@@ -848,8 +848,9 @@ fastify.post(
       });
     }
 
+    // Find agency client by matching the called number with twilioPhoneNumber in our database
     try {
-      // Find agency client by matching the called number with twilioPhoneNumber in our database
+      
       const agencyClient = await Client.findOne({
         twilioPhoneNumber: called_number,
       });
@@ -901,6 +902,7 @@ fastify.post(
 
       let customerContact = null;
 
+      // Get GHL data if it exsits 
       try {
         // Use the checkAndRefreshToken function to get a valid token
         const { accessToken } = await checkAndRefreshToken(
@@ -935,14 +937,10 @@ fastify.post(
         return reply.send({
           type: "conversation_initiation_client_data",
           dynamic_variables: dynamicVariables,
-          conversation_config_override: {
-            agent: {
-              first_message: defaultFirstMessage,
-            },
-          },
         });
       }
 
+      // IF Customer then ...
       // Add customer-specific data to dynamic variables
       dynamicVariables.customer_name =
         `${customerContact.firstNameLowerCase || ""} ${
