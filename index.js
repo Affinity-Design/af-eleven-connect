@@ -827,7 +827,7 @@ fastify.post(
 
     // Default first message
     const defaultFirstMessage =
-      "Hey, I'm Jess from Affinity Design. How may I assist you today?";
+      "Hey, there. How may I assist you today?";
 
     console.log(
       `[${requestId}] Processing inbound call personalization request:`,
