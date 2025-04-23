@@ -1,4 +1,5 @@
 # AI Outbound Script for Colour Your Life Paint & Design
+# Outbound Version 1
 
 > **CRITICAL INSTRUCTION:** Always ask only ONE question at a time, then wait for the caller's complete response before continuing. Never stack multiple questions in a single turn.
 

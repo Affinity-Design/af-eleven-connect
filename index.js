@@ -35,6 +35,7 @@ import clientRoutes from "./routes/client.js";
 import adminRoutes from "./routes/admin.js";
 import authRoutes from "./routes/auth.js";
 import integrationsRoutes from "./routes/integrations.js";
+import { registerInboundRoutes } from './inbound-call-with-forwarding.js'
 
 // Load environment variables from .env file
 dotenv.config();
@@ -733,17 +734,17 @@ fastify.register(async (fastifyInstance) => {
 // API routes ///////////////////////////////////////
 
 // Route to handle incoming calls from Twilio
-fastify.all("/incoming-call-eleven", async (request, reply) => {
-  // Generate TwiML response to connect the call to a WebSocket stream
-  const twimlResponse = `<?xml version="1.0" encoding="UTF-8"?>
-      <Response>
-        <Connect>
-          <Stream url="wss://${request.headers.host}/media-stream" />
-        </Connect>
-      </Response>`;
+// fastify.all("/incoming-call-eleven", async (request, reply) => {
+//   // Generate TwiML response to connect the call to a WebSocket stream
+//   const twimlResponse = `<?xml version="1.0" encoding="UTF-8"?>
+//       <Response>
+//         <Connect>
+//           <Stream url="wss://${request.headers.host}/media-stream" />
+//         </Connect>
+//       </Response>`;
 
-  reply.type("text/xml").send(twimlResponse);
-});
+//   reply.type("text/xml").send(twimlResponse);
+// });
 
 // Route to handle outbound calls from Twilio
 fastify.all("/outbound-call-twiml", async (request, reply) => {
