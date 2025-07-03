@@ -1,0 +1,348 @@
+{
+  "type": "post_call_transcription",
+  "event_timestamp": 1747833111,
+  "data": {
+    "agent_id": "PuDldvcypx508TYWcHye",
+    "conversation_id": "conv_01jvsfgnhreyetvwks5mgb1b1p",
+    "status": "done",
+    "transcript": [
+      {
+        "role": "agent",
+        "message": "Jamie?",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "source_medium": null,
+        "time_in_call_secs": 0,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null
+      },
+      {
+        "role": "user",
+        "message": "Hi. If I haven't answered your call, it's because I don't recognize your number. So please leave me your message and the phone number, and I will call you back ASAP. Thank you. At the tone, please record your message. When you are finished recording, you may hang up or press pound for more options.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "source_medium": "audio",
+        "time_in_call_secs": 2,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null
+      },
+      {
+        "role": "agent",
+        "message": "Voicemail detected, ending call.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "source_medium": null,
+        "time_in_call_secs": 23,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [
+          {
+            "type": "system",
+            "request_id": "end_call_c5d5fdc4af8743b49f04ea8c9880b3a0",
+            "tool_name": "end_call",
+            "params_as_json": "{\"message\": \"Voicemail detected, ending call.\", \"reason\": \"Voicemail detected\"}",
+            "tool_has_been_called": true,
+            "tool_details": null
+          }
+        ],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "source_medium": null,
+        "time_in_call_secs": 23,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [],
+        "tool_results": [
+          {
+            "type": "system",
+            "request_id": "end_call_c5d5fdc4af8743b49f04ea8c9880b3a0",
+            "tool_name": "end_call",
+            "result_value": "{\"status\": \"success\", \"reason\": \"Voicemail detected\", \"message\": \"Voicemail detected, ending call.\"}",
+            "is_error": false,
+            "tool_has_been_called": true,
+            "tool_latency_secs": 0.5003174839657731
+          }
+        ],
+        "feedback": null,
+        "llm_override": null,
+        "source_medium": null,
+        "time_in_call_secs": 23,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.5-flash": {
+              "input": {
+                "tokens": 9999,
+                "price": 0.0014998499999999998
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 15,
+                "price": 0.000009
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null
+      }
+    ],
+    "metadata": {
+      "start_time_unix_secs": 1747833083,
+      "accepted_time_unix_secs": 1747833083,
+      "call_duration_secs": 26,
+      "cost": 171,
+      "deletion_settings": {
+        "deletion_time_unix_secs": null,
+        "deleted_logs_at_time_unix_secs": null,
+        "deleted_audio_at_time_unix_secs": null,
+        "deleted_transcript_at_time_unix_secs": null,
+        "delete_transcript_and_pii": false,
+        "delete_audio": false
+      },
+      "feedback": {
+        "overall_score": null,
+        "likes": 0,
+        "dislikes": 0
+      },
+      "authorization_method": "signed_url",
+      "charging": {
+        "dev_discount": false,
+        "tier": "creator",
+        "llm_usage": {
+          "irreversible_generation": {
+            "model_usage": {
+              "gemini-2_5-flash": {
+                "input": {
+                  "tokens": 9999,
+                  "price": 0.0014998499999999998
+                },
+                "input_cache_read": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "input_cache_write": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "output_total": {
+                  "tokens": 15,
+                  "price": 0.000009
+                }
+              }
+            }
+          },
+          "initiated_generation": {
+            "model_usage": {
+              "gemini-2_5-flash": {
+                "input": {
+                  "tokens": 19703,
+                  "price": 0.0029554499999999997
+                },
+                "input_cache_read": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "input_cache_write": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "output_total": {
+                  "tokens": 37,
+                  "price": 0.000022199999999999998
+                }
+              }
+            }
+          }
+        },
+        "llm_price": 0.0029776499999999997
+      },
+      "phone_call": null,
+      "batch_call": null,
+      "termination_reason": "end_call tool was called.",
+      "error": null,
+      "main_language": "en",
+      "rag_usage": null
+    },
+    "analysis": {
+      "evaluation_criteria_results": {
+        "booked_appointment": {
+          "criteria_id": "booked_appointment",
+          "result": "failure",
+          "rationale": "The book_meeting tool was not called in this conversation. The end_call tool was called instead, indicating the call ended due to voicemail detection. Therefore, the goal was not met."
+        }
+      },
+      "data_collection_results": {
+        "time_frame": {
+          "data_collection_id": "time_frame",
+          "value": "None",
+          "json_schema": {
+            "type": "string",
+            "description": "when the caller is looking to start their project",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user left a voicemail message indicating they will return the call ASAP if they recognize the number. There is no information about when the caller is looking to start their project."
+        },
+        "project_description": {
+          "data_collection_id": "project_description",
+          "value": "None",
+          "json_schema": {
+            "type": "string",
+            "description": "describe the scope of the project the caller wishes to get done",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The conversation is a voicemail message. There is no information about the scope of a project the caller wishes to get done."
+        },
+        "previous_experiance": {
+          "data_collection_id": "previous_experiance",
+          "value": "None",
+          "json_schema": {
+            "type": "string",
+            "description": "the experience a caller had with previous contractors or painters if any",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The conversation is a voicemail message. There is no information about the caller's experience with previous contractors or painters."
+        },
+        "call_back_time": {
+          "data_collection_id": "call_back_time",
+          "value": "None",
+          "json_schema": {
+            "type": "string",
+            "description": "Return a call back time or appointment time, eg: Callback: Saturday 15th 2024 @ 11:30am or booked meeting: Friday 22nd 2025 @ 1:30pm",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user's voicemail message indicates that they will call back if a message and phone number are left. However, there is no specific time mentioned for the callback. Therefore, I cannot extract a specific callback time."
+        },
+        "call_summery": {
+          "data_collection_id": "call_summery",
+          "value": "The AI agent called a number, encountered a voicemail message from an unrecognized number, and ended the call.",
+          "json_schema": {
+            "type": "string",
+            "description": "summarize the transcript between ai and human and give me the most relevant information. ",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The AI agent called a number and detected a voicemail message. The user's voicemail message indicates they don't recognize the caller's number and requests a message and phone number for a callback. The agent then ended the call after detecting the voicemail."
+        },
+        "client_budjet": {
+          "data_collection_id": "client_budjet",
+          "value": "None",
+          "json_schema": {
+            "type": "string",
+            "description": "what the client budget is for their project",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The conversation is a voicemail message. There is no mention of a budget for a project. Therefore, it is not possible to extract the data."
+        },
+        "call_outcome": {
+          "data_collection_id": "call_outcome",
+          "value": "left a voicemail",
+          "json_schema": {
+            "type": "string",
+            "description": "Return the outcome of the call eg: Booked Meeting or Requested follow up or Hang up or Asked to Do Not Contact (dnc) or NOT QUALIFYED or not interested or left a voicemail or or something else. ",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The agent detected a voicemail and ended the call. Therefore, the outcome of the call is 'left a voicemail'."
+        }
+      },
+      "call_successful": "failure",
+      "transcript_summary": "The agent called Jamie but reached a voicemail. The agent then ended the call, noting the voicemail detection.\n"
+    },
+    "conversation_initiation_client_data": {
+      "conversation_config_override": {
+        "agent": {
+          "prompt": null,
+          "first_message": "Jamie?",
+          "language": null
+        },
+        "tts": null,
+        "conversation": null
+      },
+      "custom_llm_extra_body": {},
+      "dynamic_variables": {
+        "full_name": "Jamie Ibarra",
+        "email": "jamietbmex@yahoo.com",
+        "phone": "+16478691512",
+        "agentId": "PuDldvcypx508TYWcHye",
+        "address": "43 Losino St, L7C 3N5",
+        "todays_date": "2025-05-21",
+        "one_week_date": "2025-05-28",
+        "four_week_date": "2025-06-18",
+        "system__agent_id": "PuDldvcypx508TYWcHye",
+        "system__conversation_id": "conv_01jvsfgnhreyetvwks5mgb1b1p",
+        "system__caller_id": null,
+        "system__called_number": null,
+        "system__call_duration_secs": 25,
+        "system__time_utc": "2025-05-21T13:11:49.046233+00:00",
+        "system__call_sid": null
+      }
+    }
+  },
+  "headers": {
+    "host": "services.leadconnectorhq.com",
+    "cf-ray": "943452770c4e0252-ORD",
+    "x-forwarded-for": "34.67.146.145,10.10.0.49",
+    "cf-ipcountry": "US",
+    "user-agent": "Python/3.12 aiohttp/3.11.16",
+    "accept-encoding": "gzip, br",
+    "cdn-loop": "cloudflare; loops=1",
+    "x-forwarded-proto": "https",
+    "accept": "*/*",
+    "elevenlabs-signature": "t=1747833112,v0=4f9992bbed63d22df8eb5ab1dc554901dc89ad77278edcbaf82ac21916fe3b3c",
+    "cf-visitor": {
+      "scheme": "https"
+    },
+    "content-type": "application/json",
+    "content-length": "8687",
+    "cf-connecting-ip": "34.67.146.145",
+    "x-envoy-external-address": "10.10.0.49",
+    "x-request-id": "71736837-4f98-41f6-9d91-1fb7b49bab69",
+    "x-envoy-attempt-count": "1",
+    "x-forwarded-client-cert": "By=spiffe://cluster.local/ns/default/sa/default-automation-workflows;Hash=a27d4b1f4c52a64ae8765acdf97e7bbc566018e3d2cd3b58356754a06b0f27fa;Subject=\"\";URI=spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account",
+    "x-b3-traceid": "3062bfda11f0a1f15b222ea6b4409cf3",
+    "x-b3-spanid": "ce8a2f0b94837fa3",
+    "x-b3-parentspanid": "5b222ea6b4409cf3",
+    "x-b3-sampled": "0"
+  }
+}

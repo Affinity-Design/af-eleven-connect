@@ -35,7 +35,8 @@ import clientRoutes from "./routes/client.js";
 import adminRoutes from "./routes/admin.js";
 import authRoutes from "./routes/auth.js";
 import integrationsRoutes from "./routes/integrations.js";
-import { registerInboundRoutes } from './inbound-call-with-forwarding.js'
+import toolRoutes from "./routes/tools.js";
+import { registerInboundRoutes } from "./inbound-call-with-forwarding.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -95,6 +96,7 @@ fastify.register(clientRoutes, {
   preHandler: authenticateClient,
 });
 fastify.register(integrationsRoutes, { prefix: "/integrations" });
+fastify.register(toolRoutes, { prefix: "/tools" });
 
 // Initialize Twilio client
 const twilioClient = new Twilio(
@@ -826,8 +828,7 @@ fastify.post(
     const four_week_date = calculateTime(0, 4);
 
     // Default first message
-    const defaultFirstMessage =
-      "Hey, there. How may I assist you today?";
+    const defaultFirstMessage = "Hey, there. How may I assist you today?";
 
     console.log(
       `[${requestId}] Processing inbound call personalization request:`,
@@ -850,7 +851,6 @@ fastify.post(
 
     // Find agency client by matching the called number with twilioPhoneNumber in our database
     try {
-      
       const agencyClient = await Client.findOne({
         twilioPhoneNumber: called_number,
       });
@@ -902,7 +902,7 @@ fastify.post(
 
       let customerContact = null;
 
-      // Get GHL data if it exsits 
+      // Get GHL data if it exsits
       try {
         // Use the checkAndRefreshToken function to get a valid token
         const { accessToken } = await checkAndRefreshToken(
@@ -1666,7 +1666,7 @@ fastify.post(
   }
 );
 
-// Endpoint to handle Twilio status callbacks
+// Endpoint to handle Twilio status callbacks and update call log TODO currently disabled
 fastify.post("/call-status", async (request, reply) => {
   const { CallSid, CallStatus, CallDuration } = request.body;
   const requestId = request.query.requestId || "unknown";
@@ -1678,31 +1678,31 @@ fastify.post("/call-status", async (request, reply) => {
     // Map Twilio status to your schema's allowed values
     const mappedStatus = mapTwilioStatusToSchema(CallStatus);
 
-    // Find the client with this call in their history
-    const query = clientId
-      ? { clientId, "callHistory.callData.callSid": CallSid }
-      : { "callHistory.callData.callSid": CallSid };
+    // // Find the client with this call in their history
+    // const query = clientId
+    //   ? { clientId, "callHistory.callData.callSid": CallSid }
+    //   : { "callHistory.callData.callSid": CallSid };
 
-    const updateResult = await Client.findOneAndUpdate(
-      query,
-      {
-        $set: {
-          "callHistory.$.callData.status": mappedStatus,
-          "callHistory.$.callData.duration": CallDuration
-            ? parseInt(CallDuration)
-            : undefined,
-          "callHistory.$.callData.endTime":
-            CallStatus === "completed" ? new Date() : undefined,
-        },
-      },
-      { new: true }
-    );
+    // const updateResult = await Client.findOneAndUpdate(
+    //   query,
+    //   {
+    //     $set: {
+    //       "callHistory.$.callData.status": mappedStatus,
+    //       "callHistory.$.callData.duration": CallDuration
+    //         ? parseInt(CallDuration)
+    //         : undefined,
+    //       "callHistory.$.callData.endTime":
+    //         CallStatus === "completed" ? new Date() : undefined,
+    //     },
+    //   },
+    //   { new: true }
+    // );
 
-    if (!updateResult) {
-      console.error(
-        `[${requestId}] Failed to update call status: Record not found`
-      );
-    }
+    // if (!updateResult) {
+    //   console.error(
+    //     `[${requestId}] Failed to update call status: Record not found`
+    //   );
+    // }
 
     reply.send({ success: true });
   } catch (error) {

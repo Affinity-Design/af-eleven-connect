@@ -318,6 +318,47 @@ async function migrateClientTokens() {
   }
 }
 
+/**
+ * Find client by various identifiers for tool usage
+ * @param {Object} params - Search parameters
+ * @param {string} params.clientId - Direct client ID
+ * @param {string} params.phone - Phone number (for reverse lookup)
+ * @param {string} params.twilioPhone - Twilio phone number
+ * @param {string} params.agentId - ElevenLabs agent ID
+ * @returns {Promise<Object|null>} - Client object or null if not found
+ */
+async function findClientForTool(params) {
+  const { clientId, phone, twilioPhone, agentId } = params;
+
+  // Try direct client ID lookup first
+  if (clientId) {
+    return await Client.findOne({ clientId, status: "Active" });
+  }
+
+  // Try Twilio phone number lookup
+  if (twilioPhone) {
+    return await Client.findOne({
+      twilioPhoneNumber: twilioPhone,
+      status: "Active",
+    });
+  }
+
+  // Try agent ID lookup (if client has specific agent)
+  if (agentId) {
+    return await Client.findOne({ agentId, status: "Active" });
+  }
+
+  // Try customer phone lookup (less reliable)
+  if (phone) {
+    return await Client.findOne({
+      "clientMeta.phone": phone,
+      status: "Active",
+    });
+  }
+
+  return null;
+}
+
 export {
   refreshGhlToken,
   makeGhlApiCall,
@@ -325,4 +366,5 @@ export {
   checkAndRefreshToken,
   isTokenValid,
   migrateClientTokens,
+  findClientForTool,
 };

@@ -917,4 +917,38 @@ export default async function adminRoutes(fastify, options) {
       });
     }
   });
+
+  // Generate a dedicated admin token for ElevenLabs integration
+  fastify.post("/elevenlabs-token", async (request, reply) => {
+    try {
+      const { description = "ElevenLabs Integration" } = request.body;
+      
+      // Generate a long-lived admin token specifically for ElevenLabs
+      const elevenLabsToken = generateAdminToken(`elevenlabs-${Date.now()}`);
+      
+      fastify.log.info(`Generated ElevenLabs admin token: ${description}`);
+      
+      reply.send({
+        message: "ElevenLabs admin token generated successfully",
+        token: elevenLabsToken,
+        description,
+        usage: {
+          baseUrl: "https://api.v1.affinitydesign.ca",
+          toolEndpoints: [
+            "GET /tools/get-availability/:clientId",
+            "POST /tools/book-appointment/:clientId", 
+            "GET /tools/get-info/:clientId"
+          ],
+          authHeader: `Bearer ${elevenLabsToken}`,
+          note: "Store this token securely in your ElevenLabs agent configuration"
+        }
+      });
+    } catch (error) {
+      fastify.log.error("Error generating ElevenLabs token:", error);
+      reply.code(500).send({
+        error: "Failed to generate ElevenLabs token",
+        details: error.message,
+      });
+    }
+  });
 }
