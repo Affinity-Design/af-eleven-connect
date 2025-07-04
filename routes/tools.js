@@ -114,27 +114,77 @@ export default async function toolRoutes(fastify, options) {
   });
 
   // Get availability for any client (admin-authenticated)
-  fastify.get("/get-availability/:clientId", async (request, reply) => {
-    const { clientId } = request.params;
+  fastify.post("/get-availability", async (request, reply) => {
     const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
     
-    console.log(`[${requestId}] Tool: Get availability request for client: ${clientId}`);
+    console.log(`[${requestId}] Tool: Get availability request`);
 
     const {
+      twilioPhone,
+      clientId,
+      agentId,
       startDate,
       endDate,
       timezone = "America/New_York",
       enableLookBusy,
-    } = request.query;
+    } = request.body;
 
     try {
-      // Find client by ID
-      const client = await findClientById(clientId);
+      // Find client using discovery logic
+      let client = null;
+      let foundBy = null;
+
+      // Priority 1: Try Twilio phone number first (most reliable for ElevenLabs)
+      if (twilioPhone) {
+        client = await Client.findOne({ twilioPhoneNumber: twilioPhone, status: "Active" });
+        if (client) {
+          foundBy = "primaryTwilioPhone";
+        } else {
+          client = await Client.findOne({ 
+            "additionalAgents.twilioPhoneNumber": twilioPhone, 
+            status: "Active" 
+          });
+          if (client) foundBy = "additionalTwilioPhone";
+        }
+      }
+
+      // Priority 2: Try direct client ID lookup
+      if (!client && clientId) {
+        client = await Client.findOne({ clientId, status: "Active" });
+        if (client) foundBy = "clientId";
+      }
+
+      // Priority 3: Try agent ID lookup
+      if (!client && agentId) {
+        client = await Client.findOne({ agentId, status: "Active" });
+        if (client) {
+          foundBy = "primaryAgentId";
+        } else {
+          client = await Client.findOne({ 
+            "additionalAgents.agentId": agentId, 
+            status: "Active" 
+          });
+          if (client) foundBy = "additionalAgentId";
+        }
+      }
+
       if (!client) {
         return reply.code(404).send({
           error: "Client not found",
           requestId,
+          searchedFor: { twilioPhone, clientId, agentId },
+          note: "Provide twilioPhone, clientId, or agentId to find the client"
         });
+      }
+
+      console.log(`[${requestId}] Client found by: ${foundBy} -> ${client.clientId}`);
+
+      // Find the matched agent
+      let matchedAgent = null;
+      if (foundBy.includes("twilioPhone") && twilioPhone) {
+        matchedAgent = client.findAgentByPhone(twilioPhone);
+      } else if (foundBy.includes("AgentId") && agentId) {
+        matchedAgent = client.findAgentById(agentId);
       }
 
       // Check if client is active
@@ -210,9 +260,11 @@ export default async function toolRoutes(fastify, options) {
       // Return response with client context
       return reply.send({
         requestId,
-        clientId,
+        clientId: client.clientId,
         clientName: client.clientMeta.fullName,
         businessName: client.clientMeta.businessName,
+        foundBy: foundBy,
+        matchedAgent: matchedAgent,
         dateRange: {
           start: new Date(startTimestamp).toISOString(),
           end: new Date(endTimestamp).toISOString(),
@@ -232,13 +284,15 @@ export default async function toolRoutes(fastify, options) {
   });
 
   // Book appointment for any client (admin-authenticated)
-  fastify.post("/book-appointment/:clientId", async (request, reply) => {
-    const { clientId } = request.params;
+  fastify.post("/book-appointment", async (request, reply) => {
     const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
     
-    console.log(`[${requestId}] Tool: Book appointment request for client: ${clientId}`);
+    console.log(`[${requestId}] Tool: Book appointment request`);
 
     const {
+      twilioPhone,
+      clientId,
+      agentId,
       startTime,
       endTime,
       phone,
@@ -247,13 +301,61 @@ export default async function toolRoutes(fastify, options) {
     } = request.body;
 
     try {
-      // Find client by ID
-      const client = await findClientById(clientId);
+      // Find client using discovery logic
+      let client = null;
+      let foundBy = null;
+
+      // Priority 1: Try Twilio phone number first (most reliable for ElevenLabs)
+      if (twilioPhone) {
+        client = await Client.findOne({ twilioPhoneNumber: twilioPhone, status: "Active" });
+        if (client) {
+          foundBy = "primaryTwilioPhone";
+        } else {
+          client = await Client.findOne({ 
+            "additionalAgents.twilioPhoneNumber": twilioPhone, 
+            status: "Active" 
+          });
+          if (client) foundBy = "additionalTwilioPhone";
+        }
+      }
+
+      // Priority 2: Try direct client ID lookup
+      if (!client && clientId) {
+        client = await Client.findOne({ clientId, status: "Active" });
+        if (client) foundBy = "clientId";
+      }
+
+      // Priority 3: Try agent ID lookup
+      if (!client && agentId) {
+        client = await Client.findOne({ agentId, status: "Active" });
+        if (client) {
+          foundBy = "primaryAgentId";
+        } else {
+          client = await Client.findOne({ 
+            "additionalAgents.agentId": agentId, 
+            status: "Active" 
+          });
+          if (client) foundBy = "additionalAgentId";
+        }
+      }
+
       if (!client) {
         return reply.code(404).send({
           error: "Client not found",
           requestId,
+          searchedFor: { twilioPhone, clientId, agentId },
+          note: "Provide twilioPhone, clientId, or agentId to find the client"
         });
+      }
+
+      console.log(`[${requestId}] Client found by: ${foundBy} -> ${client.clientId}`);
+
+      // Find the matched agent
+      let matchedAgent = null;
+      if (foundBy.includes("twilioPhone") && twilioPhone) {
+        matchedAgent = client.findAgentByPhone(twilioPhone);
+      } else if (foundBy.includes("AgentId") && agentId) {
+        matchedAgent = client.findAgentById(agentId);
       }
 
       // Check if client is active
@@ -376,9 +478,11 @@ export default async function toolRoutes(fastify, options) {
 
       return reply.send({
         requestId,
-        clientId,
+        clientId: client.clientId,
         clientName: client.clientMeta.fullName,
         businessName: client.clientMeta.businessName,
+        foundBy: foundBy,
+        matchedAgent: matchedAgent,
         status: "success",
         message: "Appointment booked successfully",
         appointmentId: appointmentResult.id,
@@ -410,21 +514,69 @@ export default async function toolRoutes(fastify, options) {
   });
 
   // Get client info for any client (admin-authenticated)
-  fastify.get("/get-info/:clientId", async (request, reply) => {
-    const { clientId } = request.params;
-    const { phone } = request.query;
+  fastify.post("/get-info", async (request, reply) => {
     const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
     
-    console.log(`[${requestId}] Tool: Get info request for client: ${clientId}`);
+    console.log(`[${requestId}] Tool: Get info request`);
+
+    const { twilioPhone, clientId, agentId, phone } = request.body;
 
     try {
-      // Find client by ID
-      const client = await findClientById(clientId);
+      // Find client using discovery logic
+      let client = null;
+      let foundBy = null;
+
+      // Priority 1: Try Twilio phone number first (most reliable for ElevenLabs)
+      if (twilioPhone) {
+        client = await Client.findOne({ twilioPhoneNumber: twilioPhone, status: "Active" });
+        if (client) {
+          foundBy = "primaryTwilioPhone";
+        } else {
+          client = await Client.findOne({ 
+            "additionalAgents.twilioPhoneNumber": twilioPhone, 
+            status: "Active" 
+          });
+          if (client) foundBy = "additionalTwilioPhone";
+        }
+      }
+
+      // Priority 2: Try direct client ID lookup
+      if (!client && clientId) {
+        client = await Client.findOne({ clientId, status: "Active" });
+        if (client) foundBy = "clientId";
+      }
+
+      // Priority 3: Try agent ID lookup
+      if (!client && agentId) {
+        client = await Client.findOne({ agentId, status: "Active" });
+        if (client) {
+          foundBy = "primaryAgentId";
+        } else {
+          client = await Client.findOne({ 
+            "additionalAgents.agentId": agentId, 
+            status: "Active" 
+          });
+          if (client) foundBy = "additionalAgentId";
+        }
+      }
+
       if (!client) {
         return reply.code(404).send({
           error: "Client not found",
           requestId,
+          searchedFor: { twilioPhone, clientId, agentId },
+          note: "Provide twilioPhone, clientId, or agentId to find the client"
         });
+      }
+
+      console.log(`[${requestId}] Client found by: ${foundBy} -> ${client.clientId}`);
+
+      // Find the matched agent
+      let matchedAgent = null;
+      if (foundBy.includes("twilioPhone") && twilioPhone) {
+        matchedAgent = client.findAgentByPhone(twilioPhone);
+      } else if (foundBy.includes("AgentId") && agentId) {
+        matchedAgent = client.findAgentById(agentId);
       }
 
       // Check if client is active
@@ -462,7 +614,9 @@ export default async function toolRoutes(fastify, options) {
 
       return reply.send({
         requestId,
-        clientId,
+        clientId: client.clientId,
+        foundBy: foundBy,
+        matchedAgent: matchedAgent,
         clientInfo: {
           name: client.clientMeta.fullName,
           businessName: client.clientMeta.businessName,

@@ -951,4 +951,141 @@ export default async function adminRoutes(fastify, options) {
       });
     }
   });
+  
+  // ===== AGENT MANAGEMENT ROUTES =====
+  
+  // Add additional agent to a client
+  fastify.post("/clients/:clientId/agents", async (request, reply) => {
+    const { clientId } = request.params;
+    const agentData = request.body;
+
+    try {
+      // Import agent manager functions
+      const { addAdditionalAgent } = await import("../utils/agentManager.js");
+      
+      const result = await addAdditionalAgent(clientId, agentData);
+      
+      if (result.success) {
+        reply.send({
+          success: true,
+          message: result.message,
+          clientId,
+          agent: result.newAgent,
+          totalAgents: result.client.getAllAgents().length
+        });
+      } else {
+        reply.code(400).send({
+          error: result.error,
+          clientId
+        });
+      }
+    } catch (error) {
+      fastify.log.error("Error adding additional agent:", error);
+      reply.code(500).send({
+        error: "Failed to add additional agent",
+        details: error.message,
+      });
+    }
+  });
+
+  // Get all agents for a client
+  fastify.get("/clients/:clientId/agents", async (request, reply) => {
+    const { clientId } = request.params;
+
+    try {
+      // Import agent manager functions
+      const { getAllAgentsForClient } = await import("../utils/agentManager.js");
+      
+      const result = await getAllAgentsForClient(clientId);
+      
+      if (result.success) {
+        reply.send({
+          success: true,
+          clientId,
+          totalAgents: result.totalAgents,
+          agents: result.agents
+        });
+      } else {
+        reply.code(404).send({
+          error: result.error,
+          clientId
+        });
+      }
+    } catch (error) {
+      fastify.log.error("Error getting agents for client:", error);
+      reply.code(500).send({
+        error: "Failed to get agents",
+        details: error.message,
+      });
+    }
+  });
+
+  // Update additional agent
+  fastify.put("/clients/:clientId/agents/:agentId", async (request, reply) => {
+    const { clientId, agentId } = request.params;
+    const updateData = request.body;
+
+    try {
+      // Import agent manager functions
+      const { updateAdditionalAgent } = await import("../utils/agentManager.js");
+      
+      const result = await updateAdditionalAgent(clientId, agentId, updateData);
+      
+      if (result.success) {
+        reply.send({
+          success: true,
+          message: result.message,
+          clientId,
+          agentId,
+          updatedAgent: result.updatedAgent
+        });
+      } else {
+        reply.code(400).send({
+          error: result.error,
+          clientId,
+          agentId
+        });
+      }
+    } catch (error) {
+      fastify.log.error("Error updating additional agent:", error);
+      reply.code(500).send({
+        error: "Failed to update additional agent",
+        details: error.message,
+      });
+    }
+  });
+
+  // Remove additional agent
+  fastify.delete("/clients/:clientId/agents/:agentId", async (request, reply) => {
+    const { clientId, agentId } = request.params;
+
+    try {
+      // Import agent manager functions
+      const { removeAdditionalAgent } = await import("../utils/agentManager.js");
+      
+      const result = await removeAdditionalAgent(clientId, agentId);
+      
+      if (result.success) {
+        reply.send({
+          success: true,
+          message: result.message,
+          clientId,
+          agentId,
+          removedAgent: result.removedAgent
+        });
+      } else {
+        reply.code(400).send({
+          error: result.error,
+          clientId,
+          agentId
+        });
+      }
+    } catch (error) {
+      fastify.log.error("Error removing additional agent:", error);
+      reply.code(500).send({
+        error: "Failed to remove additional agent",
+        details: error.message,
+      });
+    }
+  });
 }
