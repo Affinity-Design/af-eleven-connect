@@ -15,6 +15,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/admin/elevenlabs-token" \
 ```
 
 Response:
+
 ```json
 {
   "message": "ElevenLabs admin token generated successfully",
@@ -38,6 +39,7 @@ Response:
 In your ElevenLabs agent configuration, add these tool definitions:
 
 #### Tool 1: Client Discovery
+
 ```json
 {
   "name": "discover_client",
@@ -50,7 +52,7 @@ In your ElevenLabs agent configuration, add these tool definitions:
         "description": "Customer phone number"
       },
       "twilioPhone": {
-        "type": "string", 
+        "type": "string",
         "description": "Twilio phone number used for the call"
       },
       "agentId": {
@@ -69,9 +71,10 @@ In your ElevenLabs agent configuration, add these tool definitions:
 ```
 
 #### Tool 2: Get Availability
+
 ```json
 {
-  "name": "get_availability", 
+  "name": "get_availability",
   "description": "Get available time slots for a client's calendar",
   "parameters": {
     "type": "object",
@@ -104,12 +107,13 @@ In your ElevenLabs agent configuration, add these tool definitions:
 ```
 
 #### Tool 3: Book Appointment
+
 ```json
 {
   "name": "book_appointment",
   "description": "Book an appointment for a client",
   "parameters": {
-    "type": "object", 
+    "type": "object",
     "properties": {
       "clientId": {
         "type": "string",
@@ -148,6 +152,7 @@ In your ElevenLabs agent configuration, add these tool definitions:
 ```
 
 #### Tool 4: Get Client Info
+
 ```json
 {
   "name": "get_client_info",
@@ -192,7 +197,7 @@ Use this FIRST to find the client ID. You can search by:
 ### 2. get_availability
 Once you have the client ID, use this to check available appointment times.
 
-### 3. book_appointment  
+### 3. book_appointment
 Use this to book appointments after confirming times with the customer.
 
 ### 4. get_client_info
@@ -211,6 +216,7 @@ Always use discover_client first to identify which client you're working with!
 ### 4. Test the Integration
 
 #### Test Client Discovery
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer YOUR_ELEVENLABS_ADMIN_TOKEN" \
@@ -221,19 +227,21 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 #### Test Get Availability
+
 ```bash
 curl -X GET "https://api.v1.affinitydesign.ca/tools/get-availability/5C3JSOVVFiVmBoh8mv3I" \
   -H "Authorization: Bearer YOUR_ELEVENLABS_ADMIN_TOKEN"
 ```
 
 #### Test Book Appointment
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment/5C3JSOVVFiVmBoh8mv3I" \
   -H "Authorization: Bearer YOUR_ELEVENLABS_ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "startTime": "2025-04-01T10:00:00-04:00",
-    "endTime": "2025-04-01T11:00:00-04:00", 
+    "endTime": "2025-04-01T11:00:00-04:00",
     "phone": "+19058363456",
     "meeting_title": "Consultation"
   }'

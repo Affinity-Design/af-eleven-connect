@@ -9,6 +9,7 @@ Your current architecture requires each ElevenLabs agent to authenticate with in
 ### New Architecture Overview
 
 1. **Admin-Only Tool Routes**: Create new endpoints under `/tools/` that:
+
    - Use admin authentication (single token)
    - Accept `clientId` as a parameter
    - Handle all client-specific operations internally
@@ -23,7 +24,7 @@ Your current architecture requires each ElevenLabs agent to authenticate with in
 
 ```
 GET  /tools/get-availability/:clientId    - Get calendar availability for any client
-POST /tools/book-appointment/:clientId    - Book appointment for any client  
+POST /tools/book-appointment/:clientId    - Book appointment for any client
 GET  /tools/get-info/:clientId            - Get client/contact info for any client
 ```
 
@@ -49,7 +50,7 @@ Configure your ElevenLabs agent with these tool definitions:
             "description": "Start date (YYYY-MM-DD format)"
           },
           "endDate": {
-            "type": "string", 
+            "type": "string",
             "description": "End date (YYYY-MM-DD format)"
           },
           "timezone": {
@@ -149,6 +150,7 @@ Configure your ElevenLabs agent with these tool definitions:
 For your current webhook flow, you'll need to modify how the `clientId` is passed to ElevenLabs:
 
 #### Option A: Pass clientId in webhook parameters
+
 ```javascript
 // In outbound-call-twiml endpoint
 if (clientId) {
@@ -157,6 +159,7 @@ if (clientId) {
 ```
 
 #### Option B: Lookup clientId by phone number
+
 ```javascript
 // In tools, add a lookup function
 async function findClientByPhone(phone) {

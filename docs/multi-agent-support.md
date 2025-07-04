@@ -9,6 +9,7 @@ The AF Eleven Connect system now supports multiple agents per client while maint
 ### Client Schema Structure
 
 Each client now supports:
+
 - **Primary Agent**: The original agent (backwards compatible)
 - **Additional Agents**: Array of additional agents with full configuration
 
@@ -47,6 +48,7 @@ Each client now supports:
 ### Additional Agent Schema
 
 Each additional agent includes:
+
 - `agentId` (required): Unique identifier for the agent
 - `twilioPhoneNumber` (required): Phone number for this agent
 - `agentName` (optional): Friendly name for the agent
@@ -65,34 +67,38 @@ Each additional agent includes:
 **Purpose**: Find a client by various parameters, now supports multi-agent lookup
 
 **Priority Order**:
+
 1. `twilioPhone` (primary → additional agents)
 2. `clientId` (direct lookup)
 3. `agentId` (primary → additional agents)
 4. `phone` (customer phone - least reliable)
 
 **Request Body**:
+
 ```json
 {
-  "twilioPhone": "+18632704911",  // Most reliable for ElevenLabs
-  "agentId": "agent_456",         // Agent-specific lookup
-  "clientId": "5C3JSOVVFiVmBoh8mv3I",  // Direct client lookup
-  "phone": "+19058363456"         // Customer phone (fallback)
+  "twilioPhone": "+18632704911", // Most reliable for ElevenLabs
+  "agentId": "agent_456", // Agent-specific lookup
+  "clientId": "5C3JSOVVFiVmBoh8mv3I", // Direct client lookup
+  "phone": "+19058363456" // Customer phone (fallback)
 }
 ```
 
 **Response**:
+
 ```json
 {
   "requestId": "abc123",
   "clientId": "5C3JSOVVFiVmBoh8mv3I",
   "clientName": "Paul Giovanatto",
   "businessName": "Affinity Design",
-  "twilioPhoneNumber": "+18632704910",  // Primary phone
+  "twilioPhoneNumber": "+18632704910", // Primary phone
   "status": "Active",
   "hasGhlIntegration": true,
   "hasCalendar": true,
   "foundBy": "additionalTwilioPhone",
-  "matchedAgent": {                     // NEW: Details of matched agent
+  "matchedAgent": {
+    // NEW: Details of matched agent
     "agentId": "agent_456",
     "twilioPhoneNumber": "+18632704911",
     "agentName": "Sales Agent",
@@ -102,8 +108,9 @@ Each additional agent includes:
     "outboundEnabled": false,
     "isPrimary": false
   },
-  "totalAgents": 3,                     // NEW: Total agent count
-  "allAgents": [                        // NEW: All agents for this client
+  "totalAgents": 3, // NEW: Total agent count
+  "allAgents": [
+    // NEW: All agents for this client
     {
       "agentId": "primary_agent_123",
       "twilioPhoneNumber": "+18632704910",
@@ -141,6 +148,7 @@ Each additional agent includes:
 ### 2. Other Tool Endpoints
 
 All other tool endpoints remain unchanged:
+
 - `GET /tools/get-availability/:clientId`
 - `POST /tools/book-appointment/:clientId`
 - `GET /tools/get-info/:clientId`
@@ -151,6 +159,7 @@ All other tool endpoints remain unchanged:
 The client schema includes built-in helper methods:
 
 ### `getAllAgents()`
+
 Returns all agents (primary + additional) for a client.
 
 ```javascript
@@ -160,6 +169,7 @@ const allAgents = client.getAllAgents();
 ```
 
 ### `findAgentByPhone(phoneNumber)`
+
 Finds a specific agent by phone number.
 
 ```javascript
@@ -168,6 +178,7 @@ const agent = client.findAgentByPhone("+18632704911");
 ```
 
 ### `findAgentById(agentId)`
+
 Finds a specific agent by agent ID.
 
 ```javascript
@@ -180,7 +191,7 @@ const agent = client.findAgentById("agent_456");
 ### Adding Additional Agents
 
 ```javascript
-import { addAdditionalAgent } from './utils/agentManager.js';
+import { addAdditionalAgent } from "./utils/agentManager.js";
 
 const newAgent = {
   agentId: "agent_999",
@@ -188,7 +199,7 @@ const newAgent = {
   agentName: "Marketing Agent",
   agentType: "outbound",
   inboundEnabled: false,
-  outboundEnabled: true
+  outboundEnabled: true,
 };
 
 const result = await addAdditionalAgent("5C3JSOVVFiVmBoh8mv3I", newAgent);
@@ -197,20 +208,24 @@ const result = await addAdditionalAgent("5C3JSOVVFiVmBoh8mv3I", newAgent);
 ### Updating Additional Agents
 
 ```javascript
-import { updateAdditionalAgent } from './utils/agentManager.js';
+import { updateAdditionalAgent } from "./utils/agentManager.js";
 
 const updates = {
   agentName: "Updated Marketing Agent",
-  isEnabled: false
+  isEnabled: false,
 };
 
-const result = await updateAdditionalAgent("5C3JSOVVFiVmBoh8mv3I", "agent_999", updates);
+const result = await updateAdditionalAgent(
+  "5C3JSOVVFiVmBoh8mv3I",
+  "agent_999",
+  updates
+);
 ```
 
 ### Removing Additional Agents
 
 ```javascript
-import { removeAdditionalAgent } from './utils/agentManager.js';
+import { removeAdditionalAgent } from "./utils/agentManager.js";
 
 const result = await removeAdditionalAgent("5C3JSOVVFiVmBoh8mv3I", "agent_999");
 ```
@@ -218,7 +233,7 @@ const result = await removeAdditionalAgent("5C3JSOVVFiVmBoh8mv3I", "agent_999");
 ### Listing All Additional Agents
 
 ```javascript
-import { getAdditionalAgents } from './utils/agentManager.js';
+import { getAdditionalAgents } from "./utils/agentManager.js";
 
 const agents = await getAdditionalAgents("5C3JSOVVFiVmBoh8mv3I");
 ```
@@ -256,7 +271,7 @@ Each tool in ElevenLabs should be configured with:
         "description": "The Twilio phone number used by the agent"
       },
       "agentId": {
-        "type": "string", 
+        "type": "string",
         "description": "The agent ID if known"
       }
     },
@@ -286,6 +301,7 @@ The multi-agent system is fully backwards compatible:
 ### For Existing Clients
 
 No migration is required. Existing clients will:
+
 - Continue using their primary `agentId` and `twilioPhoneNumber`
 - Return `totalAgents: 1` in discovery calls
 - Have `isPrimary: true` in their agent data
@@ -362,6 +378,7 @@ curl -X POST "http://localhost:3000/admin/clients/5C3JSOVVFiVmBoh8mv3I/agents" \
 ## Future Enhancements
 
 Potential future improvements:
+
 1. **Agent-specific configurations**: Different GHL integrations per agent
 2. **Agent performance tracking**: Individual agent statistics
 3. **Load balancing**: Distribute calls across multiple agents
@@ -380,6 +397,7 @@ Potential future improvements:
 ### Debugging
 
 Enable detailed logging by checking console output with request IDs:
+
 ```
 [abc123] Tool: Client discovery request
 [abc123] Client found by: additionalTwilioPhone -> 5C3JSOVVFiVmBoh8mv3I

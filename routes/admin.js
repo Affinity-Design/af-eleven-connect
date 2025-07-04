@@ -922,12 +922,12 @@ export default async function adminRoutes(fastify, options) {
   fastify.post("/elevenlabs-token", async (request, reply) => {
     try {
       const { description = "ElevenLabs Integration" } = request.body;
-      
+
       // Generate a long-lived admin token specifically for ElevenLabs
       const elevenLabsToken = generateAdminToken(`elevenlabs-${Date.now()}`);
-      
+
       fastify.log.info(`Generated ElevenLabs admin token: ${description}`);
-      
+
       reply.send({
         message: "ElevenLabs admin token generated successfully",
         token: elevenLabsToken,
@@ -936,12 +936,12 @@ export default async function adminRoutes(fastify, options) {
           baseUrl: "https://api.v1.affinitydesign.ca",
           toolEndpoints: [
             "GET /tools/get-availability/:clientId",
-            "POST /tools/book-appointment/:clientId", 
-            "GET /tools/get-info/:clientId"
+            "POST /tools/book-appointment/:clientId",
+            "GET /tools/get-info/:clientId",
           ],
           authHeader: `Bearer ${elevenLabsToken}`,
-          note: "Store this token securely in your ElevenLabs agent configuration"
-        }
+          note: "Store this token securely in your ElevenLabs agent configuration",
+        },
       });
     } catch (error) {
       fastify.log.error("Error generating ElevenLabs token:", error);
@@ -951,9 +951,9 @@ export default async function adminRoutes(fastify, options) {
       });
     }
   });
-  
+
   // ===== AGENT MANAGEMENT ROUTES =====
-  
+
   // Add additional agent to a client
   fastify.post("/clients/:clientId/agents", async (request, reply) => {
     const { clientId } = request.params;
@@ -962,21 +962,21 @@ export default async function adminRoutes(fastify, options) {
     try {
       // Import agent manager functions
       const { addAdditionalAgent } = await import("../utils/agentManager.js");
-      
+
       const result = await addAdditionalAgent(clientId, agentData);
-      
+
       if (result.success) {
         reply.send({
           success: true,
           message: result.message,
           clientId,
           agent: result.newAgent,
-          totalAgents: result.client.getAllAgents().length
+          totalAgents: result.client.getAllAgents().length,
         });
       } else {
         reply.code(400).send({
           error: result.error,
-          clientId
+          clientId,
         });
       }
     } catch (error) {
@@ -994,21 +994,23 @@ export default async function adminRoutes(fastify, options) {
 
     try {
       // Import agent manager functions
-      const { getAllAgentsForClient } = await import("../utils/agentManager.js");
-      
+      const { getAllAgentsForClient } = await import(
+        "../utils/agentManager.js"
+      );
+
       const result = await getAllAgentsForClient(clientId);
-      
+
       if (result.success) {
         reply.send({
           success: true,
           clientId,
           totalAgents: result.totalAgents,
-          agents: result.agents
+          agents: result.agents,
         });
       } else {
         reply.code(404).send({
           error: result.error,
-          clientId
+          clientId,
         });
       }
     } catch (error) {
@@ -1027,23 +1029,25 @@ export default async function adminRoutes(fastify, options) {
 
     try {
       // Import agent manager functions
-      const { updateAdditionalAgent } = await import("../utils/agentManager.js");
-      
+      const { updateAdditionalAgent } = await import(
+        "../utils/agentManager.js"
+      );
+
       const result = await updateAdditionalAgent(clientId, agentId, updateData);
-      
+
       if (result.success) {
         reply.send({
           success: true,
           message: result.message,
           clientId,
           agentId,
-          updatedAgent: result.updatedAgent
+          updatedAgent: result.updatedAgent,
         });
       } else {
         reply.code(400).send({
           error: result.error,
           clientId,
-          agentId
+          agentId,
         });
       }
     } catch (error) {
@@ -1056,36 +1060,41 @@ export default async function adminRoutes(fastify, options) {
   });
 
   // Remove additional agent
-  fastify.delete("/clients/:clientId/agents/:agentId", async (request, reply) => {
-    const { clientId, agentId } = request.params;
+  fastify.delete(
+    "/clients/:clientId/agents/:agentId",
+    async (request, reply) => {
+      const { clientId, agentId } = request.params;
 
-    try {
-      // Import agent manager functions
-      const { removeAdditionalAgent } = await import("../utils/agentManager.js");
-      
-      const result = await removeAdditionalAgent(clientId, agentId);
-      
-      if (result.success) {
-        reply.send({
-          success: true,
-          message: result.message,
-          clientId,
-          agentId,
-          removedAgent: result.removedAgent
-        });
-      } else {
-        reply.code(400).send({
-          error: result.error,
-          clientId,
-          agentId
+      try {
+        // Import agent manager functions
+        const { removeAdditionalAgent } = await import(
+          "../utils/agentManager.js"
+        );
+
+        const result = await removeAdditionalAgent(clientId, agentId);
+
+        if (result.success) {
+          reply.send({
+            success: true,
+            message: result.message,
+            clientId,
+            agentId,
+            removedAgent: result.removedAgent,
+          });
+        } else {
+          reply.code(400).send({
+            error: result.error,
+            clientId,
+            agentId,
+          });
+        }
+      } catch (error) {
+        fastify.log.error("Error removing additional agent:", error);
+        reply.code(500).send({
+          error: "Failed to remove additional agent",
+          details: error.message,
         });
       }
-    } catch (error) {
-      fastify.log.error("Error removing additional agent:", error);
-      reply.code(500).send({
-        error: "Failed to remove additional agent",
-        details: error.message,
-      });
     }
-  });
+  );
 }

@@ -14,7 +14,14 @@ import Client from "../client.js";
  */
 export async function addAdditionalAgent(clientId, agentData) {
   try {
-    const { agentId, twilioPhoneNumber, agentName, agentType, inboundEnabled, outboundEnabled } = agentData;
+    const {
+      agentId,
+      twilioPhoneNumber,
+      agentName,
+      agentType,
+      inboundEnabled,
+      outboundEnabled,
+    } = agentData;
 
     // Validate required fields
     if (!agentId || !twilioPhoneNumber) {
@@ -32,7 +39,9 @@ export async function addAdditionalAgent(clientId, agentData) {
       throw new Error("Agent ID already exists as primary agent");
     }
 
-    const existingAgent = client.additionalAgents?.find(agent => agent.agentId === agentId);
+    const existingAgent = client.additionalAgents?.find(
+      (agent) => agent.agentId === agentId
+    );
     if (existingAgent) {
       throw new Error("Agent ID already exists in additional agents");
     }
@@ -42,9 +51,13 @@ export async function addAdditionalAgent(clientId, agentData) {
       throw new Error("Twilio phone number already exists as primary number");
     }
 
-    const existingPhone = client.additionalAgents?.find(agent => agent.twilioPhoneNumber === twilioPhoneNumber);
+    const existingPhone = client.additionalAgents?.find(
+      (agent) => agent.twilioPhoneNumber === twilioPhoneNumber
+    );
     if (existingPhone) {
-      throw new Error("Twilio phone number already exists in additional agents");
+      throw new Error(
+        "Twilio phone number already exists in additional agents"
+      );
     }
 
     // Create new agent object
@@ -71,7 +84,6 @@ export async function addAdditionalAgent(clientId, agentData) {
       client: updatedClient,
       newAgent,
     };
-
   } catch (error) {
     console.error("Error adding additional agent:", error);
     return {
@@ -97,11 +109,15 @@ export async function updateAdditionalAgent(clientId, agentId, updateData) {
 
     // Check if it's the primary agent
     if (client.agentId === agentId) {
-      throw new Error("Cannot update primary agent using this function. Use regular client update instead.");
+      throw new Error(
+        "Cannot update primary agent using this function. Use regular client update instead."
+      );
     }
 
     // Find the additional agent
-    const agentIndex = client.additionalAgents?.findIndex(agent => agent.agentId === agentId);
+    const agentIndex = client.additionalAgents?.findIndex(
+      (agent) => agent.agentId === agentId
+    );
     if (agentIndex === -1 || agentIndex === undefined) {
       throw new Error("Additional agent not found");
     }
@@ -112,17 +128,21 @@ export async function updateAdditionalAgent(clientId, agentId, updateData) {
         throw new Error("Twilio phone number conflicts with primary number");
       }
 
-      const conflictingAgent = client.additionalAgents.find((agent, index) => 
-        agent.twilioPhoneNumber === updateData.twilioPhoneNumber && index !== agentIndex
+      const conflictingAgent = client.additionalAgents.find(
+        (agent, index) =>
+          agent.twilioPhoneNumber === updateData.twilioPhoneNumber &&
+          index !== agentIndex
       );
       if (conflictingAgent) {
-        throw new Error("Twilio phone number conflicts with another additional agent");
+        throw new Error(
+          "Twilio phone number conflicts with another additional agent"
+        );
       }
     }
 
     // Create update object with dot notation
     const updateObj = {};
-    Object.keys(updateData).forEach(key => {
+    Object.keys(updateData).forEach((key) => {
       updateObj[`additionalAgents.${agentIndex}.${key}`] = updateData[key];
     });
 
@@ -138,7 +158,6 @@ export async function updateAdditionalAgent(clientId, agentId, updateData) {
       client: updatedClient,
       updatedAgent: updatedClient.additionalAgents[agentIndex],
     };
-
   } catch (error) {
     console.error("Error updating additional agent:", error);
     return {
@@ -173,7 +192,9 @@ export async function removeAdditionalAgent(clientId, agentId) {
       { new: true }
     );
 
-    const removedAgent = client.additionalAgents?.find(agent => agent.agentId === agentId);
+    const removedAgent = client.additionalAgents?.find(
+      (agent) => agent.agentId === agentId
+    );
 
     return {
       success: true,
@@ -181,7 +202,6 @@ export async function removeAdditionalAgent(clientId, agentId) {
       client: updatedClient,
       removedAgent,
     };
-
   } catch (error) {
     console.error("Error removing additional agent:", error);
     return {
@@ -211,7 +231,6 @@ export async function getAllAgentsForClient(clientId) {
       totalAgents: allAgents.length,
       agents: allAgents,
     };
-
   } catch (error) {
     console.error("Error getting agents for client:", error);
     return {
@@ -235,14 +254,17 @@ export async function findClientByAnyAgent(searchParams) {
 
     if (twilioPhone) {
       // Check primary phone first
-      client = await Client.findOne({ twilioPhoneNumber: twilioPhone, status: "Active" });
+      client = await Client.findOne({
+        twilioPhoneNumber: twilioPhone,
+        status: "Active",
+      });
       if (client) {
         foundBy = "primaryPhone";
       } else {
         // Check additional agents
-        client = await Client.findOne({ 
-          "additionalAgents.twilioPhoneNumber": twilioPhone, 
-          status: "Active" 
+        client = await Client.findOne({
+          "additionalAgents.twilioPhoneNumber": twilioPhone,
+          status: "Active",
         });
         if (client) foundBy = "additionalPhone";
       }
@@ -255,9 +277,9 @@ export async function findClientByAnyAgent(searchParams) {
         foundBy = "primaryAgent";
       } else {
         // Check additional agents
-        client = await Client.findOne({ 
-          "additionalAgents.agentId": agentId, 
-          status: "Active" 
+        client = await Client.findOne({
+          "additionalAgents.agentId": agentId,
+          status: "Active",
         });
         if (client) foundBy = "additionalAgent";
       }
@@ -285,7 +307,6 @@ export async function findClientByAnyAgent(searchParams) {
       foundBy,
       allAgents: client.getAllAgents(),
     };
-
   } catch (error) {
     console.error("Error finding client by agent:", error);
     return {

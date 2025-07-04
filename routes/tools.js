@@ -8,7 +8,11 @@
 import { authenticateAdmin } from "../auth.js";
 import { findClientById } from "../crud.js";
 import Client from "../client.js";
-import { checkAndRefreshToken, searchGhlContactByPhone, findClientForTool } from "../utils/ghl.js";
+import {
+  checkAndRefreshToken,
+  searchGhlContactByPhone,
+  findClientForTool,
+} from "../utils/ghl.js";
 
 export default async function toolRoutes(fastify, options) {
   // Admin authentication for all tool routes
@@ -17,7 +21,8 @@ export default async function toolRoutes(fastify, options) {
   // Auto-discovery endpoint - finds client by various parameters
   // Priority order: twilioPhone -> clientId -> agentId -> phone (customer phone)
   fastify.post("/discover-client", async (request, reply) => {
-    const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+    const requestId =
+      Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
     console.log(`[${requestId}] Tool: Client discovery request`);
 
     const { clientId, phone, twilioPhone, agentId } = request.body;
@@ -29,14 +34,17 @@ export default async function toolRoutes(fastify, options) {
       // Priority 1: Try Twilio phone number first (most reliable for ElevenLabs)
       if (twilioPhone) {
         // First check primary twilioPhoneNumber
-        client = await Client.findOne({ twilioPhoneNumber: twilioPhone, status: "Active" });
+        client = await Client.findOne({
+          twilioPhoneNumber: twilioPhone,
+          status: "Active",
+        });
         if (client) {
           foundBy = "primaryTwilioPhone";
         } else {
           // Then check additional agents' twilioPhoneNumbers
-          client = await Client.findOne({ 
-            "additionalAgents.twilioPhoneNumber": twilioPhone, 
-            status: "Active" 
+          client = await Client.findOne({
+            "additionalAgents.twilioPhoneNumber": twilioPhone,
+            status: "Active",
           });
           if (client) foundBy = "additionalTwilioPhone";
         }
@@ -56,9 +64,9 @@ export default async function toolRoutes(fastify, options) {
           foundBy = "primaryAgentId";
         } else {
           // Then check additional agents' agentIds
-          client = await Client.findOne({ 
-            "additionalAgents.agentId": agentId, 
-            status: "Active" 
+          client = await Client.findOne({
+            "additionalAgents.agentId": agentId,
+            status: "Active",
           });
           if (client) foundBy = "additionalAgentId";
         }
@@ -66,20 +74,25 @@ export default async function toolRoutes(fastify, options) {
 
       // Priority 4: Try customer phone lookup (least reliable)
       if (!client && phone) {
-        client = await Client.findOne({ "clientMeta.phone": phone, status: "Active" });
+        client = await Client.findOne({
+          "clientMeta.phone": phone,
+          status: "Active",
+        });
         if (client) foundBy = "customerPhone";
       }
-      
+
       if (!client) {
         return reply.code(404).send({
           error: "Client not found",
           requestId,
           searchedFor: { clientId, phone, twilioPhone, agentId },
-          note: "Ensure the Twilio phone number matches a client's twilioPhoneNumber field"
+          note: "Ensure the Twilio phone number matches a client's twilioPhoneNumber field",
         });
       }
 
-      console.log(`[${requestId}] Client found by: ${foundBy} -> ${client.clientId}`);
+      console.log(
+        `[${requestId}] Client found by: ${foundBy} -> ${client.clientId}`
+      );
 
       // Find the specific agent that was matched
       let matchedAgent = null;
@@ -103,7 +116,6 @@ export default async function toolRoutes(fastify, options) {
         totalAgents: client.getAllAgents().length, // Total number of agents
         allAgents: client.getAllAgents(), // All agents for this client
       });
-
     } catch (error) {
       console.error(`[${requestId}] Error discovering client:`, error);
       return reply.code(500).send({
@@ -115,8 +127,9 @@ export default async function toolRoutes(fastify, options) {
 
   // Get availability for any client (admin-authenticated)
   fastify.post("/get-availability", async (request, reply) => {
-    const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-    
+    const requestId =
+      Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
     console.log(`[${requestId}] Tool: Get availability request`);
 
     const {
@@ -136,13 +149,16 @@ export default async function toolRoutes(fastify, options) {
 
       // Priority 1: Try Twilio phone number first (most reliable for ElevenLabs)
       if (twilioPhone) {
-        client = await Client.findOne({ twilioPhoneNumber: twilioPhone, status: "Active" });
+        client = await Client.findOne({
+          twilioPhoneNumber: twilioPhone,
+          status: "Active",
+        });
         if (client) {
           foundBy = "primaryTwilioPhone";
         } else {
-          client = await Client.findOne({ 
-            "additionalAgents.twilioPhoneNumber": twilioPhone, 
-            status: "Active" 
+          client = await Client.findOne({
+            "additionalAgents.twilioPhoneNumber": twilioPhone,
+            status: "Active",
           });
           if (client) foundBy = "additionalTwilioPhone";
         }
@@ -160,9 +176,9 @@ export default async function toolRoutes(fastify, options) {
         if (client) {
           foundBy = "primaryAgentId";
         } else {
-          client = await Client.findOne({ 
-            "additionalAgents.agentId": agentId, 
-            status: "Active" 
+          client = await Client.findOne({
+            "additionalAgents.agentId": agentId,
+            status: "Active",
           });
           if (client) foundBy = "additionalAgentId";
         }
@@ -173,11 +189,13 @@ export default async function toolRoutes(fastify, options) {
           error: "Client not found",
           requestId,
           searchedFor: { twilioPhone, clientId, agentId },
-          note: "Provide twilioPhone, clientId, or agentId to find the client"
+          note: "Provide twilioPhone, clientId, or agentId to find the client",
         });
       }
 
-      console.log(`[${requestId}] Client found by: ${foundBy} -> ${client.clientId}`);
+      console.log(
+        `[${requestId}] Client found by: ${foundBy} -> ${client.clientId}`
+      );
 
       // Find the matched agent
       let matchedAgent = null;
@@ -212,7 +230,9 @@ export default async function toolRoutes(fastify, options) {
         });
       }
 
-      console.log(`[${requestId}] Fetching availability for calendar: ${calendarId}`);
+      console.log(
+        `[${requestId}] Fetching availability for calendar: ${calendarId}`
+      );
 
       // Get or refresh GHL access token
       const { accessToken } = await checkAndRefreshToken(client.clientId);
@@ -273,7 +293,6 @@ export default async function toolRoutes(fastify, options) {
         availability: availabilityData,
         slots: availabilityData._dates_?.slots || [],
       });
-
     } catch (error) {
       console.error(`[${requestId}] Error fetching availability:`, error);
       return reply.code(500).send({
@@ -285,8 +304,9 @@ export default async function toolRoutes(fastify, options) {
 
   // Book appointment for any client (admin-authenticated)
   fastify.post("/book-appointment", async (request, reply) => {
-    const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-    
+    const requestId =
+      Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
     console.log(`[${requestId}] Tool: Book appointment request`);
 
     const {
@@ -307,13 +327,16 @@ export default async function toolRoutes(fastify, options) {
 
       // Priority 1: Try Twilio phone number first (most reliable for ElevenLabs)
       if (twilioPhone) {
-        client = await Client.findOne({ twilioPhoneNumber: twilioPhone, status: "Active" });
+        client = await Client.findOne({
+          twilioPhoneNumber: twilioPhone,
+          status: "Active",
+        });
         if (client) {
           foundBy = "primaryTwilioPhone";
         } else {
-          client = await Client.findOne({ 
-            "additionalAgents.twilioPhoneNumber": twilioPhone, 
-            status: "Active" 
+          client = await Client.findOne({
+            "additionalAgents.twilioPhoneNumber": twilioPhone,
+            status: "Active",
           });
           if (client) foundBy = "additionalTwilioPhone";
         }
@@ -331,9 +354,9 @@ export default async function toolRoutes(fastify, options) {
         if (client) {
           foundBy = "primaryAgentId";
         } else {
-          client = await Client.findOne({ 
-            "additionalAgents.agentId": agentId, 
-            status: "Active" 
+          client = await Client.findOne({
+            "additionalAgents.agentId": agentId,
+            status: "Active",
           });
           if (client) foundBy = "additionalAgentId";
         }
@@ -344,11 +367,13 @@ export default async function toolRoutes(fastify, options) {
           error: "Client not found",
           requestId,
           searchedFor: { twilioPhone, clientId, agentId },
-          note: "Provide twilioPhone, clientId, or agentId to find the client"
+          note: "Provide twilioPhone, clientId, or agentId to find the client",
         });
       }
 
-      console.log(`[${requestId}] Client found by: ${foundBy} -> ${client.clientId}`);
+      console.log(
+        `[${requestId}] Client found by: ${foundBy} -> ${client.clientId}`
+      );
 
       // Find the matched agent
       let matchedAgent = null;
@@ -398,7 +423,9 @@ export default async function toolRoutes(fastify, options) {
         });
       }
 
-      console.log(`[${requestId}] Booking appointment for calendar: ${calendarId}`);
+      console.log(
+        `[${requestId}] Booking appointment for calendar: ${calendarId}`
+      );
 
       // Get or refresh GHL access token
       const { accessToken } = await checkAndRefreshToken(client.clientId);
@@ -503,7 +530,6 @@ export default async function toolRoutes(fastify, options) {
           phone: phone,
         },
       });
-
     } catch (error) {
       console.error(`[${requestId}] Error booking appointment:`, error);
       return reply.code(500).send({
@@ -515,8 +541,9 @@ export default async function toolRoutes(fastify, options) {
 
   // Get client info for any client (admin-authenticated)
   fastify.post("/get-info", async (request, reply) => {
-    const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-    
+    const requestId =
+      Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
     console.log(`[${requestId}] Tool: Get info request`);
 
     const { twilioPhone, clientId, agentId, phone } = request.body;
@@ -528,13 +555,16 @@ export default async function toolRoutes(fastify, options) {
 
       // Priority 1: Try Twilio phone number first (most reliable for ElevenLabs)
       if (twilioPhone) {
-        client = await Client.findOne({ twilioPhoneNumber: twilioPhone, status: "Active" });
+        client = await Client.findOne({
+          twilioPhoneNumber: twilioPhone,
+          status: "Active",
+        });
         if (client) {
           foundBy = "primaryTwilioPhone";
         } else {
-          client = await Client.findOne({ 
-            "additionalAgents.twilioPhoneNumber": twilioPhone, 
-            status: "Active" 
+          client = await Client.findOne({
+            "additionalAgents.twilioPhoneNumber": twilioPhone,
+            status: "Active",
           });
           if (client) foundBy = "additionalTwilioPhone";
         }
@@ -552,9 +582,9 @@ export default async function toolRoutes(fastify, options) {
         if (client) {
           foundBy = "primaryAgentId";
         } else {
-          client = await Client.findOne({ 
-            "additionalAgents.agentId": agentId, 
-            status: "Active" 
+          client = await Client.findOne({
+            "additionalAgents.agentId": agentId,
+            status: "Active",
           });
           if (client) foundBy = "additionalAgentId";
         }
@@ -565,11 +595,13 @@ export default async function toolRoutes(fastify, options) {
           error: "Client not found",
           requestId,
           searchedFor: { twilioPhone, clientId, agentId },
-          note: "Provide twilioPhone, clientId, or agentId to find the client"
+          note: "Provide twilioPhone, clientId, or agentId to find the client",
         });
       }
 
-      console.log(`[${requestId}] Client found by: ${foundBy} -> ${client.clientId}`);
+      console.log(
+        `[${requestId}] Client found by: ${foundBy} -> ${client.clientId}`
+      );
 
       // Find the matched agent
       let matchedAgent = null;
@@ -628,7 +660,6 @@ export default async function toolRoutes(fastify, options) {
         contactInfo,
         hasContact: !!contactInfo,
       });
-
     } catch (error) {
       console.error(`[${requestId}] Error getting info:`, error);
       return reply.code(500).send({
@@ -640,7 +671,8 @@ export default async function toolRoutes(fastify, options) {
 
   // Get time utility function for any client (admin-authenticated)
   fastify.get("/get-time", async (request, reply) => {
-    const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+    const requestId =
+      Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
     console.log(`[${requestId}] Tool: Get time request`);
 
     try {
@@ -681,7 +713,6 @@ export default async function toolRoutes(fastify, options) {
 
       // Return formatted date string (matching existing endpoint behavior)
       reply.send(formattedString);
-
     } catch (error) {
       console.error(`[${requestId}] Error getting time:`, error);
       return reply.code(500).send({

@@ -5,6 +5,7 @@ This document provides comprehensive cURL commands for testing the multi-agent f
 ## Prerequisites
 
 1. Get an admin token first:
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/admin/get-token" \
   -H "Content-Type: application/json" \
@@ -14,6 +15,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/admin/get-token" \
 ```
 
 2. Set your admin token as an environment variable:
+
 ```bash
 export ADMIN_TOKEN="your_admin_token_here"
 ```
@@ -21,6 +23,7 @@ export ADMIN_TOKEN="your_admin_token_here"
 ## 1. Client Discovery Commands
 
 ### Discover Client by Twilio Phone (Primary Agent)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -31,6 +34,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 ### Discover Client by Twilio Phone (Additional Agent)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -41,6 +45,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 ### Discover Client by Agent ID
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -51,6 +56,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 ### Discover Client by Client ID
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -61,6 +67,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 ### Discover Client by Customer Phone (Fallback)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -71,6 +78,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 ### Multi-Parameter Discovery (Best Practice)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -85,6 +93,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ## 2. Agent Management Commands
 
 ### Add Additional Agent
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3I/agents" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -100,6 +109,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3
 ```
 
 ### Add Outbound-Only Agent
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3I/agents" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -115,6 +125,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3
 ```
 
 ### Add Full-Service Agent
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3I/agents" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -130,6 +141,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3
 ```
 
 ### Update Additional Agent
+
 ```bash
 curl -X PUT "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3I/agents/agent_456" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -142,6 +154,7 @@ curl -X PUT "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3I
 ```
 
 ### Enable/Disable Agent
+
 ```bash
 curl -X PUT "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3I/agents/agent_456" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -152,12 +165,14 @@ curl -X PUT "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3I
 ```
 
 ### Remove Additional Agent
+
 ```bash
 curl -X DELETE "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3I/agents/agent_456" \
   -H "Authorization: Bearer $ADMIN_TOKEN"
 ```
 
 ### Get All Agents for Client
+
 ```bash
 curl -X GET "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3I/agents" \
   -H "Authorization: Bearer $ADMIN_TOKEN"
@@ -166,6 +181,7 @@ curl -X GET "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3I
 ## 3. Tool Usage Commands (Phone-Based Discovery)
 
 ### Get Availability (Using Twilio Phone)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -180,6 +196,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
 ```
 
 ### Get Availability (Alternative Parameters)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -193,6 +210,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
 ```
 
 ### Book Appointment (Using Twilio Phone)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -208,6 +226,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
 ```
 
 ### Book Appointment (Alternative Parameters)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -223,6 +242,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
 ```
 
 ### Get Client Info (Using Twilio Phone)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -234,6 +254,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
 ```
 
 ### Get Client Info (Alternative Parameters)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -245,6 +266,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
 ```
 
 ### Get Time Utility
+
 ```bash
 curl -X GET "https://api.v1.affinitydesign.ca/tools/get-time?day=7&week=1" \
   -H "Authorization: Bearer $ADMIN_TOKEN"
@@ -253,6 +275,7 @@ curl -X GET "https://api.v1.affinitydesign.ca/tools/get-time?day=7&week=1" \
 ## 4. Complete ElevenLabs Workflow Example
 
 ### Step 1: Agent Discovery (ElevenLabs calls this first)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -263,6 +286,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 **Expected Response:**
+
 ```json
 {
   "requestId": "abc123",
@@ -290,6 +314,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 ### Step 2: Get Availability (Using twilioPhone - No separate discovery needed!)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -303,6 +328,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
 ```
 
 ### Step 3: Book Appointment (Using twilioPhone - No separate discovery needed!)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -318,6 +344,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
 ```
 
 ### Step 4: Get Client Info (Using twilioPhone - No separate discovery needed!)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -331,6 +358,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
 ## 5. Testing Error Scenarios
 
 ### Test Non-Existent Agent
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -341,6 +369,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 ### Test Duplicate Agent Addition
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3I/agents" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -353,6 +382,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3
 ```
 
 ### Test Invalid Client ID
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/admin/clients/INVALID_CLIENT_ID/agents" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -437,6 +467,7 @@ echo -e "\n\n=== Testing Complete ==="
 ```
 
 Make it executable:
+
 ```bash
 chmod +x test-multi-agent.sh
 ./test-multi-agent.sh
@@ -447,12 +478,14 @@ chmod +x test-multi-agent.sh
 For Windows users, here are PowerShell equivalents:
 
 ### Set Admin Token
+
 ```powershell
 $adminToken = "your_admin_token_here"
 $headers = @{ "Authorization" = "Bearer $adminToken"; "Content-Type" = "application/json" }
 ```
 
 ### Get Availability
+
 ```powershell
 $body = @{
     twilioPhone = "+18632704911"
@@ -465,6 +498,7 @@ Invoke-RestMethod -Uri "https://api.v1.affinitydesign.ca/tools/get-availability"
 ```
 
 ### Book Appointment
+
 ```powershell
 $body = @{
     twilioPhone = "+18632704911"
@@ -479,6 +513,7 @@ Invoke-RestMethod -Uri "https://api.v1.affinitydesign.ca/tools/book-appointment"
 ```
 
 ### Get Client Info
+
 ```powershell
 $body = @{
     twilioPhone = "+18632704911"
@@ -491,6 +526,7 @@ Invoke-RestMethod -Uri "https://api.v1.affinitydesign.ca/tools/get-info" -Method
 ## 8. Response Examples
 
 ### Successful Discovery Response
+
 ```json
 {
   "requestId": "abc123",
@@ -549,6 +585,7 @@ Invoke-RestMethod -Uri "https://api.v1.affinitydesign.ca/tools/get-info" -Method
 ```
 
 ### Error Response Examples
+
 ```json
 {
   "error": "Client not found",

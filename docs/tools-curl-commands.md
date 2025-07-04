@@ -5,6 +5,7 @@ This document provides comprehensive cURL commands for all tool endpoints in the
 ## Prerequisites
 
 1. **Get Admin Token:**
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/admin/get-token" \
   -H "Content-Type: application/json" \
@@ -14,6 +15,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/admin/get-token" \
 ```
 
 2. **Set Environment Variable:**
+
 ```bash
 export ADMIN_TOKEN="your_admin_token_here"
 ```
@@ -25,6 +27,7 @@ export ADMIN_TOKEN="your_admin_token_here"
 **Endpoint:** `POST /tools/discover-client`
 
 ### Discover by Twilio Phone (Primary Agent)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -35,6 +38,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 ### Discover by Twilio Phone (Additional Agent)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -45,6 +49,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 ### Discover by Client ID
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -55,6 +60,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 ### Discover by Agent ID
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -65,6 +71,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 ### Discover by Customer Phone (Fallback)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -75,6 +82,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 ### Multi-Parameter Discovery (Best Practice)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -93,6 +101,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 **Endpoint:** `POST /tools/get-availability`
 
 ### Basic Availability Request (Using Twilio Phone)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -103,6 +112,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
 ```
 
 ### Availability with Date Range
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -116,6 +126,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
 ```
 
 ### Availability with Custom Timezone
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -129,6 +140,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
 ```
 
 ### Availability with Look Busy Enabled
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -143,6 +155,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
 ```
 
 ### Availability Using Client ID (Alternative)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -156,6 +169,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
 ```
 
 ### Availability Using Agent ID (Alternative)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -175,6 +189,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
 **Endpoint:** `POST /tools/book-appointment`
 
 ### Basic Appointment Booking (Using Twilio Phone)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -188,6 +203,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
 ```
 
 ### Appointment with Custom Title and Location
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -203,6 +219,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
 ```
 
 ### Appointment with Detailed Information
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -218,6 +235,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
 ```
 
 ### Appointment Using Client ID (Alternative)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -233,6 +251,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
 ```
 
 ### Appointment Using Agent ID (Alternative)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -254,6 +273,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
 **Endpoint:** `POST /tools/get-info`
 
 ### Basic Client Info (Using Twilio Phone)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -264,6 +284,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
 ```
 
 ### Client Info with Contact Search
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -275,6 +296,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
 ```
 
 ### Client Info Using Client ID (Alternative)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -286,6 +308,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
 ```
 
 ### Client Info Using Agent ID (Alternative)
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -303,30 +326,35 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
 **Endpoint:** `GET /tools/get-time`
 
 ### Current Date
+
 ```bash
 curl -X GET "https://api.v1.affinitydesign.ca/tools/get-time" \
   -H "Authorization: Bearer $ADMIN_TOKEN"
 ```
 
 ### Date Plus 7 Days
+
 ```bash
 curl -X GET "https://api.v1.affinitydesign.ca/tools/get-time?day=7" \
   -H "Authorization: Bearer $ADMIN_TOKEN"
 ```
 
 ### Date Plus 1 Week
+
 ```bash
 curl -X GET "https://api.v1.affinitydesign.ca/tools/get-time?week=1" \
   -H "Authorization: Bearer $ADMIN_TOKEN"
 ```
 
 ### Date Plus 1 Week and 3 Days
+
 ```bash
 curl -X GET "https://api.v1.affinitydesign.ca/tools/get-time?week=1&day=3" \
   -H "Authorization: Bearer $ADMIN_TOKEN"
 ```
 
 ### Date Minus 5 Days (Negative Values)
+
 ```bash
 curl -X GET "https://api.v1.affinitydesign.ca/tools/get-time?day=-5" \
   -H "Authorization: Bearer $ADMIN_TOKEN"
@@ -337,6 +365,7 @@ curl -X GET "https://api.v1.affinitydesign.ca/tools/get-time?day=-5" \
 ## Complete ElevenLabs Workflow Example
 
 ### Step 1: Discover Client
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -347,6 +376,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/discover-client" \
 ```
 
 ### Step 2: Get Availability
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -360,6 +390,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
 ```
 
 ### Step 3: Book Appointment
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -375,6 +406,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
 ```
 
 ### Step 4: Get Client Info
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -390,6 +422,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
 ## PowerShell Equivalents (Windows)
 
 ### Set Variables
+
 ```powershell
 $adminToken = "your_admin_token_here"
 $headers = @{ "Authorization" = "Bearer $adminToken"; "Content-Type" = "application/json" }
@@ -397,6 +430,7 @@ $baseUrl = "https://api.v1.affinitydesign.ca"
 ```
 
 ### Discover Client
+
 ```powershell
 $body = @{
     twilioPhone = "+18632704911"
@@ -406,6 +440,7 @@ Invoke-RestMethod -Uri "$baseUrl/tools/discover-client" -Method Post -Headers $h
 ```
 
 ### Get Availability
+
 ```powershell
 $body = @{
     twilioPhone = "+18632704911"
@@ -418,6 +453,7 @@ Invoke-RestMethod -Uri "$baseUrl/tools/get-availability" -Method Post -Headers $
 ```
 
 ### Book Appointment
+
 ```powershell
 $body = @{
     twilioPhone = "+18632704911"
@@ -432,6 +468,7 @@ Invoke-RestMethod -Uri "$baseUrl/tools/book-appointment" -Method Post -Headers $
 ```
 
 ### Get Client Info
+
 ```powershell
 $body = @{
     twilioPhone = "+18632704911"
@@ -442,6 +479,7 @@ Invoke-RestMethod -Uri "$baseUrl/tools/get-info" -Method Post -Headers $headers 
 ```
 
 ### Get Time
+
 ```powershell
 Invoke-RestMethod -Uri "$baseUrl/tools/get-time?day=7&week=1" -Method Get -Headers $headers
 ```
@@ -451,6 +489,7 @@ Invoke-RestMethod -Uri "$baseUrl/tools/get-time?day=7&week=1" -Method Get -Heade
 ## Response Examples
 
 ### Successful Discovery Response
+
 ```json
 {
   "requestId": "abc123",
@@ -478,6 +517,7 @@ Invoke-RestMethod -Uri "$baseUrl/tools/get-time?day=7&week=1" -Method Get -Heade
 ```
 
 ### Successful Availability Response
+
 ```json
 {
   "requestId": "def456",
@@ -497,6 +537,7 @@ Invoke-RestMethod -Uri "$baseUrl/tools/get-time?day=7&week=1" -Method Get -Heade
 ```
 
 ### Successful Booking Response
+
 ```json
 {
   "requestId": "ghi789",
@@ -528,6 +569,7 @@ Invoke-RestMethod -Uri "$baseUrl/tools/get-time?day=7&week=1" -Method Get -Heade
 ```
 
 ### Error Response
+
 ```json
 {
   "error": "Client not found",

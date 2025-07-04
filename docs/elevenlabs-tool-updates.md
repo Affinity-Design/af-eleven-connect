@@ -3,21 +3,24 @@
 ## KEY CHANGES MADE
 
 ### 🚨 **IMPORTANT UPDATE** 🚨
+
 **All tool endpoints now use phone-based discovery instead of requiring clientId in the URL path.**
 
 ### What Changed:
 
 1. **Endpoint URLs Changed:**
+
    - ❌ **OLD**: `/tools/get-availability/:clientId` (GET with clientId in URL)
    - ✅ **NEW**: `/tools/get-availability` (POST with twilioPhone in body)
-   
+
    - ❌ **OLD**: `/tools/book-appointment/:clientId` (POST with clientId in URL)
    - ✅ **NEW**: `/tools/book-appointment` (POST with twilioPhone in body)
-   
+
    - ❌ **OLD**: `/tools/get-info/:clientId` (GET with clientId in URL)
    - ✅ **NEW**: `/tools/get-info` (POST with twilioPhone in body)
 
 2. **Request Method Changes:**
+
    - **get-availability**: Changed from GET to POST
    - **book-appointment**: Still POST, but no clientId in URL
    - **get-info**: Changed from GET to POST
@@ -30,6 +33,7 @@
 ## Updated ElevenLabs Tool Definitions
 
 ### 1. Get Availability Tool
+
 ```json
 {
   "name": "get_availability",
@@ -64,6 +68,7 @@
 ```
 
 ### 2. Book Appointment Tool
+
 ```json
 {
   "name": "book_appointment",
@@ -102,6 +107,7 @@
 ```
 
 ### 3. Get Client Info Tool
+
 ```json
 {
   "name": "get_client_info",
@@ -124,6 +130,7 @@
 ```
 
 ### 4. Discover Client Tool (Still Available)
+
 ```json
 {
   "name": "discover_client",
@@ -148,6 +155,7 @@
 ## Updated cURL Commands
 
 ### Get Availability
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -161,6 +169,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-availability" \
 ```
 
 ### Book Appointment
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -176,6 +185,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/book-appointment" \
 ```
 
 ### Get Client Info
+
 ```bash
 curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -204,6 +214,7 @@ curl -X POST "https://api.v1.affinitydesign.ca/tools/get-info" \
 ## Response Format
 
 All responses now include:
+
 - `foundBy`: How the client was discovered
 - `matchedAgent`: Details of the agent that was matched
 - `clientId`: The discovered client ID (for reference)
@@ -212,6 +223,7 @@ All responses now include:
 ## Error Handling
 
 If client cannot be found by `twilioPhone`, the response will be:
+
 ```json
 {
   "error": "Client not found",

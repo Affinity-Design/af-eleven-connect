@@ -128,32 +128,34 @@ clientSchema.index({ "additionalAgents.agentId": 1 }); // Index for additional a
 clientSchema.index({ accessToken: 1 }); // Index for accessToken lookups
 
 // Helper methods for multi-agent support
-clientSchema.methods.getAllAgents = function() {
-  const agents = [{
-    agentId: this.agentId,
-    twilioPhoneNumber: this.twilioPhoneNumber,
-    agentName: "Primary Agent",
-    agentType: "both",
-    isEnabled: this.status === "Active",
-    inboundEnabled: true,
-    outboundEnabled: true,
-    isPrimary: true
-  }];
-  
+clientSchema.methods.getAllAgents = function () {
+  const agents = [
+    {
+      agentId: this.agentId,
+      twilioPhoneNumber: this.twilioPhoneNumber,
+      agentName: "Primary Agent",
+      agentType: "both",
+      isEnabled: this.status === "Active",
+      inboundEnabled: true,
+      outboundEnabled: true,
+      isPrimary: true,
+    },
+  ];
+
   // Add additional agents
   if (this.additionalAgents && this.additionalAgents.length > 0) {
-    this.additionalAgents.forEach(agent => {
+    this.additionalAgents.forEach((agent) => {
       agents.push({
         ...agent.toObject(),
-        isPrimary: false
+        isPrimary: false,
       });
     });
   }
-  
+
   return agents;
 };
 
-clientSchema.methods.findAgentByPhone = function(phoneNumber) {
+clientSchema.methods.findAgentByPhone = function (phoneNumber) {
   // Check primary agent first
   if (this.twilioPhoneNumber === phoneNumber) {
     return {
@@ -164,27 +166,27 @@ clientSchema.methods.findAgentByPhone = function(phoneNumber) {
       isEnabled: this.status === "Active",
       inboundEnabled: true,
       outboundEnabled: true,
-      isPrimary: true
+      isPrimary: true,
     };
   }
-  
+
   // Check additional agents
   if (this.additionalAgents && this.additionalAgents.length > 0) {
-    const additionalAgent = this.additionalAgents.find(agent => 
-      agent.twilioPhoneNumber === phoneNumber && agent.isEnabled
+    const additionalAgent = this.additionalAgents.find(
+      (agent) => agent.twilioPhoneNumber === phoneNumber && agent.isEnabled
     );
     if (additionalAgent) {
       return {
         ...additionalAgent.toObject(),
-        isPrimary: false
+        isPrimary: false,
       };
     }
   }
-  
+
   return null;
 };
 
-clientSchema.methods.findAgentById = function(agentId) {
+clientSchema.methods.findAgentById = function (agentId) {
   // Check primary agent first
   if (this.agentId === agentId) {
     return {
@@ -195,23 +197,23 @@ clientSchema.methods.findAgentById = function(agentId) {
       isEnabled: this.status === "Active",
       inboundEnabled: true,
       outboundEnabled: true,
-      isPrimary: true
+      isPrimary: true,
     };
   }
-  
+
   // Check additional agents
   if (this.additionalAgents && this.additionalAgents.length > 0) {
-    const additionalAgent = this.additionalAgents.find(agent => 
-      agent.agentId === agentId && agent.isEnabled
+    const additionalAgent = this.additionalAgents.find(
+      (agent) => agent.agentId === agentId && agent.isEnabled
     );
     if (additionalAgent) {
       return {
         ...additionalAgent.toObject(),
-        isPrimary: false
+        isPrimary: false,
       };
     }
   }
-  
+
   return null;
 };
 
