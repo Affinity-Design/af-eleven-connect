@@ -7,6 +7,7 @@
 
 import { authenticateAdmin } from "../auth.js";
 import { findClientById } from "../crud.js";
+import Client from "../client.js";
 import { checkAndRefreshToken, searchGhlContactByPhone, findClientForTool } from "../utils/ghl.js";
 
 export default async function toolRoutes(fastify, options) {
@@ -14,6 +15,7 @@ export default async function toolRoutes(fastify, options) {
   fastify.addHook("preHandler", authenticateAdmin);
 
   // Auto-discovery endpoint - finds client by various parameters
+  // Priority order: twilioPhone -> clientId -> agentId -> phone (customer phone)
   fastify.post("/discover-client", async (request, reply) => {
     const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
     console.log(`[${requestId}] Tool: Client discovery request`);
@@ -21,14 +23,70 @@ export default async function toolRoutes(fastify, options) {
     const { clientId, phone, twilioPhone, agentId } = request.body;
 
     try {
-      const client = await findClientForTool({ clientId, phone, twilioPhone, agentId });
+      let client = null;
+      let foundBy = null;
+
+      // Priority 1: Try Twilio phone number first (most reliable for ElevenLabs)
+      if (twilioPhone) {
+        // First check primary twilioPhoneNumber
+        client = await Client.findOne({ twilioPhoneNumber: twilioPhone, status: "Active" });
+        if (client) {
+          foundBy = "primaryTwilioPhone";
+        } else {
+          // Then check additional agents' twilioPhoneNumbers
+          client = await Client.findOne({ 
+            "additionalAgents.twilioPhoneNumber": twilioPhone, 
+            status: "Active" 
+          });
+          if (client) foundBy = "additionalTwilioPhone";
+        }
+      }
+
+      // Priority 2: Try direct client ID lookup
+      if (!client && clientId) {
+        client = await Client.findOne({ clientId, status: "Active" });
+        if (client) foundBy = "clientId";
+      }
+
+      // Priority 3: Try agent ID lookup (primary and additional agents)
+      if (!client && agentId) {
+        // First check primary agentId
+        client = await Client.findOne({ agentId, status: "Active" });
+        if (client) {
+          foundBy = "primaryAgentId";
+        } else {
+          // Then check additional agents' agentIds
+          client = await Client.findOne({ 
+            "additionalAgents.agentId": agentId, 
+            status: "Active" 
+          });
+          if (client) foundBy = "additionalAgentId";
+        }
+      }
+
+      // Priority 4: Try customer phone lookup (least reliable)
+      if (!client && phone) {
+        client = await Client.findOne({ "clientMeta.phone": phone, status: "Active" });
+        if (client) foundBy = "customerPhone";
+      }
       
       if (!client) {
         return reply.code(404).send({
           error: "Client not found",
           requestId,
-          searchedFor: { clientId, phone, twilioPhone, agentId }
+          searchedFor: { clientId, phone, twilioPhone, agentId },
+          note: "Ensure the Twilio phone number matches a client's twilioPhoneNumber field"
         });
+      }
+
+      console.log(`[${requestId}] Client found by: ${foundBy} -> ${client.clientId}`);
+
+      // Find the specific agent that was matched
+      let matchedAgent = null;
+      if (foundBy.includes("twilioPhone") && twilioPhone) {
+        matchedAgent = client.findAgentByPhone(twilioPhone);
+      } else if (foundBy.includes("AgentId") && agentId) {
+        matchedAgent = client.findAgentById(agentId);
       }
 
       return reply.send({
@@ -36,9 +94,14 @@ export default async function toolRoutes(fastify, options) {
         clientId: client.clientId,
         clientName: client.clientMeta.fullName,
         businessName: client.clientMeta.businessName,
+        twilioPhoneNumber: client.twilioPhoneNumber, // Primary phone number
         status: client.status,
         hasGhlIntegration: !!client.refreshToken,
         hasCalendar: !!client.calId,
+        foundBy: foundBy,
+        matchedAgent: matchedAgent, // Details of the specific agent that matched
+        totalAgents: client.getAllAgents().length, // Total number of agents
+        allAgents: client.getAllAgents(), // All agents for this client
       });
 
     } catch (error) {
@@ -416,6 +479,59 @@ export default async function toolRoutes(fastify, options) {
       console.error(`[${requestId}] Error getting info:`, error);
       return reply.code(500).send({
         error: "Failed to get client info",
+        requestId,
+      });
+    }
+  });
+
+  // Get time utility function for any client (admin-authenticated)
+  fastify.get("/get-time", async (request, reply) => {
+    const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+    console.log(`[${requestId}] Tool: Get time request`);
+
+    try {
+      // Get query parameters (default to 0 if not provided)
+      const { day = 0, week = 0 } = request.query;
+
+      // Convert parameters to integers
+      const daysToAdd = parseInt(day);
+      const weeksToAdd = parseInt(week);
+
+      // Validate parameters are numbers
+      if (isNaN(daysToAdd) || isNaN(weeksToAdd)) {
+        return reply.code(400).send({
+          error: "Invalid parameters: day and week must be numbers",
+          requestId,
+        });
+      }
+
+      // Get current date
+      const currentDate = new Date();
+
+      // Calculate total days to add (weeks * 7 + days)
+      const totalDays = weeksToAdd * 7 + daysToAdd;
+
+      // Add/subtract days from current date
+      currentDate.setDate(currentDate.getDate() + totalDays);
+
+      // Get Unix timestamp in milliseconds
+      const timestamp = currentDate.getTime();
+
+      // Format the date as "YYYY-MM-DD"
+      const formattedString = currentDate.toISOString().split("T")[0];
+
+      // Log the request
+      console.log(
+        `[${requestId}] Timestamp requested: ${timestamp}, days: ${daysToAdd}, weeks: ${weeksToAdd}`
+      );
+
+      // Return formatted date string (matching existing endpoint behavior)
+      reply.send(formattedString);
+
+    } catch (error) {
+      console.error(`[${requestId}] Error getting time:`, error);
+      return reply.code(500).send({
+        error: "Failed to get time",
         requestId,
       });
     }
