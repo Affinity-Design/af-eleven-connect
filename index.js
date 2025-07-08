@@ -1466,7 +1466,7 @@ fastify.post(
     preHandler: authenticateClient, // Secure the endpoint with client authentication
   },
   async (request, reply) => {
-    const { phone } = request.body;
+    const { phone, twilioPhone } = request.body;
     const {
       first_message,
       f_name,
@@ -1532,6 +1532,20 @@ fastify.post(
         });
       }
 
+      // Determine which Twilio phone number to use - prioritize parameter over client data
+      const fromPhoneNumber = twilioPhone || client.twilioPhoneNumber;
+
+      if (!fromPhoneNumber) {
+        fastify.log.warn(
+          `[${requestId}] Error: No Twilio phone number available (neither in request nor client data)`
+        );
+        return reply.code(400).send({
+          error:
+            "No Twilio phone number available. Provide twilioPhone parameter or ensure client has twilioPhoneNumber configured",
+          requestId,
+        });
+      }
+
       // Build the webhook URL with all dynamic variables
       let webhookUrl = `https://${request.headers.host}/outbound-call-twiml?`;
 
@@ -1542,8 +1556,7 @@ fastify.post(
       if (first_message)
         params.first_message = decodeURIComponent(first_message);
       if (client && client.agentId) params.agentId = client.agentId;
-      if (client && client.twilioPhoneNumber)
-        params.twilioPhoneNumber = client.twilioPhoneNumber;
+      if (fromPhoneNumber) params.twilioPhoneNumber = fromPhoneNumber;
       if (f_name || l_name) {
         // Combine first and last name if either exists
         const firstName = f_name ? decodeURIComponent(f_name) : "";
@@ -1577,7 +1590,7 @@ fastify.post(
       const call = await twilioClient.calls.create({
         url: webhookUrl,
         to: phone,
-        from: client.twilioPhoneNumber,
+        from: fromPhoneNumber,
         statusCallback: `https://${request.headers.host}/call-status?requestId=${requestId}&clientId=${client.clientId}`,
         statusCallbackEvent: ["initiated", "ringing", "answered", "completed"],
         statusCallbackMethod: "POST",
@@ -1593,7 +1606,7 @@ fastify.post(
           callSid: call.sid,
           requestId,
           phone,
-          from: client.twilioPhoneNumber,
+          from: fromPhoneNumber,
           agentId: client.agentId,
           startTime: new Date(),
           callCount: 1,
