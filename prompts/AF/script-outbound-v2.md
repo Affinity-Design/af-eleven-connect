@@ -15,7 +15,7 @@
   - job_title: {{job_title}}
   - email: {{email}}
   - phone: {{phone}}
-  - twilioPhoneNumber: {{twilioPhoneNumber}}
+  - twilioPhone: {{twilioPhone}}
 
 - **Time Details:**
   - todays_date: {{todays_date}}
