@@ -657,7 +657,6 @@ fastify.register(async (fastifyInstance) => {
               // Now that we have the parameters, set up ElevenLabs
               await setupElevenLabs();
               break;
-
             case "media":
               if (
                 isElevenLabsReady &&
@@ -690,7 +689,6 @@ fastify.register(async (fastifyInstance) => {
                 );
               }
               break;
-
             case "stop":
               console.log(`[Twilio] Stream ${streamSid} ended`);
               if (elevenLabsWs && elevenLabsWs.readyState === WebSocket.OPEN) {
@@ -762,6 +760,7 @@ fastify.all("/outbound-call-twiml", async (request, reply) => {
     requestId,
     agentId,
     address,
+    twilioPhoneNumber,
   } = request.query;
 
   console.log(
@@ -796,6 +795,8 @@ fastify.all("/outbound-call-twiml", async (request, reply) => {
     twimlResponse += `\n          <Parameter name="agentId" value="${agentId}" />`;
   if (address)
     twimlResponse += `\n          <Parameter name="address" value="${address}" />`;
+  if (twilioPhoneNumber)
+    twimlResponse += `\n          <Parameter name="twilioPhoneNumber" value="${twilioPhoneNumber}" />`;
   // if (todays_date)
   //   twimlResponse += `\n          <Parameter name="agentId" value="${todays_date}" />`;
   // if (one_week_date)
@@ -1541,6 +1542,8 @@ fastify.post(
       if (first_message)
         params.first_message = decodeURIComponent(first_message);
       if (client && client.agentId) params.agentId = client.agentId;
+      if (client && client.twilioPhoneNumber)
+        params.twilioPhoneNumber = client.twilioPhoneNumber;
       if (f_name || l_name) {
         // Combine first and last name if either exists
         const firstName = f_name ? decodeURIComponent(f_name) : "";

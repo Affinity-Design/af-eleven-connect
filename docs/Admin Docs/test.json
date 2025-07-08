@@ -1,0 +1,1427 @@
+{
+  "type": "post_call_transcription",
+  "event_timestamp": 1751609788,
+  "data": {
+    "agent_id": "agent_01jxxp5senerprmm60n0fnmf49",
+    "conversation_id": "conv_01jza153ymfybsq9gmj9140ss6",
+    "status": "done",
+    "transcript": [
+      {
+        "role": "agent",
+        "message": "Hey its Aria from whylaw Legal Services, how can I help you today? ",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 0,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "Hey, I think I'm getting sued.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 5,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "I see. That sounds like a stressful situation. Could you briefly tell me what legal issue you are facing today?",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 10,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 1.519920060876757
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 1.5195931899361312
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "q8rpkubMtbumpm5KDzky",
+              "vector_distance": 0.17973822355270386
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.18255579471588135
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.18600475788116455
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
+              "vector_distance": 0.18659979104995728
+            },
+            {
+              "document_id": "YY8EtWDXkd78TQ83CPJ5",
+              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
+              "vector_distance": 0.18659979104995728
+            },
+            {
+              "document_id": "JxEIWFXstuR1f0QhRUb9",
+              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
+              "vector_distance": 0.19614267349243164
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
+              "vector_distance": 0.19625240564346313
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
+              "vector_distance": 0.196968674659729
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "F98mRtgMh3bAvP1lWICR",
+              "vector_distance": 0.19764530658721924
+            },
+            {
+              "document_id": "lJdT82rUXfoYg9SzgZdQ",
+              "chunk_id": "HCrpLeAFmaetPdnIQYfA",
+              "vector_distance": 0.2005249261856079
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
+              "vector_distance": 0.20100760459899902
+            },
+            {
+              "document_id": "YY8EtWDXkd78TQ83CPJ5",
+              "chunk_id": "9gsCpc7yyUPbR2vfao5I",
+              "vector_distance": 0.20100760459899902
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "qRApy4nqUDobSsBBvq3b",
+              "vector_distance": 0.20456832647323608
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "zzVQLdEn2CE5D7CFEOOq",
+              "vector_distance": 0.20591866970062256
+            },
+            {
+              "document_id": "ep10H8ERp4k0s7RgUvI3",
+              "chunk_id": "CLMuviQjriGrrsS9UFHa",
+              "vector_distance": 0.20614516735076904
+            },
+            {
+              "document_id": "9NcdFJVGQ0Js7z8TxHTG",
+              "chunk_id": "aGrIwt7Qc9LBAOZPqGft",
+              "vector_distance": 0.2071881890296936
+            },
+            {
+              "document_id": "xlnS5kLgPhbj9TYpZwlL",
+              "chunk_id": "57EwSifW1hiPOo8fRsUR",
+              "vector_distance": 0.20819151401519775
+            },
+            {
+              "document_id": "zmQmoXCCRGVwF3AIPFZ0",
+              "chunk_id": "QytG4l5SLbDfNGssT143",
+              "vector_distance": 0.20846831798553467
+            },
+            {
+              "document_id": "3AvYOeBINSuDoUZyBHCu",
+              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
+              "vector_distance": 0.21060508489608765
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "I think I'm being sued; what should I do?\n",
+          "rag_latency_secs": 0.7283659959211946
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.5-flash": {
+              "input": {
+                "tokens": 17850,
+                "price": 0.0026775
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 23,
+                "price": 0.000013799999999999998
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "Yeah, I owe a lot of money.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 19,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "I understand. Are you currently engaged in any legal action regarding this debt?",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 25,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.175972580909729
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.1819971799850464
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "q8rpkubMtbumpm5KDzky",
+              "vector_distance": 0.18958383798599243
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
+              "vector_distance": 0.1994626522064209
+            },
+            {
+              "document_id": "YY8EtWDXkd78TQ83CPJ5",
+              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
+              "vector_distance": 0.1994626522064209
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "F98mRtgMh3bAvP1lWICR",
+              "vector_distance": 0.19960248470306396
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "qRApy4nqUDobSsBBvq3b",
+              "vector_distance": 0.20158660411834717
+            },
+            {
+              "document_id": "JxEIWFXstuR1f0QhRUb9",
+              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
+              "vector_distance": 0.20267540216445923
+            },
+            {
+              "document_id": "JCBlTQEoKDWYq9wJmyE5",
+              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
+              "vector_distance": 0.2098490595817566
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
+              "vector_distance": 0.211886465549469
+            },
+            {
+              "document_id": "YY8EtWDXkd78TQ83CPJ5",
+              "chunk_id": "9gsCpc7yyUPbR2vfao5I",
+              "vector_distance": 0.211886465549469
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
+              "vector_distance": 0.2125423550605774
+            },
+            {
+              "document_id": "xlnS5kLgPhbj9TYpZwlL",
+              "chunk_id": "57EwSifW1hiPOo8fRsUR",
+              "vector_distance": 0.21384590864181519
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
+              "vector_distance": 0.21473455429077148
+            },
+            {
+              "document_id": "JCBlTQEoKDWYq9wJmyE5",
+              "chunk_id": "dgmY5ZLfBd7RnQU1Wvui",
+              "vector_distance": 0.21475744247436523
+            },
+            {
+              "document_id": "zmQmoXCCRGVwF3AIPFZ0",
+              "chunk_id": "QytG4l5SLbDfNGssT143",
+              "vector_distance": 0.21526658535003662
+            },
+            {
+              "document_id": "lJdT82rUXfoYg9SzgZdQ",
+              "chunk_id": "HCrpLeAFmaetPdnIQYfA",
+              "vector_distance": 0.2156754732131958
+            },
+            {
+              "document_id": "8uZsLJ3XWpNud4OMU5MC",
+              "chunk_id": "qtMNxDOu4VQqU3wyW03l",
+              "vector_distance": 0.215969979763031
+            },
+            {
+              "document_id": "3AvYOeBINSuDoUZyBHCu",
+              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
+              "vector_distance": 0.21649503707885742
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "I'm being sued because I owe a lot of money. What should I do?\n",
+          "rag_latency_secs": 0.7638457301072776
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.5-flash": {
+              "input": {
+                "tokens": 17803,
+                "price": 0.00267045
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 15,
+                "price": 0.000009
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "No.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 31,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "I see. Are you looking to start legal action?",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 34,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.1665867567062378
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.17155539989471436
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "q8rpkubMtbumpm5KDzky",
+              "vector_distance": 0.18411719799041748
+            },
+            {
+              "document_id": "JxEIWFXstuR1f0QhRUb9",
+              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
+              "vector_distance": 0.1846441626548767
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
+              "vector_distance": 0.18729782104492188
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
+              "vector_distance": 0.19085431098937988
+            },
+            {
+              "document_id": "YY8EtWDXkd78TQ83CPJ5",
+              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
+              "vector_distance": 0.19085431098937988
+            },
+            {
+              "document_id": "JCBlTQEoKDWYq9wJmyE5",
+              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
+              "vector_distance": 0.19139766693115234
+            },
+            {
+              "document_id": "xlnS5kLgPhbj9TYpZwlL",
+              "chunk_id": "57EwSifW1hiPOo8fRsUR",
+              "vector_distance": 0.19584786891937256
+            },
+            {
+              "document_id": "lJdT82rUXfoYg9SzgZdQ",
+              "chunk_id": "HCrpLeAFmaetPdnIQYfA",
+              "vector_distance": 0.19772064685821533
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "F98mRtgMh3bAvP1lWICR",
+              "vector_distance": 0.19830560684204102
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "qRApy4nqUDobSsBBvq3b",
+              "vector_distance": 0.19957101345062256
+            },
+            {
+              "document_id": "JCBlTQEoKDWYq9wJmyE5",
+              "chunk_id": "dgmY5ZLfBd7RnQU1Wvui",
+              "vector_distance": 0.20139646530151367
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
+              "vector_distance": 0.20256578922271729
+            },
+            {
+              "document_id": "YY8EtWDXkd78TQ83CPJ5",
+              "chunk_id": "9gsCpc7yyUPbR2vfao5I",
+              "vector_distance": 0.20256578922271729
+            },
+            {
+              "document_id": "Ud0ZzJKfA5Q9HpNwFMtY",
+              "chunk_id": "GaWT1DdPaOon44qkSGWj",
+              "vector_distance": 0.20319604873657227
+            },
+            {
+              "document_id": "8uZsLJ3XWpNud4OMU5MC",
+              "chunk_id": "qtMNxDOu4VQqU3wyW03l",
+              "vector_distance": 0.203210711479187
+            },
+            {
+              "document_id": "ep10H8ERp4k0s7RgUvI3",
+              "chunk_id": "CLMuviQjriGrrsS9UFHa",
+              "vector_distance": 0.2035199999809265
+            },
+            {
+              "document_id": "XBypJgRPXRERg8GxSCmA",
+              "chunk_id": "LlmA38O0vkPVWL1Emjri",
+              "vector_distance": 0.2058647871017456
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
+              "vector_distance": 0.20650219917297363
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "I owe a significant amount of money and haven't yet been contacted by any legal representatives regarding this debt; am I being sued?\n",
+          "rag_latency_secs": 1.0324333417229354
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.5-flash": {
+              "input": {
+                "tokens": 18036,
+                "price": 0.0027054
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 11,
+                "price": 0.0000065999999999999995
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "Uh yes",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 39,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "Does the dispute involve a specific amount of money or damages?",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 43,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.16100084781646729
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.16428208351135254
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "q8rpkubMtbumpm5KDzky",
+              "vector_distance": 0.16451656818389893
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
+              "vector_distance": 0.17157185077667236
+            },
+            {
+              "document_id": "YY8EtWDXkd78TQ83CPJ5",
+              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
+              "vector_distance": 0.17157185077667236
+            },
+            {
+              "document_id": "JxEIWFXstuR1f0QhRUb9",
+              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
+              "vector_distance": 0.17438507080078125
+            },
+            {
+              "document_id": "lJdT82rUXfoYg9SzgZdQ",
+              "chunk_id": "HCrpLeAFmaetPdnIQYfA",
+              "vector_distance": 0.1749945878982544
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
+              "vector_distance": 0.17591440677642822
+            },
+            {
+              "document_id": "JCBlTQEoKDWYq9wJmyE5",
+              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
+              "vector_distance": 0.17971831560134888
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "F98mRtgMh3bAvP1lWICR",
+              "vector_distance": 0.1817570924758911
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "qRApy4nqUDobSsBBvq3b",
+              "vector_distance": 0.18246984481811523
+            },
+            {
+              "document_id": "xlnS5kLgPhbj9TYpZwlL",
+              "chunk_id": "57EwSifW1hiPOo8fRsUR",
+              "vector_distance": 0.18355798721313477
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
+              "vector_distance": 0.18484997749328613
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
+              "vector_distance": 0.1854502558708191
+            },
+            {
+              "document_id": "YY8EtWDXkd78TQ83CPJ5",
+              "chunk_id": "9gsCpc7yyUPbR2vfao5I",
+              "vector_distance": 0.1854502558708191
+            },
+            {
+              "document_id": "zmQmoXCCRGVwF3AIPFZ0",
+              "chunk_id": "QytG4l5SLbDfNGssT143",
+              "vector_distance": 0.18733197450637817
+            },
+            {
+              "document_id": "Ud0ZzJKfA5Q9HpNwFMtY",
+              "chunk_id": "GaWT1DdPaOon44qkSGWj",
+              "vector_distance": 0.18781507015228271
+            },
+            {
+              "document_id": "ep10H8ERp4k0s7RgUvI3",
+              "chunk_id": "CLMuviQjriGrrsS9UFHa",
+              "vector_distance": 0.18807005882263184
+            },
+            {
+              "document_id": "3AvYOeBINSuDoUZyBHCu",
+              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
+              "vector_distance": 0.18828964233398438
+            },
+            {
+              "document_id": "lJdT82rUXfoYg9SzgZdQ",
+              "chunk_id": "iSZRRWqJ8VB0ALjSeW4n",
+              "vector_distance": 0.18924355506896973
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "I owe a significant amount of money and am facing potential legal action.  Should I initiate legal action myself?\n",
+          "rag_latency_secs": 0.9747207746841013
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.5-flash": {
+              "input": {
+                "tokens": 14053,
+                "price": 0.00210795
+              },
+              "input_cache_read": {
+                "tokens": 3909,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 12,
+                "price": 0.0000072
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "Yes",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 47,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "What outcome would make your life easier?",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 52,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.16779601573944092
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "q8rpkubMtbumpm5KDzky",
+              "vector_distance": 0.16857266426086426
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.16900014877319336
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
+              "vector_distance": 0.17260009050369263
+            },
+            {
+              "document_id": "YY8EtWDXkd78TQ83CPJ5",
+              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
+              "vector_distance": 0.17260009050369263
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "F98mRtgMh3bAvP1lWICR",
+              "vector_distance": 0.1752537488937378
+            },
+            {
+              "document_id": "JxEIWFXstuR1f0QhRUb9",
+              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
+              "vector_distance": 0.1752811074256897
+            },
+            {
+              "document_id": "ep10H8ERp4k0s7RgUvI3",
+              "chunk_id": "CLMuviQjriGrrsS9UFHa",
+              "vector_distance": 0.18081313371658325
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "qRApy4nqUDobSsBBvq3b",
+              "vector_distance": 0.18252873420715332
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
+              "vector_distance": 0.18334472179412842
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
+              "vector_distance": 0.18419510126113892
+            },
+            {
+              "document_id": "xlnS5kLgPhbj9TYpZwlL",
+              "chunk_id": "57EwSifW1hiPOo8fRsUR",
+              "vector_distance": 0.18453264236450195
+            },
+            {
+              "document_id": "JCBlTQEoKDWYq9wJmyE5",
+              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
+              "vector_distance": 0.18531537055969238
+            },
+            {
+              "document_id": "zmQmoXCCRGVwF3AIPFZ0",
+              "chunk_id": "QytG4l5SLbDfNGssT143",
+              "vector_distance": 0.18654215335845947
+            },
+            {
+              "document_id": "3AvYOeBINSuDoUZyBHCu",
+              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
+              "vector_distance": 0.18717443943023682
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
+              "vector_distance": 0.18758082389831543
+            },
+            {
+              "document_id": "YY8EtWDXkd78TQ83CPJ5",
+              "chunk_id": "9gsCpc7yyUPbR2vfao5I",
+              "vector_distance": 0.18758082389831543
+            },
+            {
+              "document_id": "ep10H8ERp4k0s7RgUvI3",
+              "chunk_id": "I2KyzCQ9okjFp9w9hSZD",
+              "vector_distance": 0.18835383653640747
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "I owe a significant debt and want to take legal action; what are my options?\n",
+          "rag_latency_secs": 1.2088099750690162
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.5-flash": {
+              "input": {
+                "tokens": 13335,
+                "price": 0.00200025
+              },
+              "input_cache_read": {
+                "tokens": 3900,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 8,
+                "price": 0.0000048
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "Um... if... I didn't have this problem anyway",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 56,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "I understand you'd like to find a resolution to this problem. It sounds like something we might be able to help you with.\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 64,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.15657341480255127
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.1641039252281189
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
+              "vector_distance": 0.16511154174804688
+            },
+            {
+              "document_id": "YY8EtWDXkd78TQ83CPJ5",
+              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
+              "vector_distance": 0.16511154174804688
+            },
+            {
+              "document_id": "xlnS5kLgPhbj9TYpZwlL",
+              "chunk_id": "57EwSifW1hiPOo8fRsUR",
+              "vector_distance": 0.16676044464111328
+            },
+            {
+              "document_id": "JCBlTQEoKDWYq9wJmyE5",
+              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
+              "vector_distance": 0.16765141487121582
+            },
+            {
+              "document_id": "zmQmoXCCRGVwF3AIPFZ0",
+              "chunk_id": "QytG4l5SLbDfNGssT143",
+              "vector_distance": 0.16809916496276855
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "q8rpkubMtbumpm5KDzky",
+              "vector_distance": 0.16817224025726318
+            },
+            {
+              "document_id": "JxEIWFXstuR1f0QhRUb9",
+              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
+              "vector_distance": 0.16872501373291016
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "F98mRtgMh3bAvP1lWICR",
+              "vector_distance": 0.17180734872817993
+            },
+            {
+              "document_id": "ep10H8ERp4k0s7RgUvI3",
+              "chunk_id": "CLMuviQjriGrrsS9UFHa",
+              "vector_distance": 0.17287558317184448
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
+              "vector_distance": 0.17550867795944214
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "qRApy4nqUDobSsBBvq3b",
+              "vector_distance": 0.17722177505493164
+            },
+            {
+              "document_id": "lJdT82rUXfoYg9SzgZdQ",
+              "chunk_id": "iSZRRWqJ8VB0ALjSeW4n",
+              "vector_distance": 0.1772635579109192
+            },
+            {
+              "document_id": "3AvYOeBINSuDoUZyBHCu",
+              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
+              "vector_distance": 0.17757666110992432
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
+              "vector_distance": 0.1779576539993286
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
+              "vector_distance": 0.17914211750030518
+            },
+            {
+              "document_id": "YY8EtWDXkd78TQ83CPJ5",
+              "chunk_id": "9gsCpc7yyUPbR2vfao5I",
+              "vector_distance": 0.17914211750030518
+            },
+            {
+              "document_id": "Ud0ZzJKfA5Q9HpNwFMtY",
+              "chunk_id": "GaWT1DdPaOon44qkSGWj",
+              "vector_distance": 0.17926263809204102
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "I owe a significant debt and am considering legal action. What legal options are available to resolve this debt problem?\n",
+          "rag_latency_secs": 0.6532735787332058
+        },
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [
+          {
+            "type": "webhook",
+            "request_id": "get_availability_a9e3c2cb5c3b47a1875746abafb73411",
+            "tool_name": "get_availability",
+            "params_as_json": "{\"twilioPhone\": \"+14379959529\"}",
+            "tool_has_been_called": true,
+            "tool_details": {
+              "type": "webhook",
+              "method": "POST",
+              "url": "https://api.v1.affinitydesign.ca/tools/get-availability",
+              "headers": {
+                "Authorization": "<REDACTED>",
+                "Content-Type": "application/json"
+              },
+              "path_params": {},
+              "query_params": {},
+              "body": "{\"twilioPhone\": \"+16473606807\"}"
+            }
+          }
+        ],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 64,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [],
+        "tool_results": [
+          {
+            "type": "webhook",
+            "request_id": "get_availability_a9e3c2cb5c3b47a1875746abafb73411",
+            "tool_name": "get_availability",
+            "result_value": "{\"requestId\":\"mcof7qlyvlqjm\",\"clientId\":\"IQUPST2vTUl67YUYZYDy\",\"clientName\":\"Daniel English\",\"businessName\":\"YLAW\",\"foundBy\":\"primaryTwilioPhone\",\"matchedAgent\":null,\"dateRange\":{\"start\":\"2025-07-04T06:15:41.708Z\",\"end\":\"2025-07-11T06:15:41.708Z\"},\"timezone\":\"America/New_York\",\"availability\":{\"2025-07-04\":{\"slots\":[\"2025-07-04T02:30:00-04:00\",\"2025-07-04T02:45:00-04:00\",\"2025-07-04T03:00:00-04:00\",\"2025-07-04T03:15:00-04:00\",\"2025-07-04T03:30:00-04:00\",\"2025-07-04T03:45:00-04:00\",\"2025-07-04T04:00:00-04:00\",\"2025-07-04T04:15:00-04:00\",\"2025-07-04T04:30:00-04:00\",\"2025-07-04T04:45:00-04:00\",\"2025-07-04T05:00:00-04:00\",\"2025-07-04T05:15:00-04:00\",\"2025-07-04T05:30:00-04:00\",\"2025-07-04T05:45:00-04:00\",\"2025-07-04T06:00:00-04:00\",\"2025-07-04T06:15:00-04:00\",\"2025-07-04T06:30:00-04:00\",\"2025-07-04T06:45:00-04:00\",\"2025-07-04T07:00:00-04:00\",\"2025-07-04T07:15:00-04:00\",\"2025-07-04T07:30:00-04:00\",\"2025-07-04T07:45:00-04:00\",\"2025-07-04T08:00:00-04:00\",\"2025-07-04T08:15:00-04:00\",\"2025-07-04T08:30:00-04:00\",\"2025-07-04T08:45:00-04:00\",\"2025-07-04T09:00:00-04:00\",\"2025-07-04T09:15:00-04:00\",\"2025-07-04T09:30:00-04:00\",\"2025-07-04T09:45:00-04:00\",\"2025-07-04T10:00:00-04:00\",\"2025-07-04T10:15:00-04:00\",\"2025-07-04T10:30:00-04:00\",\"2025-07-04T10:45:00-04:00\",\"2025-07-04T11:00:00-04:00\",\"2025-07-04T11:15:00-04:00\",\"2025-07-04T11:30:00-04:00\",\"2025-07-04T11:45:00-04:00\",\"2025-07-04T12:00:00-04:00\",\"2025-07-04T12:15:00-04:00\",\"2025-07-04T12:30:00-04:00\",\"2025-07-04T12:45:00-04:00\",\"2025-07-04T13:00:00-04:00\",\"2025-07-04T13:15:00-04:00\",\"2025-07-04T13:30:00-04:00\",\"2025-07-04T13:45:00-04:00\",\"2025-07-04T14:00:00-04:00\",\"2025-07-04T14:15:00-04:00\",\"2025-07-04T14:30:00-04:00\",\"2025-07-04T14:45:00-04:00\",\"2025-07-04T15:00:00-04:00\",\"2025-07-04T15:15:00-04:00\",\"2025-07-04T15:30:00-04:00\",\"2025-07-04T15:45:00-04:00\",\"2025-07-04T16:00:00-04:00\",\"2025-07-04T16:15:00-04:00\"]},\"2025-07-07\":{\"slots\":[\"2025-07-07T15:00:00-04:00\",\"2025-07-07T15:15:00-04:00\",\"2025-07-07T15:30:00-04:00\",\"2025-07-07T15:45:00-04:00\",\"2025-07-07T16:00:00-04:00\",\"2025-07-07T16:15:00-04:00\",\"2025-07-07T16:30:00-04:00\",\"2025-07-07T16:45:00-04:00\",\"2025-07-07T17:00:00-04:00\",\"2025-07-07T17:15:00-04:00\",\"2025-07-07T17:30:00-04:00\",\"2025-07-07T17:45:00-04:00\"]},\"2025-07-08\":{\"slots\":[\"2025-07-08T15:00:00-04:00\",\"2025-07-08T15:15:00-04:00\",\"2025-07-08T15:30:00-04:00\",\"2025-07-08T15:45:00-04:00\",\"2025-07-08T16:00:00-04:00\",\"2025-07-08T16:15:00-04:00\",\"2025-07-08T16:30:00-04:00\",\"2025-07-08T16:45:00-04:00\",\"2025-07-08T17:00:00-04:00\",\"2025-07-08T17:15:00-04:00\",\"2025-07-08T17:30:00-04:00\",\"2025-07-08T17:45:00-04:00\"]},\"2025-07-09\":{\"slots\":[\"2025-07-09T15:00:00-04:00\",\"2025-07-09T15:15:00-04:00\",\"2025-07-09T15:30:00-04:00\",\"2025-07-09T15:45:00-04:00\",\"2025-07-09T16:00:00-04:00\",\"2025-07-09T16:15:00-04:00\",\"2025-07-09T16:30:00-04:00\",\"2025-07-09T16:45:00-04:00\",\"2025-07-09T17:00:00-04:00\",\"2025-07-09T17:15:00-04:00\",\"2025-07-09T17:30:00-04:00\",\"2025-07-09T17:45:00-04:00\"]},\"2025-07-10\":{\"slots\":[\"2025-07-10T15:00:00-04:00\",\"2025-07-10T15:15:00-04:00\",\"2025-07-10T15:30:00-04:00\",\"2025-07-10T15:45:00-04:00\",\"2025-07-10T16:00:00-04:00\",\"2025-07-10T16:15:00-04:00\",\"2025-07-10T16:30:00-04:00\",\"2025-07-10T16:45:00-04:00\",\"2025-07-10T17:00:00-04:00\",\"2025-07-10T17:15:00-04:00\",\"2025-07-10T17:30:00-04:00\",\"2025-07-10T17:45:00-04:00\"]},\"2025-07-11\":{\"slots\":[\"2025-07-11T02:30:00-04:00\",\"2025-07-11T02:45:00-04:00\",\"2025-07-11T03:00:00-04:00\",\"2025-07-11T03:15:00-04:00\",\"2025-07-11T03:30:00-04:00\",\"2025-07-11T03:45:00-04:00\",\"2025-07-11T04:00:00-04:00\",\"2025-07-11T04:15:00-04:00\",\"2025-07-11T04:30:00-04:00\",\"2025-07-11T04:45:00-04:00\",\"2025-07-11T05:00:00-04:00\",\"2025-07-11T05:15:00-04:00\",\"2025-07-11T05:30:00-04:00\",\"2025-07-11T05:45:00-04:00\",\"2025-07-11T06:00:00-04:00\",\"2025-07-11T06:15:00-04:00\",\"2025-07-11T06:30:00-04:00\",\"2025-07-11T06:45:00-04:00\",\"2025-07-11T07:00:00-04:00\",\"2025-07-11T07:15:00-04:00\",\"2025-07-11T07:30:00-04:00\",\"2025-07-11T07:45:00-04:00\",\"2025-07-11T08:00:00-04:00\",\"2025-07-11T08:15:00-04:00\",\"2025-07-11T08:30:00-04:00\",\"2025-07-11T08:45:00-04:00\",\"2025-07-11T09:00:00-04:00\",\"2025-07-11T09:15:00-04:00\",\"2025-07-11T09:30:00-04:00\",\"2025-07-11T09:45:00-04:00\",\"2025-07-11T10:00:00-04:00\",\"2025-07-11T10:15:00-04:00\",\"2025-07-11T10:30:00-04:00\",\"2025-07-11T10:45:00-04:00\",\"2025-07-11T11:00:00-04:00\",\"2025-07-11T11:15:00-04:00\",\"2025-07-11T11:30:00-04:00\",\"2025-07-11T11:45:00-04:00\",\"2025-07-11T12:00:00-04:00\",\"2025-07-11T12:15:00-04:00\",\"2025-07-11T12:30:00-04:00\",\"2025-07-11T12:45:00-04:00\",\"2025-07-11T13:00:00-04:00\",\"2025-07-11T13:15:00-04:00\",\"2025-07-11T13:30:00-04:00\",\"2025-07-11T13:45:00-04:00\",\"2025-07-11T14:00:00-04:00\",\"2025-07-11T14:15:00-04:00\",\"2025-07-11T14:30:00-04:00\",\"2025-07-11T14:45:00-04:00\",\"2025-07-11T15:00:00-04:00\",\"2025-07-11T15:15:00-04:00\",\"2025-07-11T15:30:00-04:00\",\"2025-07-11T15:45:00-04:00\",\"2025-07-11T16:00:00-04:00\",\"2025-07-11T16:15:00-04:00\"]},\"traceId\":\"13980d7e-f398-47ea-81c4-29bc08eff9f1\"},\"slots\":[]}",
+            "is_error": false,
+            "tool_has_been_called": true,
+            "tool_latency_secs": 0.9964220239780843
+          }
+        ],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 64,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": "Awesome, it sounds like we might be able to help you out! I'd love to get you booked with one of our Account Executives—they're the real pros who can dive into the details with you.\n\nWe have availability on Friday, July fourth at two-thirty AM or Monday, July seventh at three PM. Would either of those work for you?",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 64,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 2.690499883145094
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 2.690120665822178
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.15017080307006836
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.16109931468963623
+            },
+            {
+              "document_id": "JxEIWFXstuR1f0QhRUb9",
+              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
+              "vector_distance": 0.16431409120559692
+            },
+            {
+              "document_id": "xlnS5kLgPhbj9TYpZwlL",
+              "chunk_id": "57EwSifW1hiPOo8fRsUR",
+              "vector_distance": 0.16867965459823608
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
+              "vector_distance": 0.17141544818878174
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
+              "vector_distance": 0.17258483171463013
+            },
+            {
+              "document_id": "YY8EtWDXkd78TQ83CPJ5",
+              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
+              "vector_distance": 0.17258483171463013
+            },
+            {
+              "document_id": "JCBlTQEoKDWYq9wJmyE5",
+              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
+              "vector_distance": 0.17369449138641357
+            },
+            {
+              "document_id": "zmQmoXCCRGVwF3AIPFZ0",
+              "chunk_id": "QytG4l5SLbDfNGssT143",
+              "vector_distance": 0.17891758680343628
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "q8rpkubMtbumpm5KDzky",
+              "vector_distance": 0.17892491817474365
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "qRApy4nqUDobSsBBvq3b",
+              "vector_distance": 0.18019020557403564
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "F98mRtgMh3bAvP1lWICR",
+              "vector_distance": 0.18183624744415283
+            },
+            {
+              "document_id": "lJdT82rUXfoYg9SzgZdQ",
+              "chunk_id": "iSZRRWqJ8VB0ALjSeW4n",
+              "vector_distance": 0.1820368766784668
+            },
+            {
+              "document_id": "ep10H8ERp4k0s7RgUvI3",
+              "chunk_id": "CLMuviQjriGrrsS9UFHa",
+              "vector_distance": 0.18281221389770508
+            },
+            {
+              "document_id": "Ud0ZzJKfA5Q9HpNwFMtY",
+              "chunk_id": "GaWT1DdPaOon44qkSGWj",
+              "vector_distance": 0.1839585304260254
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
+              "vector_distance": 0.18402314186096191
+            },
+            {
+              "document_id": "3AvYOeBINSuDoUZyBHCu",
+              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
+              "vector_distance": 0.18487560749053955
+            },
+            {
+              "document_id": "ep10H8ERp4k0s7RgUvI3",
+              "chunk_id": "I2KyzCQ9okjFp9w9hSZD",
+              "vector_distance": 0.18673765659332275
+            },
+            {
+              "document_id": "lJdT82rUXfoYg9SzgZdQ",
+              "chunk_id": "HCrpLeAFmaetPdnIQYfA",
+              "vector_distance": 0.18683838844299316
+            },
+            {
+              "document_id": "I1UYPu6BuCRRBOHlQxEp",
+              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
+              "vector_distance": 0.1880548596382141
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "I owe a significant debt and want to explore legal options for resolving it.  What can you do to help?\n",
+          "rag_latency_secs": 0.6975294258445501
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.5-flash": {
+              "input": {
+                "tokens": 31162,
+                "price": 0.004674299999999999
+              },
+              "input_cache_read": {
+                "tokens": 8813,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 121,
+                "price": 0.0000726
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "Any second.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 96,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      }
+    ],
+    "metadata": {
+      "start_time_unix_secs": 1751609675,
+      "accepted_time_unix_secs": 1751609676,
+      "call_duration_secs": 103,
+      "cost": 731,
+      "deletion_settings": {
+        "deletion_time_unix_secs": 1814681788,
+        "deleted_logs_at_time_unix_secs": null,
+        "deleted_audio_at_time_unix_secs": null,
+        "deleted_transcript_at_time_unix_secs": null,
+        "delete_transcript_and_pii": true,
+        "delete_audio": true
+      },
+      "feedback": {
+        "overall_score": null,
+        "likes": 0,
+        "dislikes": 0
+      },
+      "authorization_method": "signed_url",
+      "charging": {
+        "dev_discount": false,
+        "is_burst": false,
+        "tier": "creator",
+        "llm_usage": {
+          "irreversible_generation": {
+            "model_usage": {
+              "gemini-2_5-flash": {
+                "input": {
+                  "tokens": 112239,
+                  "price": 0.01683585
+                },
+                "input_cache_read": {
+                  "tokens": 16622,
+                  "price": 0
+                },
+                "input_cache_write": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "output_total": {
+                  "tokens": 190,
+                  "price": 0.000114
+                }
+              }
+            }
+          },
+          "initiated_generation": {
+            "model_usage": {
+              "gemini-2_5-flash": {
+                "input": {
+                  "tokens": 157828,
+                  "price": 0.023674200000000003
+                },
+                "input_cache_read": {
+                  "tokens": 30312,
+                  "price": 0
+                },
+                "input_cache_write": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "output_total": {
+                  "tokens": 217,
+                  "price": 0.0001302
+                }
+              }
+            }
+          }
+        },
+        "llm_price": 0.023804400000000003,
+        "llm_charge": 109,
+        "call_charge": 622
+      },
+      "phone_call": {
+        "direction": "inbound",
+        "phone_number_id": "phnum_01jz88xevee6w9e61yt9e8bbxg",
+        "agent_number": "+16473606807",
+        "external_number": "+19058363456",
+        "type": "twilio",
+        "stream_sid": "MZe02db4c361e4b2d28e6c148dc9293203",
+        "call_sid": "CA45993ff6da968e879bcc477b3bb102e7"
+      },
+      "batch_call": null,
+      "termination_reason": "Client disconnected: 1005",
+      "error": null,
+      "main_language": "en",
+      "rag_usage": {
+        "usage_count": 7,
+        "embedding_model": "e5_mistral_7b_instruct"
+      },
+      "text_only": false,
+      "features_usage": {
+        "language_detection": {
+          "enabled": true,
+          "used": false
+        },
+        "transfer_to_agent": {
+          "enabled": false,
+          "used": false
+        },
+        "transfer_to_number": {
+          "enabled": true,
+          "used": false
+        },
+        "multivoice": {
+          "enabled": false,
+          "used": false
+        },
+        "pii_zrm_workspace": false,
+        "pii_zrm_agent": false
+      },
+      "eleven_assistant": {
+        "is_eleven_assistant": false
+      }
+    },
+    "analysis": {
+      "evaluation_criteria_results": {
+        "qualified": {
+          "criteria_id": "qualified",
+          "result": "success",
+          "rationale": "The agent gathered information about the user's legal issue (debt, potential lawsuit) and then checked availability using a tool. Based on the information gathered and the availability check, the agent offered to book the user with an Account Executive, indicating a willingness to work with them. This suggests the agent determined they have a case they can work with."
+        }
+      },
+      "data_collection_results": {
+        "language": {
+          "data_collection_id": "language",
+          "value": null,
+          "json_schema": {
+            "type": "string",
+            "description": "return the users language ",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user's language cannot be determined from the conversation. The user is responding in short phrases, but it is not possible to determine the language they are using."
+        },
+        "action": {
+          "data_collection_id": "action",
+          "value": true,
+          "json_schema": {
+            "type": "boolean",
+            "description": "true or false, is the caller looking to start legal action?",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user explicitly states 'yes' when asked 'Are you looking to start legal action?' at timestamp 1751609714."
+        },
+        "phone": {
+          "data_collection_id": "phone",
+          "value": null,
+          "json_schema": {
+            "type": "string",
+            "description": "return the users phone number",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user's phone number is not mentioned in the conversation."
+        },
+        "outcome": {
+          "data_collection_id": "outcome",
+          "value": "to not have the debt problem",
+          "json_schema": {
+            "type": "string",
+            "description": "summarize what the caller wants as an outcome for the dispute",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user wants to resolve the debt issue, ideally to the point where they \"didn't have this problem anyway\"."
+        },
+        "suit": {
+          "data_collection_id": "suit",
+          "value": false,
+          "json_schema": {
+            "type": "boolean",
+            "description": "True or false: Is the caller currently defending against an existing or pending legal action? Only for existing cases should you say true, if they are starting something new or haven't started its false. ",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user states that they think they are getting sued, but when asked if they are currently engaged in any legal action, they respond 'No'. Therefore, the caller is not currently defending against an existing legal action."
+        },
+        "money": {
+          "data_collection_id": "money",
+          "value": true,
+          "json_schema": {
+            "type": "boolean",
+            "description": "true or false, does the dispute involve a specific amount of money or damages?",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The agent asks 'Does the dispute involve a specific amount of money or damages?' and the user responds 'Yes'. Therefore, the value is true."
+        },
+        "email": {
+          "data_collection_id": "email",
+          "value": null,
+          "json_schema": {
+            "type": "string",
+            "description": "return the users email\n",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "I cannot extract the user's email from the conversation, as it is not mentioned in the transcript."
+        },
+        "issue": {
+          "data_collection_id": "issue",
+          "value": "The caller is facing a legal issue related to owing a lot of money and potentially being sued for debt.",
+          "json_schema": {
+            "type": "string",
+            "description": "Summarize what legal issue the caller is facing",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user states they are getting sued and owe a lot of money. This suggests the legal issue is related to debt and potential legal action from creditors."
+        },
+        "name": {
+          "data_collection_id": "name",
+          "value": "Daniel English",
+          "json_schema": {
+            "type": "string",
+            "description": "return the users name",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The tool result contains the client name as 'Daniel English'."
+        }
+      },
+      "call_successful": "success",
+      "transcript_summary": "The user is seeking legal assistance regarding a debt issue and potential lawsuit. The agent confirmed the user's need for help and checked availability for a consultation with an Account Executive, offering slots on July 4th and July 7th. The user responded with \"Any second\".\n"
+    },
+    "conversation_initiation_client_data": {
+      "conversation_config_override": {
+        "tts": null,
+        "conversation": null,
+        "agent": null
+      },
+      "custom_llm_extra_body": {},
+      "dynamic_variables": {
+        "system__agent_id": "agent_01jxxp5senerprmm60n0fnmf49",
+        "system__conversation_id": "conv_01jza153ymfybsq9gmj9140ss6",
+        "system__caller_id": "+19058363456",
+        "system__called_number": "+16473606807",
+        "system__call_duration_secs": 102,
+        "system__time_utc": "2025-07-04T06:16:18.001461+00:00",
+        "system__call_sid": "CA45993ff6da968e879bcc477b3bb102e7"
+      }
+    }
+  },
+  "headers": {
+    "host": "services.leadconnectorhq.com",
+    "cf-ray": "959c7e7c2a68540f-ORD",
+    "x-forwarded-for": "34.59.11.47,10.10.0.244",
+    "cf-ipcountry": "US",
+    "user-agent": "Python/3.12 aiohttp/3.11.16",
+    "accept-encoding": "gzip, br",
+    "cdn-loop": "cloudflare; loops=1",
+    "x-forwarded-proto": "https",
+    "accept": "*/*",
+    "elevenlabs-signature": "t=1751609788,v0=915af296d70e3900bb403ebce2590a66e17ce15068c61e5c69d07fa6a6c0732e",
+    "cf-visitor": {
+      "scheme": "https"
+    },
+    "content-type": "application/json",
+    "content-length": "37993",
+    "cf-connecting-ip": "34.59.11.47",
+    "x-envoy-external-address": "10.10.0.244",
+    "x-request-id": "a8d3d225-f443-497c-a9f7-e086f4f82784",
+    "x-envoy-attempt-count": "1",
+    "x-forwarded-client-cert": "By=spiffe://cluster.local/ns/default/sa/default-automation-workflows;Hash=2a62b13927f63caca68c71671bbe760c28bace28e2fcaf3fe4b1ebfb94c4edd3;Subject=\"\";URI=spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account",
+    "x-b3-traceid": "c3b0fd6cd36f68a43d8d31e35301ae79",
+    "x-b3-spanid": "51dab0b6623b8dcc",
+    "x-b3-parentspanid": "3d8d31e35301ae79",
+    "x-b3-sampled": "0"
+  }
+}
