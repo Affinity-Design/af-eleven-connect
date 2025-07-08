@@ -1556,7 +1556,7 @@ fastify.post(
       if (first_message)
         params.first_message = decodeURIComponent(first_message);
       if (client && client.agentId) params.agentId = client.agentId;
-      if (fromPhoneNumber) params.twilioPhoneNumber = fromPhoneNumber;
+      if (fromPhoneNumber) params.twilioPhone = fromPhoneNumber;
       if (f_name || l_name) {
         // Combine first and last name if either exists
         const firstName = f_name ? decodeURIComponent(f_name) : "";
