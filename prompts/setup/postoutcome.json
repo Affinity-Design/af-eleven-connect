@@ -1,383 +1,413 @@
 {
   "type": "post_call_transcription",
-  "event_timestamp": 1742551878,
+  "event_timestamp": 1751987718,
   "data": {
-    "agent_id": "qvu7240QhEUKLultBI7i",
-    "conversation_id": "rQ8n7ZOPSdWgqcWgKyjq",
+    "agent_id": "agent_01jxxp5senerprmm60n0fnmf49",
+    "conversation_id": "conv_01jzn9knzwe37ry23587nxgmfk",
     "status": "done",
+    "user_id": null,
     "transcript": [
       {
         "role": "agent",
-        "message": "Paul?",
+        "message": "Hey its Aria from whylaw Legal Services, how can I help you today? ",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
         "time_in_call_secs": 0,
         "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
       },
       {
         "role": "user",
-        "message": "Yep.",
+        "message": "...",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 1,
+        "time_in_call_secs": 10,
         "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
       },
       {
         "role": "agent",
-        "message": "I'm Sam with Affinity Design! I saw you clicked on our ad about how our AI sales reps can supercharge your business this year, just making sure that was you?",
-        "tool_calls": [],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 3,
-        "conversation_turn_metrics": {
-          "metrics": {
-            "convai_llm_service_ttf_sentence": {
-              "elapsed_time": 0.48551563298678957
-            },
-            "convai_llm_service_ttfb": {
-              "elapsed_time": 0.28481902899511624
-            }
-          }
-        },
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "user",
-        "message": "Yeah.",
+        "message": "Hello? Are you still there? Is there anything I can help you with today?\n",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
         "time_in_call_secs": 12,
         "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "agent",
-        "message": "Great, well Nice to meet you Paul, and, What type of business do you run?\n",
-        "tool_calls": [],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 13,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "JxEIWFXstuR1f0QhRUb9",
+              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
+              "vector_distance": 0.15872859954833984
+            },
+            {
+              "document_id": "xlnS5kLgPhbj9TYpZwlL",
+              "chunk_id": "57EwSifW1hiPOo8fRsUR",
+              "vector_distance": 0.16188156604766846
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.17650312185287476
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "What legal services do you offer?\n",
+          "rag_latency_secs": 0.41102233808487654
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 8381,
+                "price": 0.0008381
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 18,
+                "price": 0.0000072000000000000005
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
       },
       {
         "role": "user",
-        "message": "I run a design company.",
+        "message": "Can I speak to somebody?",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 18,
+        "time_in_call_secs": 19,
         "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
       },
       {
         "role": "agent",
-        "message": "Got it! Would you say you guys bring in around fifteen thousand dollars a month?\n",
+        "message": "Yes, absolutely. To best assist you, could you briefly tell me what legal issue you're facing today?\n",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
         "time_in_call_secs": 21,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "user",
-        "message": "Yep.",
-        "tool_calls": [],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 25,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "agent",
-        "message": "Sweet, you're right in our wheelhouse—let's keep rolling! What's your biggest challenge regarding getting new leads? Volume, quality, or slow followups stalling opportunities?\n",
-        "tool_calls": [],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 27,
         "conversation_turn_metrics": {
           "metrics": {
             "convai_llm_service_ttf_sentence": {
-              "elapsed_time": 0.46026796399382874
+              "elapsed_time": 0.9105258854106069
             },
             "convai_llm_service_ttfb": {
-              "elapsed_time": 0.2749049929989269
+              "elapsed_time": 0.6614917069673538
             }
           }
         },
-        "rag_retrieval_info": null
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.2739051580429077
+            },
+            {
+              "document_id": "JxEIWFXstuR1f0QhRUb9",
+              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
+              "vector_distance": 0.2771691083908081
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.27861732244491577
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "I need to speak to someone.\n",
+          "rag_latency_secs": 0.3877321919426322
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 8555,
+                "price": 0.0008555
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 24,
+                "price": 0.000009600000000000001
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
       },
       {
         "role": "user",
-        "message": "Low follow-ups.",
+        "message": "A landlord and tenant issue.",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 36,
+        "time_in_call_secs": 28,
         "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
       },
       {
         "role": "agent",
-        "message": "We've got this awesome AI-powered sales rep that calls your leads the second they come in - qualifies them, then books appointments for you—like a tireless assistant who never misses a call-back. We can add three to five more clients per month, Could you even handle that many more clients next month?\n",
+        "message": "I see. Are you currently defending against an existing or pending legal action, or are you looking to start legal action against someone else?\n",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 39,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "user",
-        "message": "Oh, yeah, baby.",
-        "tool_calls": [],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 56,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "agent",
-        "message": "Sounds like we could really take some weight off your shoulders! I'd like to offer you a free AI consulting call with one of our senior advisors to dig into how it can all work for you. Let me check some times here.\n\n",
-        "tool_calls": [],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 58,
+        "time_in_call_secs": 32,
         "conversation_turn_metrics": {
           "metrics": {
             "convai_llm_service_ttf_sentence": {
-              "elapsed_time": 0.4675492790120188
+              "elapsed_time": 0.835560504347086
             },
             "convai_llm_service_ttfb": {
-              "elapsed_time": 0.27859701099805534
+              "elapsed_time": 0.6252994602546096
             }
           }
         },
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "agent",
-        "message": null,
-        "tool_calls": [
-          {
-            "request_id": "get_availability_ff89256781a646d0a7d8dc1a3cb84d3a",
-            "tool_name": "get_availability",
-            "params_as_json": "{\"endDate\": \"2025-03-28\", \"startDate\": \"2025-03-21\", \"timezone\": \"America/Toronto\"}",
-            "tool_has_been_called": true
-          }
-        ],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 58,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "agent",
-        "message": null,
-        "tool_calls": [],
-        "tool_results": [
-          {
-            "request_id": "get_availability_ff89256781a646d0a7d8dc1a3cb84d3a",
-            "tool_name": "get_availability",
-            "result_value": "{\"requestId\":\"m8imd35hgtsrr\",\"dateRange\":{\"start\":\"2025-03-21T00:00:00.000Z\",\"end\":\"2025-03-28T00:00:00.000Z\"},\"timezone\":\"America/Toronto\",\"availability\":{\"2025-03-21\":{\"slots\":[\"2025-03-21T10:00:00-04:00\",\"2025-03-21T10:30:00-04:00\",\"2025-03-21T11:00:00-04:00\",\"2025-03-21T11:30:00-04:00\"]},\"2025-03-24\":{\"slots\":[\"2025-03-24T09:30:00-04:00\",\"2025-03-24T11:00:00-04:00\",\"2025-03-24T11:30:00-04:00\",\"2025-03-24T12:00:00-04:00\",\"2025-03-24T12:30:00-04:00\",\"2025-03-24T13:00:00-04:00\",\"2025-03-24T13:30:00-04:00\",\"2025-03-24T14:00:00-04:00\",\"2025-03-24T14:30:00-04:00\",\"2025-03-24T15:00:00-04:00\",\"2025-03-24T15:30:00-04:00\",\"2025-03-24T16:00:00-04:00\",\"2025-03-24T16:30:00-04:00\",\"2025-03-24T17:00:00-04:00\",\"2025-03-24T17:30:00-04:00\"]},\"2025-03-25\":{\"slots\":[\"2025-03-25T10:00:00-04:00\",\"2025-03-25T10:30:00-04:00\",\"2025-03-25T11:30:00-04:00\",\"2025-03-25T12:00:00-04:00\",\"2025-03-25T12:30:00-04:00\",\"2025-03-25T13:00:00-04:00\",\"2025-03-25T13:30:00-04:00\",\"2025-03-25T14:00:00-04:00\",\"2025-03-25T14:30:00-04:00\",\"2025-03-25T15:00:00-04:00\",\"2025-03-25T15:30:00-04:00\",\"2025-03-25T16:00:00-04:00\",\"2025-03-25T16:30:00-04:00\",\"2025-03-25T17:00:00-04:00\"]},\"2025-03-26\":{\"slots\":[\"2025-03-26T19:00:00-04:00\",\"2025-03-26T19:30:00-04:00\",\"2025-03-26T20:00:00-04:00\",\"2025-03-26T20:30:00-04:00\"]},\"2025-03-27\":{\"slots\":[\"2025-03-27T10:00:00-04:00\",\"2025-03-27T10:30:00-04:00\",\"2025-03-27T11:00:00-04:00\",\"2025-03-27T11:30:00-04:00\",\"2025-03-27T12:00:00-04:00\",\"2025-03-27T12:30:00-04:00\",\"2025-03-27T13:00:00-04:00\",\"2025-03-27T13:30:00-04:00\",\"2025-03-27T14:00:00-04:00\",\"2025-03-27T14:30:00-04:00\",\"2025-03-27T15:00:00-04:00\",\"2025-03-27T15:30:00-04:00\",\"2025-03-27T16:00:00-04:00\",\"2025-03-27T16:30:00-04:00\",\"2025-03-27T17:00:00-04:00\"]},\"traceId\":\"51c21722-852e-4be7-9d83-e348c5af673e\"},\"slots\":[]}",
-            "is_error": false,
-            "tool_has_been_called": true
-          }
-        ],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 58,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "agent",
-        "message": "Okay, we have a couple of slots open. How about Friday, March twenty seventh at ten AM or Monday, March twenty fourth at three thirty PM?\n",
-        "tool_calls": [],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 58,
-        "conversation_turn_metrics": {
-          "metrics": {
-            "convai_llm_service_ttf_sentence": {
-              "elapsed_time": 0.5397249939996982
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "3AvYOeBINSuDoUZyBHCu",
+              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
+              "vector_distance": 0.1631825566291809
             },
-            "convai_llm_service_ttfb": {
-              "elapsed_time": 0.3054942460003076
+            {
+              "document_id": "JCBlTQEoKDWYq9wJmyE5",
+              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
+              "vector_distance": 0.16610896587371826
+            },
+            {
+              "document_id": "3AvYOeBINSuDoUZyBHCu",
+              "chunk_id": "7gZMKwmfyYhzv3bF4eSF",
+              "vector_distance": 0.16765713691711426
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "I need assistance with a landlord-tenant issue.\n",
+          "rag_latency_secs": 0.41473151464015245
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 8905,
+                "price": 0.0008905
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 28,
+                "price": 0.000011200000000000001
+              }
             }
           }
         },
-        "rag_retrieval_info": null
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
       },
       {
         "role": "user",
-        "message": "Yeah, Monday.",
+        "message": "To start",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 84,
+        "time_in_call_secs": 42,
         "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
       },
       {
         "role": "agent",
-        "message": "Okay great, lets get you booked in.\n\n",
+        "message": "Okay, and does the dispute involve a specific amount of money or damages?\n",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 86,
+        "time_in_call_secs": 44,
         "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "agent",
-        "message": null,
-        "tool_calls": [
-          {
-            "request_id": "book_meeting_f528fce641374c8fb476eaa04ecbfcbc",
-            "tool_name": "book_meeting",
-            "params_as_json": "{\"startTime\": \"2025-03-24T15:30:00-04:00\", \"endTime\": \"2025-03-24T16:00:00-04:00\", \"meeting_title\": \"Free Ai Consultation\", \"phone\": \"+19058363456\"}",
-            "tool_has_been_called": true
-          }
-        ],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 86,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "agent",
-        "message": null,
-        "tool_calls": [],
-        "tool_results": [
-          {
-            "request_id": "book_meeting_f528fce641374c8fb476eaa04ecbfcbc",
-            "tool_name": "book_meeting",
-            "result_value": "{\"requestId\":\"m8imdof02v6lb\",\"status\":\"success\",\"message\":\"Appointment booked successfully\",\"appointmentId\":\"z2VRnyaWcH1sUg6h0vSH\",\"details\":{\"calendarId\":\"e0JBV5PARC9sbebxcYnY\",\"locationId\":\"5C3JSOVVFiVmBoh8mv3I\",\"contactId\":\"BZlmhid22ovDCOqQ61Ju\",\"startTime\":\"2025-03-24T15:30:00-04:00\",\"endTime\":\"2025-03-24T16:00:00-04:00\",\"title\":\"Client x Affinity Design - Free Ai Consultation \",\"status\":\"confirmed\",\"address\":\"https://meet.google.com/fjt-jhot-gza\",\"isRecurring\":false},\"contact\":{\"id\":\"BZlmhid22ovDCOqQ61Ju\",\"name\":\"\",\"phone\":\"+19058363456\",\"email\":\"oracleadventureslimited@gmail.com\"},\"notification\":{\"message\":\"Contact has a phone number. You can use make-outbound-call to send a confirmation.\",\"phone\":\"+19058363456\"}}",
-            "is_error": false,
-            "tool_has_been_called": true
-          }
-        ],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 86,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "agent",
-        "message": "Awesome! Appointment booked. So, I've actually just booked you with our founder Paul, and he never has openings on that day, i'll shoot the details to your email, Sound good? Make sure to add the appointment to your calander in the email after this call so you don't miss it. Have an awesome day!\n",
-        "tool_calls": [],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 86,
-        "conversation_turn_metrics": {
-          "metrics": {
-            "convai_llm_service_ttf_sentence": {
-              "elapsed_time": 0.532580336992396
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "3AvYOeBINSuDoUZyBHCu",
+              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
+              "vector_distance": 0.13809573650360107
             },
-            "convai_llm_service_ttfb": {
-              "elapsed_time": 0.4092273150017718
+            {
+              "document_id": "JCBlTQEoKDWYq9wJmyE5",
+              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
+              "vector_distance": 0.13891804218292236
+            },
+            {
+              "document_id": "Ud0ZzJKfA5Q9HpNwFMtY",
+              "chunk_id": "GaWT1DdPaOon44qkSGWj",
+              "vector_distance": 0.14139896631240845
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "I need legal advice to start a landlord and tenant lawsuit.\n",
+          "rag_latency_secs": 0.6265494283288717
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 8626,
+                "price": 0.0008626
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 16,
+                "price": 0.0000064000000000000006
+              }
             }
           }
         },
-        "rag_retrieval_info": null
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
       },
       {
         "role": "user",
-        "message": "Yeah. Yeah?",
+        "message": "I'm not sure yet.",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 101,
+        "time_in_call_secs": 52,
         "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
       },
       {
         "role": "agent",
-        "message": "Great! Thanks for chatting! Take care!\n",
+        "message": "I understand. What outcome would make your life easier regarding this landlord and tenant issue?",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 104,
+        "time_in_call_secs": 54,
         "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "agent",
-        "message": null,
-        "tool_calls": [
-          {
-            "request_id": "end_call_b9a5a5f4a4bb4c47a88a2aadef630e9d",
-            "tool_name": "end_call",
-            "params_as_json": "{\"message\": \"Thanks for chatting! Take care!\", \"reason\": \"User indicates completion\"}",
-            "tool_has_been_called": true
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "JCBlTQEoKDWYq9wJmyE5",
+              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
+              "vector_distance": 0.16387295722961426
+            },
+            {
+              "document_id": "3AvYOeBINSuDoUZyBHCu",
+              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
+              "vector_distance": 0.16560590267181396
+            },
+            {
+              "document_id": "Ud0ZzJKfA5Q9HpNwFMtY",
+              "chunk_id": "GaWT1DdPaOon44qkSGWj",
+              "vector_distance": 0.16790378093719482
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "I need legal advice to start a landlord-tenant lawsuit, but I'm unsure of the damages yet.\n",
+          "rag_latency_secs": 0.5711999097838998
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 8649,
+                "price": 0.0008649
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 18,
+                "price": 0.0000072000000000000005
+              }
+            }
           }
-        ],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 104,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
-      },
-      {
-        "role": "agent",
-        "message": null,
-        "tool_calls": [],
-        "tool_results": [
-          {
-            "request_id": "end_call_b9a5a5f4a4bb4c47a88a2aadef630e9d",
-            "tool_name": "end_call",
-            "result_value": "{\"status\": \"success\", \"reason\": \"User indicates completion\", \"message\": \"Thanks for chatting! Take care!\"}",
-            "is_error": false,
-            "tool_has_been_called": true
-          }
-        ],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 104,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": null
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
       }
     ],
     "metadata": {
-      "start_time_unix_secs": 1742551762,
-      "call_duration_secs": 106,
-      "cost": 711,
+      "start_time_unix_secs": 1751987640,
+      "accepted_time_unix_secs": 1751987640,
+      "call_duration_secs": 64,
+      "cost": 448,
       "deletion_settings": {
-        "deletion_time_unix_secs": 1805623869,
+        "deletion_time_unix_secs": 1815059710,
         "deleted_logs_at_time_unix_secs": null,
         "deleted_audio_at_time_unix_secs": null,
         "deleted_transcript_at_time_unix_secs": null,
@@ -391,122 +421,279 @@
       },
       "authorization_method": "signed_url",
       "charging": {
-        "dev_discount": false
+        "dev_discount": false,
+        "is_burst": false,
+        "tier": "creator",
+        "llm_usage": {
+          "irreversible_generation": {
+            "model_usage": {
+              "gemini-2_0-flash": {
+                "input": {
+                  "tokens": 43116,
+                  "price": 0.0043116
+                },
+                "input_cache_read": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "input_cache_write": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "output_total": {
+                  "tokens": 104,
+                  "price": 0.0000416
+                }
+              }
+            }
+          },
+          "initiated_generation": {
+            "model_usage": {
+              "gemini-2_0-flash": {
+                "input": {
+                  "tokens": 50597,
+                  "price": 0.0050596999999999994
+                },
+                "input_cache_read": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "input_cache_write": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "output_total": {
+                  "tokens": 106,
+                  "price": 0.0000424
+                }
+              }
+            }
+          }
+        },
+        "llm_price": 0.005102099999999999,
+        "llm_charge": 24,
+        "call_charge": 424
       },
-      "phone_call": null,
-      "termination_reason": "end_call tool was called."
+      "phone_call": {
+        "direction": "inbound",
+        "phone_number_id": "phnum_01jz88xevee6w9e61yt9e8bbxg",
+        "agent_number": "+16473606807",
+        "external_number": "Anonymous",
+        "type": "twilio",
+        "stream_sid": "MZ0c2e116342db062bf872309c9a2b6095",
+        "call_sid": "CA3635a24efd2fc7b9061c9d92fad5e233"
+      },
+      "batch_call": null,
+      "termination_reason": "Client disconnected: 1005",
+      "error": null,
+      "main_language": "en",
+      "rag_usage": {
+        "usage_count": 5,
+        "embedding_model": "e5_mistral_7b_instruct"
+      },
+      "text_only": false,
+      "features_usage": {
+        "language_detection": {
+          "enabled": false,
+          "used": false
+        },
+        "transfer_to_agent": {
+          "enabled": false,
+          "used": false
+        },
+        "transfer_to_number": {
+          "enabled": false,
+          "used": false
+        },
+        "multivoice": {
+          "enabled": false,
+          "used": false
+        },
+        "pii_zrm_workspace": false,
+        "pii_zrm_agent": false
+      },
+      "eleven_assistant": {
+        "is_eleven_assistant": false
+      },
+      "initiator_id": null
     },
     "analysis": {
       "evaluation_criteria_results": {
-        "booked_appointment": {
-          "criteria_id": "booked_appointment",
-          "result": "success",
-          "rationale": "The 'book_meeting' tool was called with parameters and the tool result shows a successful response with 'status':'success' and 'message':'Appointment booked successfully'."
+        "qualified": {
+          "criteria_id": "qualified",
+          "result": "unknown",
+          "rationale": "The conversation establishes the user has a landlord-tenant issue and wants to start legal action. However, the conversation ends before the agent can gather enough information to determine if the legal services can work with them. The agent is still in the process of gathering information."
         }
       },
       "data_collection_results": {
-        "call_summery": {
-          "data_collection_id": "call_summery",
-          "value": "The agent, Sam with Affinity Design, contacted Paul after he clicked on an ad about AI sales reps. Paul runs a design company and makes around $15,000 a month. His biggest challenge is low follow-ups. Sam offered Paul a free AI consulting call with a senior advisor and booked him for Monday, March 24th at 3:30 PM with the founder Paul.",
+        "language": {
+          "data_collection_id": "language",
+          "value": null,
           "json_schema": {
             "type": "string",
-            "description": "summarize the transcript between ai and human and give me the most relevant information. ",
+            "description": "return the users language ",
             "dynamic_variable": "",
             "constant_value": ""
           },
-          "rationale": "The agent, Sam with Affinity Design, contacted Paul after he clicked on an ad about AI sales reps. Paul runs a design company and makes around $15,000 a month. His biggest challenge is low follow-ups. Sam offered Paul a free AI consulting call with a senior advisor and booked him for Monday, March 24th at 3:30 PM with the founder Paul."
+          "rationale": "The user's language is not explicitly stated in the conversation. Therefore, it is not possible to extract the user's language from the provided transcript."
+        },
+        "call_summary": {
+          "data_collection_id": "call_summary",
+          "value": "The user contacted whylaw Legal Services with a landlord and tenant issue and is looking to start legal action. The user is unsure about the amount of money or damages involved but wants an outcome that makes their life easier.",
+          "json_schema": {
+            "type": "string",
+            "description": "summarize the call",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The conversation is about a landlord and tenant issue where the user is looking to start legal action. The user is unsure about the amount of money or damages involved but wants an outcome that makes their life easier."
+        },
+        "name": {
+          "data_collection_id": "name",
+          "value": null,
+          "json_schema": {
+            "type": "string",
+            "description": "return the users name",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user's name is not mentioned in the conversation. Therefore, it is not possible to extract the user's name."
+        },
+        "phone": {
+          "data_collection_id": "phone",
+          "value": null,
+          "json_schema": {
+            "type": "string",
+            "description": "return the users phone number",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user's phone number is not mentioned in the conversation. Therefore, it is not possible to extract it."
+        },
+        "outcome": {
+          "data_collection_id": "outcome",
+          "value": "What outcome would make your life easier regarding this landlord and tenant issue?",
+          "json_schema": {
+            "type": "string",
+            "description": "summarize what the caller wants as an outcome for the dispute",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The agent asks the user 'What outcome would make your life easier regarding this landlord and tenant issue?'. This is a direct question about the user's desired outcome for the dispute."
+        },
+        "suit": {
+          "data_collection_id": "suit",
+          "value": false,
+          "json_schema": {
+            "type": "boolean",
+            "description": "True or false: Is the caller currently defending against an existing or pending legal action? Only for existing cases should you say true, if they are starting something new or haven't started its false. ",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user stated that they are looking 'to start' legal action, meaning they are not currently defending against an existing or pending legal action. Therefore, the answer is false."
+        },
+        "money": {
+          "data_collection_id": "money",
+          "value": false,
+          "json_schema": {
+            "type": "boolean",
+            "description": "true or false, does the dispute involve a specific amount of money or damages?",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The agent asks 'does the dispute involve a specific amount of money or damages?' and the user responds 'I'm not sure yet.'. This indicates that it is currently unknown whether the dispute involves a specific amount of money or damages. Therefore, the answer is false."
+        },
+        "email": {
+          "data_collection_id": "email",
+          "value": null,
+          "json_schema": {
+            "type": "string",
+            "description": "return the users email\n",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user's email address is not mentioned in the conversation. Therefore, it is not possible to extract it."
         },
         "call_outcome": {
           "data_collection_id": "call_outcome",
-          "value": "Booked Meeting",
+          "value": null,
           "json_schema": {
             "type": "string",
-            "description": "return the outcome of the call eg: Booked Meeting or Requested follow up or Hang up or Asked to Do Not Contact (dnc) or something else. ",
+            "description": "Return the outcome of the call eg: Booked Meeting or Requested follow up or Hang up or Asked to Do Not Contact (dnc) or NOT QUALIFYED or not interested or left a voicemail or or something else. ",
             "dynamic_variable": "",
             "constant_value": ""
           },
-          "rationale": "The agent successfully booked a meeting with the user. The tool call 'book_meeting' confirms this, and the agent states, \"Appointment booked.\""
+          "rationale": "The conversation is still in progress and the outcome of the call is not yet determined. The user is explaining their issue, but there is no clear resolution or action taken."
         },
-        "call_back_time": {
-          "data_collection_id": "call_back_time",
-          "value": "booked meeting: Monday 24th 2025 @ 3:30pm",
+        "issue": {
+          "data_collection_id": "issue",
+          "value": "landlord and tenant issue",
           "json_schema": {
             "type": "string",
-            "description": "Return a call back time or appointment time, eg: Callback: Saturday 15th 2024 @ 11:30am or booked meeting: Friday 22nd 2025 @ 1:30pm",
+            "description": "Summarize what legal issue the caller is facing",
             "dynamic_variable": "",
             "constant_value": ""
           },
-          "rationale": "The agent booked an appointment for the user on Monday, March 24th at 3:30 PM. The tool result confirms the booking with the start time as 2025-03-24T15:30:00-04:00."
+          "rationale": "The user states that they are facing a landlord and tenant issue and are looking to start legal action."
         },
-        "user_company": {
-          "data_collection_id": "user_company",
-          "value": "design company",
+        "action": {
+          "data_collection_id": "action",
+          "value": true,
           "json_schema": {
-            "type": "string",
-            "description": "The provided company name the caller works at or owns. ",
+            "type": "boolean",
+            "description": "true or false, is the caller looking to start legal action?",
             "dynamic_variable": "",
             "constant_value": ""
           },
-          "rationale": "The user states, \"I run a design company.\" This indicates that the company name is 'design company'."
+          "rationale": "The user states 'To start' in response to the agent's question 'Are you currently defending against an existing or pending legal action, or are you looking to start legal action against someone else?'. This indicates that the user is looking to start legal action."
         }
       },
-      "call_successful": "success",
-      "transcript_summary": "Sam from Affinity Design contacted Paul, who runs a design company, after he clicked on their ad. Paul confirmed his company makes around $15k/month and expressed interest in addressing low follow-ups on leads. Sam offered a free AI consultation to help Paul potentially gain 3-5 more clients per month. Sam then used a tool to check availability and scheduled the consultation for Monday, March 24th at 3:30 PM. Sam confirmed the appointment and said he would send the details via email.\n"
+      "call_successful": "unknown",
+      "transcript_summary": "Aria from whylaw Legal Services is assisting a user with a landlord-tenant issue. The user is looking to initiate legal action but is unsure about the specific amount of damages involved. Aria is trying to understand the user's desired outcome.\n"
     },
     "conversation_initiation_client_data": {
       "conversation_config_override": {
-        "agent": {
-          "prompt": null,
-          "first_message": "Paul?",
-          "language": null
-        },
-        "tts": null
+        "tts": null,
+        "conversation": null,
+        "agent": null
       },
       "custom_llm_extra_body": {},
+      "user_id": null,
       "dynamic_variables": {
-        "full_name": "Paul Giovanatto",
-        "business_name": "Affinity Design",
-        "city": "Canada",
-        "job_title": "CEO",
-        "email": "paul@affinitydesign.ca",
-        "phone": "+19058363456",
-        "agentId": "qvu7240QhEUKLultBI7i",
-        "todays_date": "2025-03-21",
-        "one_week_date": "2025-03-28",
-        "four_week_date": "2025-04-18",
-        "system__agent_id": "qvu7240QhEUKLultBI7i",
-        "system__conversation_id": "rQ8n7ZOPSdWgqcWgKyjq",
-        "system__caller_id": null,
-        "system__called_number": null,
-        "system__call_duration_secs": 107,
-        "system__time_utc": "2025-03-21T10:11:09.885366+00:00"
+        "system__agent_id": "agent_01jxxp5senerprmm60n0fnmf49",
+        "system__conversation_id": "conv_01jzn9knzwe37ry23587nxgmfk",
+        "system__caller_id": "Anonymous",
+        "system__called_number": "+16473606807",
+        "system__call_duration_secs": 63,
+        "system__time_utc": "2025-07-08T15:15:04.244021+00:00",
+        "system__call_sid": "CA3635a24efd2fc7b9061c9d92fad5e233"
       }
     }
   },
   "headers": {
     "host": "services.leadconnectorhq.com",
-    "cf-ray": "923caa17ecc0874f-ORD",
-    "x-forwarded-for": "34.67.146.145,10.10.0.146",
-    "content-type": "application/json",
-    "user-agent": "Python/3.12 aiohttp/3.10.11",
-    "accept-encoding": "gzip, br",
+    "cf-ray": "95c08949cae4f4ae-ORD",
+    "x-forwarded-for": "34.59.11.47,10.10.0.98",
     "cf-ipcountry": "US",
+    "user-agent": "Python/3.12 aiohttp/3.11.16",
+    "accept-encoding": "gzip, br",
+    "cdn-loop": "cloudflare; loops=1",
     "x-forwarded-proto": "https",
     "accept": "*/*",
-    "elevenlabs-signature": "t=1742551878,v0=a18872adc746105c78bb9497e361c1ae80e6802078841753ce168598a8712662",
+    "elevenlabs-signature": "t=1751987718,v0=a77d875eb8202bc00a3db56ec5e8e1ab785157fdeebb51f71f501eca5fb67d3a",
     "cf-visitor": {
       "scheme": "https"
     },
-    "cdn-loop": "cloudflare; loops=1",
-    "content-length": "16208",
-    "cf-connecting-ip": "34.67.146.145",
-    "x-envoy-external-address": "10.10.0.146",
-    "x-request-id": "f20e712c-6c5e-4b2b-95ff-37e2cda464bd",
+    "content-type": "application/json",
+    "content-length": "16421",
+    "cf-connecting-ip": "34.59.11.47",
+    "x-envoy-external-address": "10.10.0.98",
+    "x-request-id": "5d276252-7f7d-43f5-99fb-c7e38162d1a8",
     "x-envoy-attempt-count": "1",
-    "x-forwarded-client-cert": "By=spiffe://cluster.local/ns/default/sa/default-automation-workflows;Hash=ee787a42a6ada98a15eb01bc3e97a10421e524409f214a48d0dac217919911f0;Subject=\"\";URI=spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account",
-    "x-b3-traceid": "a6929e1afb4a9fe2b84b98bfd08670ad",
-    "x-b3-spanid": "6bb4a796568a0026",
-    "x-b3-parentspanid": "b84b98bfd08670ad",
+    "x-forwarded-client-cert": "By=spiffe://cluster.local/ns/default/sa/default-automation-workflows;Hash=4cc33ef2b7a2f3a81f60b132954792ae1d611d4a3f8b84701291659a088f07db;Subject=\"\";URI=spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account",
+    "x-b3-traceid": "2ce516d1110dbcb0ad1317665c74728f",
+    "x-b3-spanid": "09eb825da06fb2af",
+    "x-b3-parentspanid": "ad1317665c74728f",
     "x-b3-sampled": "0"
   }
 }

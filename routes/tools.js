@@ -399,10 +399,11 @@ export default async function toolRoutes(fastify, options) {
         });
       }
 
-      if (!phone) {
+      if (!phone || phone === "unknown" || phone.trim() === "") {
         return reply.code(400).send({
-          error: "A phone number is required to find the contact",
+          error: "A valid phone number is required to find the contact",
           requestId,
+          received: phone,
         });
       }
 
@@ -426,9 +427,14 @@ export default async function toolRoutes(fastify, options) {
       console.log(
         `[${requestId}] Booking appointment for calendar: ${calendarId}`
       );
+      console.log(
+        `[${requestId}] Appointment details: ${startTime} to ${endTime}, phone: ${phone}`
+      );
 
       // Get or refresh GHL access token
       const { accessToken } = await checkAndRefreshToken(client.clientId);
+
+      console.log(`[${requestId}] Searching for contact with phone: ${phone}`);
 
       // Search for contact
       const contactSearchResult = await searchGhlContactByPhone(
@@ -438,10 +444,15 @@ export default async function toolRoutes(fastify, options) {
       );
 
       if (!contactSearchResult) {
+        console.log(
+          `[${requestId}] Contact not found for phone: ${phone} in location: ${client.clientId}`
+        );
         return reply.code(404).send({
           error: "Contact not found in GoHighLevel",
           details: "No contact exists with the provided phone number",
           requestId,
+          phone: phone,
+          clientId: client.clientId,
         });
       }
 
@@ -477,6 +488,11 @@ export default async function toolRoutes(fastify, options) {
         ignoreFreeSlotValidation: false,
       };
 
+      console.log(
+        `[${requestId}] Sending appointment data to GHL:`,
+        JSON.stringify(appointmentData, null, 2)
+      );
+
       const response = await fetch(
         "https://services.leadconnectorhq.com/calendars/events/appointments",
         {
@@ -496,9 +512,18 @@ export default async function toolRoutes(fastify, options) {
           `[${requestId}] GHL API error: ${response.status} ${response.statusText}`,
           errorText
         );
-        throw new Error(
-          `GHL API error: ${response.status} ${response.statusText} - ${errorText}`
+        console.error(
+          `[${requestId}] Failed appointment data:`,
+          JSON.stringify(appointmentData, null, 2)
         );
+
+        return reply.code(response.status).send({
+          error: "Failed to book appointment with GoHighLevel",
+          ghlError: errorText,
+          ghlStatus: response.status,
+          requestId,
+          appointmentData,
+        });
       }
 
       const appointmentResult = await response.json();
