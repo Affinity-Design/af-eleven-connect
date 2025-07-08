@@ -1619,7 +1619,7 @@ fastify.post(
       };
 
       // Add call to client's call history in the database
-      await addCallToHistory(client.clientId, callData);
+      // await addCallToHistory(client.clientId, callData);
 
       reply.send({
         success: true,
