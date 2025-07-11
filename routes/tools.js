@@ -308,6 +308,7 @@ export default async function toolRoutes(fastify, options) {
       Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
 
     console.log(`[${requestId}] Tool: Book appointment request`);
+    console.log(`[${requestId}] Request payload:`, JSON.stringify(request.body, null, 2));
 
     const {
       twilioPhone,
@@ -407,6 +408,16 @@ export default async function toolRoutes(fastify, options) {
         });
       }
 
+      // Normalize phone number (remove spaces, ensure + prefix)
+      let normalizedPhone = phone.trim();
+      if (!normalizedPhone.startsWith('+')) {
+        normalizedPhone = '+' + normalizedPhone;
+      }
+      
+      console.log(
+        `[${requestId}] Original phone: "${phone}", normalized: "${normalizedPhone}"`
+      );
+
       // Use the calId from client record as the calendarId
       const calendarId = client.calId;
       if (!calendarId) {
@@ -434,30 +445,102 @@ export default async function toolRoutes(fastify, options) {
       // Get or refresh GHL access token
       const { accessToken } = await checkAndRefreshToken(client.clientId);
 
-      console.log(`[${requestId}] Searching for contact with phone: ${phone}`);
+      console.log(`[${requestId}] Searching for contact with phone: ${normalizedPhone}`);
 
       // Search for contact
-      const contactSearchResult = await searchGhlContactByPhone(
+      let contactSearchResult = await searchGhlContactByPhone(
         accessToken,
-        phone,
+        normalizedPhone,
         client.clientId
       );
 
+      // If not found, try without country code for North American numbers
+      if (!contactSearchResult && normalizedPhone.startsWith('+1')) {
+        const withoutCountryCode = normalizedPhone.substring(2); // Remove +1
+        console.log(`[${requestId}] Retrying search without country code: ${withoutCountryCode}`);
+        contactSearchResult = await searchGhlContactByPhone(
+          accessToken,
+          withoutCountryCode,
+          client.clientId
+        );
+      }
+
+      // If still not found, try the original format
+      if (!contactSearchResult && phone !== normalizedPhone) {
+        console.log(`[${requestId}] Retrying search with original format: ${phone}`);
+        contactSearchResult = await searchGhlContactByPhone(
+          accessToken,
+          phone,
+          client.clientId
+        );
+      }
+
       if (!contactSearchResult) {
         console.log(
-          `[${requestId}] Contact not found for phone: ${phone} in location: ${client.clientId}`
+          `[${requestId}] Contact not found for phone: ${normalizedPhone} (tried multiple formats) in location: ${client.clientId}`
         );
-        return reply.code(404).send({
-          error: "Contact not found in GoHighLevel",
-          details: "No contact exists with the provided phone number",
-          requestId,
-          phone: phone,
-          clientId: client.clientId,
-        });
+        console.log(`[${requestId}] Creating new contact with phone: ${normalizedPhone}`);
+        
+        // Create new contact in GoHighLevel
+        const newContactData = {
+          firstName: "New", // Default first name
+          lastName: "Contact", // Default last name
+          phone: normalizedPhone,
+          locationId: client.clientId,
+          source: "ElevenLabs AI Call", // Track the source
+        };
+
+        try {
+          const createResponse = await fetch(
+            "https://services.leadconnectorhq.com/contacts/",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+                Version: "2021-07-28",
+              },
+              body: JSON.stringify(newContactData),
+            }
+          );
+
+          if (!createResponse.ok) {
+            const createErrorText = await createResponse.text();
+            console.error(
+              `[${requestId}] Failed to create contact: ${createResponse.status} ${createResponse.statusText}`,
+              createErrorText
+            );
+            return reply.code(500).send({
+              error: "Failed to create contact in GoHighLevel",
+              details: createErrorText,
+              requestId,
+              phone: normalizedPhone,
+              clientId: client.clientId,
+            });
+          }
+
+          const createdContact = await createResponse.json();
+          console.log(
+            `[${requestId}] Successfully created contact with ID: ${createdContact.contact.id}`
+          );
+          
+          // Use the newly created contact
+          contactSearchResult = createdContact.contact;
+        } catch (createError) {
+          console.error(`[${requestId}] Error creating contact:`, createError);
+          return reply.code(500).send({
+            error: "Failed to create contact in GoHighLevel",
+            details: createError.message,
+            requestId,
+            phone: normalizedPhone,
+            clientId: client.clientId,
+          });
+        }
       }
 
       const contactData = contactSearchResult;
       const contactId = contactData.id;
+      const wasContactCreated = !contactData.dateAdded || new Date(contactData.dateAdded) > new Date(Date.now() - 60000); // Created in last minute
 
       if (!contactId) {
         return reply.code(500).send({
@@ -465,6 +548,10 @@ export default async function toolRoutes(fastify, options) {
           requestId,
         });
       }
+
+      console.log(
+        `[${requestId}] Using contact ID: ${contactId} ${wasContactCreated ? '(newly created)' : '(existing)'}`
+      );
 
       // Create the custom appointment title
       const contactFirstName = contactData.firstNameLowerCase || "Appointment";
@@ -551,8 +638,9 @@ export default async function toolRoutes(fastify, options) {
         },
         contact: {
           id: contactId,
-          name: contactData.firstNameLowerCase || "Unknown",
-          phone: phone,
+          name: contactData.firstNameLowerCase || contactData.firstName || "New Contact",
+          phone: normalizedPhone,
+          wasCreated: wasContactCreated,
         },
       });
     } catch (error) {

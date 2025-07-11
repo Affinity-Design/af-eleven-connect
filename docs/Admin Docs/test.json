@@ -1,10 +1,11 @@
 {
   "type": "post_call_transcription",
-  "event_timestamp": 1751609788,
+  "event_timestamp": 1751984941,
   "data": {
     "agent_id": "agent_01jxxp5senerprmm60n0fnmf49",
-    "conversation_id": "conv_01jza153ymfybsq9gmj9140ss6",
+    "conversation_id": "conv_01jzn6tjgtfdrss085zw2a1vpj",
     "status": "done",
+    "user_id": null,
     "transcript": [
       {
         "role": "agent",
@@ -23,7 +24,7 @@
       },
       {
         "role": "user",
-        "message": "Hey, I think I'm getting sued.",
+        "message": "Yeah, I'm being evicted.",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
@@ -38,130 +39,50 @@
       },
       {
         "role": "agent",
-        "message": "I see. That sounds like a stressful situation. Could you briefly tell me what legal issue you are facing today?",
+        "message": "I understand you're being evicted. Could you briefly tell me what legal issue you’re facing today, in a bit more detail?\n",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 10,
+        "time_in_call_secs": 8,
         "conversation_turn_metrics": {
           "metrics": {
             "convai_llm_service_ttf_sentence": {
-              "elapsed_time": 1.519920060876757
+              "elapsed_time": 0.7189841521903872
             },
             "convai_llm_service_ttfb": {
-              "elapsed_time": 1.5195931899361312
+              "elapsed_time": 0.4704104121774435
             }
           }
         },
         "rag_retrieval_info": {
           "chunks": [
             {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "q8rpkubMtbumpm5KDzky",
-              "vector_distance": 0.17973822355270386
+              "document_id": "3AvYOeBINSuDoUZyBHCu",
+              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
+              "vector_distance": 0.16581034660339355
+            },
+            {
+              "document_id": "JCBlTQEoKDWYq9wJmyE5",
+              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
+              "vector_distance": 0.1706981658935547
             },
             {
               "document_id": "tGi9LQqtqXmM3Y9l8rRw",
               "chunk_id": "s82ggNsRLu4nMLajM06j",
-              "vector_distance": 0.18255579471588135
-            },
-            {
-              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
-              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
-              "vector_distance": 0.18600475788116455
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
-              "vector_distance": 0.18659979104995728
-            },
-            {
-              "document_id": "YY8EtWDXkd78TQ83CPJ5",
-              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
-              "vector_distance": 0.18659979104995728
-            },
-            {
-              "document_id": "JxEIWFXstuR1f0QhRUb9",
-              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
-              "vector_distance": 0.19614267349243164
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
-              "vector_distance": 0.19625240564346313
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
-              "vector_distance": 0.196968674659729
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "F98mRtgMh3bAvP1lWICR",
-              "vector_distance": 0.19764530658721924
-            },
-            {
-              "document_id": "lJdT82rUXfoYg9SzgZdQ",
-              "chunk_id": "HCrpLeAFmaetPdnIQYfA",
-              "vector_distance": 0.2005249261856079
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
-              "vector_distance": 0.20100760459899902
-            },
-            {
-              "document_id": "YY8EtWDXkd78TQ83CPJ5",
-              "chunk_id": "9gsCpc7yyUPbR2vfao5I",
-              "vector_distance": 0.20100760459899902
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "qRApy4nqUDobSsBBvq3b",
-              "vector_distance": 0.20456832647323608
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "zzVQLdEn2CE5D7CFEOOq",
-              "vector_distance": 0.20591866970062256
-            },
-            {
-              "document_id": "ep10H8ERp4k0s7RgUvI3",
-              "chunk_id": "CLMuviQjriGrrsS9UFHa",
-              "vector_distance": 0.20614516735076904
-            },
-            {
-              "document_id": "9NcdFJVGQ0Js7z8TxHTG",
-              "chunk_id": "aGrIwt7Qc9LBAOZPqGft",
-              "vector_distance": 0.2071881890296936
-            },
-            {
-              "document_id": "xlnS5kLgPhbj9TYpZwlL",
-              "chunk_id": "57EwSifW1hiPOo8fRsUR",
-              "vector_distance": 0.20819151401519775
-            },
-            {
-              "document_id": "zmQmoXCCRGVwF3AIPFZ0",
-              "chunk_id": "QytG4l5SLbDfNGssT143",
-              "vector_distance": 0.20846831798553467
-            },
-            {
-              "document_id": "3AvYOeBINSuDoUZyBHCu",
-              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
-              "vector_distance": 0.21060508489608765
+              "vector_distance": 0.17204642295837402
             }
           ],
           "embedding_model": "e5_mistral_7b_instruct",
-          "retrieval_query": "I think I'm being sued; what should I do?\n",
-          "rag_latency_secs": 0.7283659959211946
+          "retrieval_query": "I am being evicted; what are my legal options?\n",
+          "rag_latency_secs": 0.43266000133007765
         },
         "llm_usage": {
           "model_usage": {
-            "gemini-2.5-flash": {
+            "gemini-2.0-flash": {
               "input": {
-                "tokens": 17850,
-                "price": 0.0026775
+                "tokens": 8689,
+                "price": 0.0008689000000000001
               },
               "input_cache_read": {
                 "tokens": 0,
@@ -172,8 +93,8 @@
                 "price": 0
               },
               "output_total": {
-                "tokens": 23,
-                "price": 0.000013799999999999998
+                "tokens": 29,
+                "price": 0.0000116
               }
             }
           }
@@ -184,12 +105,12 @@
       },
       {
         "role": "user",
-        "message": "Yeah, I owe a lot of money.",
+        "message": "My landlord came to me yesterday and said, you have to be out by the end of the month.",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 19,
+        "time_in_call_secs": 18,
         "conversation_turn_metrics": null,
         "rag_retrieval_info": null,
         "llm_usage": null,
@@ -199,278 +120,50 @@
       },
       {
         "role": "agent",
-        "message": "I understand. Are you currently engaged in any legal action regarding this debt?",
+        "message": "Okay, thank you for clarifying. Are you currently defending against an existing or pending legal action related to this eviction, or is this the first you're hearing of it?\n",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 25,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": {
-          "chunks": [
-            {
-              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
-              "chunk_id": "s82ggNsRLu4nMLajM06j",
-              "vector_distance": 0.175972580909729
+        "time_in_call_secs": 30,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.7861333768814802
             },
-            {
-              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
-              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
-              "vector_distance": 0.1819971799850464
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "q8rpkubMtbumpm5KDzky",
-              "vector_distance": 0.18958383798599243
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
-              "vector_distance": 0.1994626522064209
-            },
-            {
-              "document_id": "YY8EtWDXkd78TQ83CPJ5",
-              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
-              "vector_distance": 0.1994626522064209
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "F98mRtgMh3bAvP1lWICR",
-              "vector_distance": 0.19960248470306396
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "qRApy4nqUDobSsBBvq3b",
-              "vector_distance": 0.20158660411834717
-            },
-            {
-              "document_id": "JxEIWFXstuR1f0QhRUb9",
-              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
-              "vector_distance": 0.20267540216445923
-            },
-            {
-              "document_id": "JCBlTQEoKDWYq9wJmyE5",
-              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
-              "vector_distance": 0.2098490595817566
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
-              "vector_distance": 0.211886465549469
-            },
-            {
-              "document_id": "YY8EtWDXkd78TQ83CPJ5",
-              "chunk_id": "9gsCpc7yyUPbR2vfao5I",
-              "vector_distance": 0.211886465549469
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
-              "vector_distance": 0.2125423550605774
-            },
-            {
-              "document_id": "xlnS5kLgPhbj9TYpZwlL",
-              "chunk_id": "57EwSifW1hiPOo8fRsUR",
-              "vector_distance": 0.21384590864181519
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
-              "vector_distance": 0.21473455429077148
-            },
-            {
-              "document_id": "JCBlTQEoKDWYq9wJmyE5",
-              "chunk_id": "dgmY5ZLfBd7RnQU1Wvui",
-              "vector_distance": 0.21475744247436523
-            },
-            {
-              "document_id": "zmQmoXCCRGVwF3AIPFZ0",
-              "chunk_id": "QytG4l5SLbDfNGssT143",
-              "vector_distance": 0.21526658535003662
-            },
-            {
-              "document_id": "lJdT82rUXfoYg9SzgZdQ",
-              "chunk_id": "HCrpLeAFmaetPdnIQYfA",
-              "vector_distance": 0.2156754732131958
-            },
-            {
-              "document_id": "8uZsLJ3XWpNud4OMU5MC",
-              "chunk_id": "qtMNxDOu4VQqU3wyW03l",
-              "vector_distance": 0.215969979763031
-            },
-            {
-              "document_id": "3AvYOeBINSuDoUZyBHCu",
-              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
-              "vector_distance": 0.21649503707885742
-            }
-          ],
-          "embedding_model": "e5_mistral_7b_instruct",
-          "retrieval_query": "I'm being sued because I owe a lot of money. What should I do?\n",
-          "rag_latency_secs": 0.7638457301072776
-        },
-        "llm_usage": {
-          "model_usage": {
-            "gemini-2.5-flash": {
-              "input": {
-                "tokens": 17803,
-                "price": 0.00267045
-              },
-              "input_cache_read": {
-                "tokens": 0,
-                "price": 0
-              },
-              "input_cache_write": {
-                "tokens": 0,
-                "price": 0
-              },
-              "output_total": {
-                "tokens": 15,
-                "price": 0.000009
-              }
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.5144114764407277
             }
           }
         },
-        "interrupted": false,
-        "original_message": null,
-        "source_medium": null
-      },
-      {
-        "role": "user",
-        "message": "No.",
-        "tool_calls": [],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 31,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": null,
-        "llm_usage": null,
-        "interrupted": false,
-        "original_message": null,
-        "source_medium": "audio"
-      },
-      {
-        "role": "agent",
-        "message": "I see. Are you looking to start legal action?",
-        "tool_calls": [],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 34,
-        "conversation_turn_metrics": null,
         "rag_retrieval_info": {
           "chunks": [
             {
-              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
-              "chunk_id": "s82ggNsRLu4nMLajM06j",
-              "vector_distance": 0.1665867567062378
-            },
-            {
-              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
-              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
-              "vector_distance": 0.17155539989471436
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "q8rpkubMtbumpm5KDzky",
-              "vector_distance": 0.18411719799041748
-            },
-            {
-              "document_id": "JxEIWFXstuR1f0QhRUb9",
-              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
-              "vector_distance": 0.1846441626548767
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
-              "vector_distance": 0.18729782104492188
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
-              "vector_distance": 0.19085431098937988
-            },
-            {
-              "document_id": "YY8EtWDXkd78TQ83CPJ5",
-              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
-              "vector_distance": 0.19085431098937988
-            },
-            {
-              "document_id": "JCBlTQEoKDWYq9wJmyE5",
-              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
-              "vector_distance": 0.19139766693115234
-            },
-            {
-              "document_id": "xlnS5kLgPhbj9TYpZwlL",
-              "chunk_id": "57EwSifW1hiPOo8fRsUR",
-              "vector_distance": 0.19584786891937256
-            },
-            {
-              "document_id": "lJdT82rUXfoYg9SzgZdQ",
-              "chunk_id": "HCrpLeAFmaetPdnIQYfA",
-              "vector_distance": 0.19772064685821533
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "F98mRtgMh3bAvP1lWICR",
-              "vector_distance": 0.19830560684204102
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "qRApy4nqUDobSsBBvq3b",
-              "vector_distance": 0.19957101345062256
-            },
-            {
-              "document_id": "JCBlTQEoKDWYq9wJmyE5",
-              "chunk_id": "dgmY5ZLfBd7RnQU1Wvui",
-              "vector_distance": 0.20139646530151367
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
-              "vector_distance": 0.20256578922271729
-            },
-            {
-              "document_id": "YY8EtWDXkd78TQ83CPJ5",
-              "chunk_id": "9gsCpc7yyUPbR2vfao5I",
-              "vector_distance": 0.20256578922271729
+              "document_id": "Py61GsmRNzk0X6rxb4bu",
+              "chunk_id": "qW269PROAUbbBP4VmgBe",
+              "vector_distance": 0.14667993783950806
             },
             {
               "document_id": "Ud0ZzJKfA5Q9HpNwFMtY",
-              "chunk_id": "GaWT1DdPaOon44qkSGWj",
-              "vector_distance": 0.20319604873657227
+              "chunk_id": "RYfat0d0LnbEBJNGgIGd",
+              "vector_distance": 0.15457451343536377
             },
             {
               "document_id": "8uZsLJ3XWpNud4OMU5MC",
               "chunk_id": "qtMNxDOu4VQqU3wyW03l",
-              "vector_distance": 0.203210711479187
-            },
-            {
-              "document_id": "ep10H8ERp4k0s7RgUvI3",
-              "chunk_id": "CLMuviQjriGrrsS9UFHa",
-              "vector_distance": 0.2035199999809265
-            },
-            {
-              "document_id": "XBypJgRPXRERg8GxSCmA",
-              "chunk_id": "LlmA38O0vkPVWL1Emjri",
-              "vector_distance": 0.2058647871017456
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
-              "vector_distance": 0.20650219917297363
+              "vector_distance": 0.1601099967956543
             }
           ],
           "embedding_model": "e5_mistral_7b_instruct",
-          "retrieval_query": "I owe a significant amount of money and haven't yet been contacted by any legal representatives regarding this debt; am I being sued?\n",
-          "rag_latency_secs": 1.0324333417229354
+          "retrieval_query": "I am being evicted; my landlord gave me one day's notice to vacate by the end of the month.  What are my legal options?\n",
+          "rag_latency_secs": 1.39186601806432
         },
         "llm_usage": {
           "model_usage": {
-            "gemini-2.5-flash": {
+            "gemini-2.0-flash": {
               "input": {
-                "tokens": 18036,
-                "price": 0.0027054
+                "tokens": 9715,
+                "price": 0.0009715
               },
               "input_cache_read": {
                 "tokens": 0,
@@ -481,8 +174,8 @@
                 "price": 0
               },
               "output_total": {
-                "tokens": 11,
-                "price": 0.0000065999999999999995
+                "tokens": 36,
+                "price": 0.000014400000000000001
               }
             }
           }
@@ -493,144 +186,68 @@
       },
       {
         "role": "user",
-        "message": "Uh yes",
-        "tool_calls": [],
-        "tool_results": [],
-        "feedback": null,
-        "llm_override": null,
-        "time_in_call_secs": 39,
-        "conversation_turn_metrics": null,
-        "rag_retrieval_info": null,
-        "llm_usage": null,
-        "interrupted": false,
-        "original_message": null,
-        "source_medium": "audio"
-      },
-      {
-        "role": "agent",
-        "message": "Does the dispute involve a specific amount of money or damages?",
+        "message": "Yeah, this is the first time it came out of nowhere. I don't have any other legal action.",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
         "time_in_call_secs": 43,
         "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "I see. Does this dispute involve a specific amount of money or damages that you are concerned about?\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 55,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.8393894964829087
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.5881818002089858
+            }
+          }
+        },
         "rag_retrieval_info": {
           "chunks": [
             {
-              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
-              "chunk_id": "s82ggNsRLu4nMLajM06j",
-              "vector_distance": 0.16100084781646729
+              "document_id": "Py61GsmRNzk0X6rxb4bu",
+              "chunk_id": "qW269PROAUbbBP4VmgBe",
+              "vector_distance": 0.13613951206207275
             },
             {
-              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
-              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
-              "vector_distance": 0.16428208351135254
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "q8rpkubMtbumpm5KDzky",
-              "vector_distance": 0.16451656818389893
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
-              "vector_distance": 0.17157185077667236
-            },
-            {
-              "document_id": "YY8EtWDXkd78TQ83CPJ5",
-              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
-              "vector_distance": 0.17157185077667236
-            },
-            {
-              "document_id": "JxEIWFXstuR1f0QhRUb9",
-              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
-              "vector_distance": 0.17438507080078125
-            },
-            {
-              "document_id": "lJdT82rUXfoYg9SzgZdQ",
-              "chunk_id": "HCrpLeAFmaetPdnIQYfA",
-              "vector_distance": 0.1749945878982544
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
-              "vector_distance": 0.17591440677642822
+              "document_id": "8uZsLJ3XWpNud4OMU5MC",
+              "chunk_id": "qtMNxDOu4VQqU3wyW03l",
+              "vector_distance": 0.14350080490112305
             },
             {
               "document_id": "JCBlTQEoKDWYq9wJmyE5",
               "chunk_id": "fBu2TSXO6yLxrJveTkvY",
-              "vector_distance": 0.17971831560134888
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "F98mRtgMh3bAvP1lWICR",
-              "vector_distance": 0.1817570924758911
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "qRApy4nqUDobSsBBvq3b",
-              "vector_distance": 0.18246984481811523
-            },
-            {
-              "document_id": "xlnS5kLgPhbj9TYpZwlL",
-              "chunk_id": "57EwSifW1hiPOo8fRsUR",
-              "vector_distance": 0.18355798721313477
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
-              "vector_distance": 0.18484997749328613
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
-              "vector_distance": 0.1854502558708191
-            },
-            {
-              "document_id": "YY8EtWDXkd78TQ83CPJ5",
-              "chunk_id": "9gsCpc7yyUPbR2vfao5I",
-              "vector_distance": 0.1854502558708191
-            },
-            {
-              "document_id": "zmQmoXCCRGVwF3AIPFZ0",
-              "chunk_id": "QytG4l5SLbDfNGssT143",
-              "vector_distance": 0.18733197450637817
-            },
-            {
-              "document_id": "Ud0ZzJKfA5Q9HpNwFMtY",
-              "chunk_id": "GaWT1DdPaOon44qkSGWj",
-              "vector_distance": 0.18781507015228271
-            },
-            {
-              "document_id": "ep10H8ERp4k0s7RgUvI3",
-              "chunk_id": "CLMuviQjriGrrsS9UFHa",
-              "vector_distance": 0.18807005882263184
-            },
-            {
-              "document_id": "3AvYOeBINSuDoUZyBHCu",
-              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
-              "vector_distance": 0.18828964233398438
-            },
-            {
-              "document_id": "lJdT82rUXfoYg9SzgZdQ",
-              "chunk_id": "iSZRRWqJ8VB0ALjSeW4n",
-              "vector_distance": 0.18924355506896973
+              "vector_distance": 0.1453382968902588
             }
           ],
           "embedding_model": "e5_mistral_7b_instruct",
-          "retrieval_query": "I owe a significant amount of money and am facing potential legal action.  Should I initiate legal action myself?\n",
-          "rag_latency_secs": 0.9747207746841013
+          "retrieval_query": "Is this verbal notice of eviction legally valid, and what are my rights and options for responding?\n",
+          "rag_latency_secs": 3.4967278875410557
         },
         "llm_usage": {
           "model_usage": {
-            "gemini-2.5-flash": {
+            "gemini-2.0-flash": {
               "input": {
-                "tokens": 14053,
-                "price": 0.00210795
+                "tokens": 9279,
+                "price": 0.0009279000000000001
               },
               "input_cache_read": {
-                "tokens": 3909,
+                "tokens": 0,
                 "price": 0
               },
               "input_cache_write": {
@@ -638,8 +255,8 @@
                 "price": 0
               },
               "output_total": {
-                "tokens": 12,
-                "price": 0.0000072
+                "tokens": 21,
+                "price": 0.000008400000000000001
               }
             }
           }
@@ -650,12 +267,12 @@
       },
       {
         "role": "user",
-        "message": "Yes",
+        "message": "No, not that I know of.",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 47,
+        "time_in_call_secs": 62,
         "conversation_turn_metrics": null,
         "rag_retrieval_info": null,
         "llm_usage": null,
@@ -665,119 +282,44 @@
       },
       {
         "role": "agent",
-        "message": "What outcome would make your life easier?",
+        "message": "Okay. What outcome would make your life easier in this situation?\n",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 52,
+        "time_in_call_secs": 65,
         "conversation_turn_metrics": null,
         "rag_retrieval_info": {
           "chunks": [
             {
-              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
-              "chunk_id": "s82ggNsRLu4nMLajM06j",
-              "vector_distance": 0.16779601573944092
+              "document_id": "Py61GsmRNzk0X6rxb4bu",
+              "chunk_id": "qW269PROAUbbBP4VmgBe",
+              "vector_distance": 0.1462327241897583
             },
             {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "q8rpkubMtbumpm5KDzky",
-              "vector_distance": 0.16857266426086426
-            },
-            {
-              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
-              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
-              "vector_distance": 0.16900014877319336
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
-              "vector_distance": 0.17260009050369263
-            },
-            {
-              "document_id": "YY8EtWDXkd78TQ83CPJ5",
-              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
-              "vector_distance": 0.17260009050369263
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "F98mRtgMh3bAvP1lWICR",
-              "vector_distance": 0.1752537488937378
-            },
-            {
-              "document_id": "JxEIWFXstuR1f0QhRUb9",
-              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
-              "vector_distance": 0.1752811074256897
-            },
-            {
-              "document_id": "ep10H8ERp4k0s7RgUvI3",
-              "chunk_id": "CLMuviQjriGrrsS9UFHa",
-              "vector_distance": 0.18081313371658325
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "qRApy4nqUDobSsBBvq3b",
-              "vector_distance": 0.18252873420715332
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
-              "vector_distance": 0.18334472179412842
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
-              "vector_distance": 0.18419510126113892
-            },
-            {
-              "document_id": "xlnS5kLgPhbj9TYpZwlL",
-              "chunk_id": "57EwSifW1hiPOo8fRsUR",
-              "vector_distance": 0.18453264236450195
-            },
-            {
-              "document_id": "JCBlTQEoKDWYq9wJmyE5",
-              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
-              "vector_distance": 0.18531537055969238
-            },
-            {
-              "document_id": "zmQmoXCCRGVwF3AIPFZ0",
-              "chunk_id": "QytG4l5SLbDfNGssT143",
-              "vector_distance": 0.18654215335845947
+              "document_id": "Ud0ZzJKfA5Q9HpNwFMtY",
+              "chunk_id": "RYfat0d0LnbEBJNGgIGd",
+              "vector_distance": 0.1537145972251892
             },
             {
               "document_id": "3AvYOeBINSuDoUZyBHCu",
               "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
-              "vector_distance": 0.18717443943023682
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
-              "vector_distance": 0.18758082389831543
-            },
-            {
-              "document_id": "YY8EtWDXkd78TQ83CPJ5",
-              "chunk_id": "9gsCpc7yyUPbR2vfao5I",
-              "vector_distance": 0.18758082389831543
-            },
-            {
-              "document_id": "ep10H8ERp4k0s7RgUvI3",
-              "chunk_id": "I2KyzCQ9okjFp9w9hSZD",
-              "vector_distance": 0.18835383653640747
+              "vector_distance": 0.15935546159744263
             }
           ],
           "embedding_model": "e5_mistral_7b_instruct",
-          "retrieval_query": "I owe a significant debt and want to take legal action; what are my options?\n",
-          "rag_latency_secs": 1.2088099750690162
+          "retrieval_query": "Is there a legal process I need to follow because my landlord verbally told me to vacate my property by the end of the month, and this is the first I've heard of it?\n",
+          "rag_latency_secs": 0.8707404108718038
         },
         "llm_usage": {
           "model_usage": {
-            "gemini-2.5-flash": {
+            "gemini-2.0-flash": {
               "input": {
-                "tokens": 13335,
-                "price": 0.00200025
+                "tokens": 9875,
+                "price": 0.0009875
               },
               "input_cache_read": {
-                "tokens": 3900,
+                "tokens": 0,
                 "price": 0
               },
               "input_cache_write": {
@@ -785,8 +327,8 @@
                 "price": 0
               },
               "output_total": {
-                "tokens": 8,
-                "price": 0.0000048
+                "tokens": 14,
+                "price": 0.000005600000000000001
               }
             }
           }
@@ -797,12 +339,12 @@
       },
       {
         "role": "user",
-        "message": "Um... if... I didn't have this problem anyway",
+        "message": "Well, I would like to stay in the apartment and continue paying my rent.",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 56,
+        "time_in_call_secs": 71,
         "conversation_turn_metrics": null,
         "rag_retrieval_info": null,
         "llm_usage": null,
@@ -812,119 +354,84 @@
       },
       {
         "role": "agent",
-        "message": "I understand you'd like to find a resolution to this problem. It sounds like something we might be able to help you with.\n",
+        "message": "I understand. To see if we can assist you, when would be convenient for a fifteen-minute action proposal call with Daniel English, morning or afternoon?\n",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 64,
-        "conversation_turn_metrics": null,
+        "time_in_call_secs": 79,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.7359473500400782
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.38664761651307344
+            }
+          }
+        },
         "rag_retrieval_info": {
           "chunks": [
             {
-              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
-              "chunk_id": "s82ggNsRLu4nMLajM06j",
-              "vector_distance": 0.15657341480255127
-            },
-            {
-              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
-              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
-              "vector_distance": 0.1641039252281189
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
-              "vector_distance": 0.16511154174804688
-            },
-            {
-              "document_id": "YY8EtWDXkd78TQ83CPJ5",
-              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
-              "vector_distance": 0.16511154174804688
-            },
-            {
-              "document_id": "xlnS5kLgPhbj9TYpZwlL",
-              "chunk_id": "57EwSifW1hiPOo8fRsUR",
-              "vector_distance": 0.16676044464111328
-            },
-            {
               "document_id": "JCBlTQEoKDWYq9wJmyE5",
               "chunk_id": "fBu2TSXO6yLxrJveTkvY",
-              "vector_distance": 0.16765141487121582
-            },
-            {
-              "document_id": "zmQmoXCCRGVwF3AIPFZ0",
-              "chunk_id": "QytG4l5SLbDfNGssT143",
-              "vector_distance": 0.16809916496276855
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "q8rpkubMtbumpm5KDzky",
-              "vector_distance": 0.16817224025726318
-            },
-            {
-              "document_id": "JxEIWFXstuR1f0QhRUb9",
-              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
-              "vector_distance": 0.16872501373291016
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "F98mRtgMh3bAvP1lWICR",
-              "vector_distance": 0.17180734872817993
-            },
-            {
-              "document_id": "ep10H8ERp4k0s7RgUvI3",
-              "chunk_id": "CLMuviQjriGrrsS9UFHa",
-              "vector_distance": 0.17287558317184448
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
-              "vector_distance": 0.17550867795944214
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "qRApy4nqUDobSsBBvq3b",
-              "vector_distance": 0.17722177505493164
-            },
-            {
-              "document_id": "lJdT82rUXfoYg9SzgZdQ",
-              "chunk_id": "iSZRRWqJ8VB0ALjSeW4n",
-              "vector_distance": 0.1772635579109192
+              "vector_distance": 0.15732383728027344
             },
             {
               "document_id": "3AvYOeBINSuDoUZyBHCu",
               "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
-              "vector_distance": 0.17757666110992432
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
-              "vector_distance": 0.1779576539993286
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
-              "vector_distance": 0.17914211750030518
-            },
-            {
-              "document_id": "YY8EtWDXkd78TQ83CPJ5",
-              "chunk_id": "9gsCpc7yyUPbR2vfao5I",
-              "vector_distance": 0.17914211750030518
+              "vector_distance": 0.1594356894493103
             },
             {
               "document_id": "Ud0ZzJKfA5Q9HpNwFMtY",
               "chunk_id": "GaWT1DdPaOon44qkSGWj",
-              "vector_distance": 0.17926263809204102
+              "vector_distance": 0.1620417833328247
             }
           ],
           "embedding_model": "e5_mistral_7b_instruct",
-          "retrieval_query": "I owe a significant debt and am considering legal action. What legal options are available to resolve this debt problem?\n",
-          "rag_latency_secs": 0.6532735787332058
+          "retrieval_query": "How can I avoid eviction from my apartment and continue my tenancy?\n",
+          "rag_latency_secs": 1.5665210504084826
         },
-        "llm_usage": null,
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 8848,
+                "price": 0.0008848
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 32,
+                "price": 0.000012800000000000001
+              }
+            }
+          }
+        },
         "interrupted": false,
         "original_message": null,
         "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "Afternoon.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 92,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
       },
       {
         "role": "agent",
@@ -932,9 +439,9 @@
         "tool_calls": [
           {
             "type": "webhook",
-            "request_id": "get_availability_a9e3c2cb5c3b47a1875746abafb73411",
+            "request_id": "get_availability_d311f20717f0461a8d40e0d764605d85",
             "tool_name": "get_availability",
-            "params_as_json": "{\"twilioPhone\": \"+14379959529\"}",
+            "params_as_json": "{\"twilioPhone\": \"\"}",
             "tool_has_been_called": true,
             "tool_details": {
               "type": "webhook",
@@ -953,7 +460,7 @@
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 64,
+        "time_in_call_secs": 101,
         "conversation_turn_metrics": null,
         "rag_retrieval_info": null,
         "llm_usage": null,
@@ -968,17 +475,17 @@
         "tool_results": [
           {
             "type": "webhook",
-            "request_id": "get_availability_a9e3c2cb5c3b47a1875746abafb73411",
+            "request_id": "get_availability_d311f20717f0461a8d40e0d764605d85",
             "tool_name": "get_availability",
-            "result_value": "{\"requestId\":\"mcof7qlyvlqjm\",\"clientId\":\"IQUPST2vTUl67YUYZYDy\",\"clientName\":\"Daniel English\",\"businessName\":\"YLAW\",\"foundBy\":\"primaryTwilioPhone\",\"matchedAgent\":null,\"dateRange\":{\"start\":\"2025-07-04T06:15:41.708Z\",\"end\":\"2025-07-11T06:15:41.708Z\"},\"timezone\":\"America/New_York\",\"availability\":{\"2025-07-04\":{\"slots\":[\"2025-07-04T02:30:00-04:00\",\"2025-07-04T02:45:00-04:00\",\"2025-07-04T03:00:00-04:00\",\"2025-07-04T03:15:00-04:00\",\"2025-07-04T03:30:00-04:00\",\"2025-07-04T03:45:00-04:00\",\"2025-07-04T04:00:00-04:00\",\"2025-07-04T04:15:00-04:00\",\"2025-07-04T04:30:00-04:00\",\"2025-07-04T04:45:00-04:00\",\"2025-07-04T05:00:00-04:00\",\"2025-07-04T05:15:00-04:00\",\"2025-07-04T05:30:00-04:00\",\"2025-07-04T05:45:00-04:00\",\"2025-07-04T06:00:00-04:00\",\"2025-07-04T06:15:00-04:00\",\"2025-07-04T06:30:00-04:00\",\"2025-07-04T06:45:00-04:00\",\"2025-07-04T07:00:00-04:00\",\"2025-07-04T07:15:00-04:00\",\"2025-07-04T07:30:00-04:00\",\"2025-07-04T07:45:00-04:00\",\"2025-07-04T08:00:00-04:00\",\"2025-07-04T08:15:00-04:00\",\"2025-07-04T08:30:00-04:00\",\"2025-07-04T08:45:00-04:00\",\"2025-07-04T09:00:00-04:00\",\"2025-07-04T09:15:00-04:00\",\"2025-07-04T09:30:00-04:00\",\"2025-07-04T09:45:00-04:00\",\"2025-07-04T10:00:00-04:00\",\"2025-07-04T10:15:00-04:00\",\"2025-07-04T10:30:00-04:00\",\"2025-07-04T10:45:00-04:00\",\"2025-07-04T11:00:00-04:00\",\"2025-07-04T11:15:00-04:00\",\"2025-07-04T11:30:00-04:00\",\"2025-07-04T11:45:00-04:00\",\"2025-07-04T12:00:00-04:00\",\"2025-07-04T12:15:00-04:00\",\"2025-07-04T12:30:00-04:00\",\"2025-07-04T12:45:00-04:00\",\"2025-07-04T13:00:00-04:00\",\"2025-07-04T13:15:00-04:00\",\"2025-07-04T13:30:00-04:00\",\"2025-07-04T13:45:00-04:00\",\"2025-07-04T14:00:00-04:00\",\"2025-07-04T14:15:00-04:00\",\"2025-07-04T14:30:00-04:00\",\"2025-07-04T14:45:00-04:00\",\"2025-07-04T15:00:00-04:00\",\"2025-07-04T15:15:00-04:00\",\"2025-07-04T15:30:00-04:00\",\"2025-07-04T15:45:00-04:00\",\"2025-07-04T16:00:00-04:00\",\"2025-07-04T16:15:00-04:00\"]},\"2025-07-07\":{\"slots\":[\"2025-07-07T15:00:00-04:00\",\"2025-07-07T15:15:00-04:00\",\"2025-07-07T15:30:00-04:00\",\"2025-07-07T15:45:00-04:00\",\"2025-07-07T16:00:00-04:00\",\"2025-07-07T16:15:00-04:00\",\"2025-07-07T16:30:00-04:00\",\"2025-07-07T16:45:00-04:00\",\"2025-07-07T17:00:00-04:00\",\"2025-07-07T17:15:00-04:00\",\"2025-07-07T17:30:00-04:00\",\"2025-07-07T17:45:00-04:00\"]},\"2025-07-08\":{\"slots\":[\"2025-07-08T15:00:00-04:00\",\"2025-07-08T15:15:00-04:00\",\"2025-07-08T15:30:00-04:00\",\"2025-07-08T15:45:00-04:00\",\"2025-07-08T16:00:00-04:00\",\"2025-07-08T16:15:00-04:00\",\"2025-07-08T16:30:00-04:00\",\"2025-07-08T16:45:00-04:00\",\"2025-07-08T17:00:00-04:00\",\"2025-07-08T17:15:00-04:00\",\"2025-07-08T17:30:00-04:00\",\"2025-07-08T17:45:00-04:00\"]},\"2025-07-09\":{\"slots\":[\"2025-07-09T15:00:00-04:00\",\"2025-07-09T15:15:00-04:00\",\"2025-07-09T15:30:00-04:00\",\"2025-07-09T15:45:00-04:00\",\"2025-07-09T16:00:00-04:00\",\"2025-07-09T16:15:00-04:00\",\"2025-07-09T16:30:00-04:00\",\"2025-07-09T16:45:00-04:00\",\"2025-07-09T17:00:00-04:00\",\"2025-07-09T17:15:00-04:00\",\"2025-07-09T17:30:00-04:00\",\"2025-07-09T17:45:00-04:00\"]},\"2025-07-10\":{\"slots\":[\"2025-07-10T15:00:00-04:00\",\"2025-07-10T15:15:00-04:00\",\"2025-07-10T15:30:00-04:00\",\"2025-07-10T15:45:00-04:00\",\"2025-07-10T16:00:00-04:00\",\"2025-07-10T16:15:00-04:00\",\"2025-07-10T16:30:00-04:00\",\"2025-07-10T16:45:00-04:00\",\"2025-07-10T17:00:00-04:00\",\"2025-07-10T17:15:00-04:00\",\"2025-07-10T17:30:00-04:00\",\"2025-07-10T17:45:00-04:00\"]},\"2025-07-11\":{\"slots\":[\"2025-07-11T02:30:00-04:00\",\"2025-07-11T02:45:00-04:00\",\"2025-07-11T03:00:00-04:00\",\"2025-07-11T03:15:00-04:00\",\"2025-07-11T03:30:00-04:00\",\"2025-07-11T03:45:00-04:00\",\"2025-07-11T04:00:00-04:00\",\"2025-07-11T04:15:00-04:00\",\"2025-07-11T04:30:00-04:00\",\"2025-07-11T04:45:00-04:00\",\"2025-07-11T05:00:00-04:00\",\"2025-07-11T05:15:00-04:00\",\"2025-07-11T05:30:00-04:00\",\"2025-07-11T05:45:00-04:00\",\"2025-07-11T06:00:00-04:00\",\"2025-07-11T06:15:00-04:00\",\"2025-07-11T06:30:00-04:00\",\"2025-07-11T06:45:00-04:00\",\"2025-07-11T07:00:00-04:00\",\"2025-07-11T07:15:00-04:00\",\"2025-07-11T07:30:00-04:00\",\"2025-07-11T07:45:00-04:00\",\"2025-07-11T08:00:00-04:00\",\"2025-07-11T08:15:00-04:00\",\"2025-07-11T08:30:00-04:00\",\"2025-07-11T08:45:00-04:00\",\"2025-07-11T09:00:00-04:00\",\"2025-07-11T09:15:00-04:00\",\"2025-07-11T09:30:00-04:00\",\"2025-07-11T09:45:00-04:00\",\"2025-07-11T10:00:00-04:00\",\"2025-07-11T10:15:00-04:00\",\"2025-07-11T10:30:00-04:00\",\"2025-07-11T10:45:00-04:00\",\"2025-07-11T11:00:00-04:00\",\"2025-07-11T11:15:00-04:00\",\"2025-07-11T11:30:00-04:00\",\"2025-07-11T11:45:00-04:00\",\"2025-07-11T12:00:00-04:00\",\"2025-07-11T12:15:00-04:00\",\"2025-07-11T12:30:00-04:00\",\"2025-07-11T12:45:00-04:00\",\"2025-07-11T13:00:00-04:00\",\"2025-07-11T13:15:00-04:00\",\"2025-07-11T13:30:00-04:00\",\"2025-07-11T13:45:00-04:00\",\"2025-07-11T14:00:00-04:00\",\"2025-07-11T14:15:00-04:00\",\"2025-07-11T14:30:00-04:00\",\"2025-07-11T14:45:00-04:00\",\"2025-07-11T15:00:00-04:00\",\"2025-07-11T15:15:00-04:00\",\"2025-07-11T15:30:00-04:00\",\"2025-07-11T15:45:00-04:00\",\"2025-07-11T16:00:00-04:00\",\"2025-07-11T16:15:00-04:00\"]},\"traceId\":\"13980d7e-f398-47ea-81c4-29bc08eff9f1\"},\"slots\":[]}",
+            "result_value": "{\"requestId\":\"mcumiyjj1sm06\",\"clientId\":\"IQUPST2vTUl67YUYZYDy\",\"clientName\":\"Daniel English\",\"businessName\":\"YLAW\",\"foundBy\":\"primaryTwilioPhone\",\"matchedAgent\":null,\"dateRange\":{\"start\":\"2025-07-08T14:26:59.562Z\",\"end\":\"2025-07-15T14:26:59.562Z\"},\"timezone\":\"America/New_York\",\"availability\":{\"2025-07-08\":{\"slots\":[\"2025-07-08T15:00:00-04:00\",\"2025-07-08T15:15:00-04:00\",\"2025-07-08T15:30:00-04:00\",\"2025-07-08T15:45:00-04:00\",\"2025-07-08T16:00:00-04:00\",\"2025-07-08T16:15:00-04:00\",\"2025-07-08T16:30:00-04:00\",\"2025-07-08T16:45:00-04:00\",\"2025-07-08T17:00:00-04:00\",\"2025-07-08T17:15:00-04:00\",\"2025-07-08T17:30:00-04:00\",\"2025-07-08T17:45:00-04:00\"]},\"2025-07-09\":{\"slots\":[\"2025-07-09T15:00:00-04:00\",\"2025-07-09T15:15:00-04:00\",\"2025-07-09T15:30:00-04:00\",\"2025-07-09T15:45:00-04:00\",\"2025-07-09T16:00:00-04:00\",\"2025-07-09T16:15:00-04:00\",\"2025-07-09T16:30:00-04:00\",\"2025-07-09T16:45:00-04:00\",\"2025-07-09T17:00:00-04:00\",\"2025-07-09T17:15:00-04:00\",\"2025-07-09T17:30:00-04:00\",\"2025-07-09T17:45:00-04:00\"]},\"2025-07-10\":{\"slots\":[\"2025-07-10T15:00:00-04:00\",\"2025-07-10T15:15:00-04:00\",\"2025-07-10T15:30:00-04:00\",\"2025-07-10T15:45:00-04:00\",\"2025-07-10T16:00:00-04:00\",\"2025-07-10T16:15:00-04:00\",\"2025-07-10T16:30:00-04:00\",\"2025-07-10T16:45:00-04:00\",\"2025-07-10T17:00:00-04:00\",\"2025-07-10T17:15:00-04:00\",\"2025-07-10T17:30:00-04:00\",\"2025-07-10T17:45:00-04:00\"]},\"2025-07-11\":{\"slots\":[\"2025-07-11T08:00:00-04:00\",\"2025-07-11T08:15:00-04:00\",\"2025-07-11T08:30:00-04:00\",\"2025-07-11T08:45:00-04:00\",\"2025-07-11T09:00:00-04:00\",\"2025-07-11T09:15:00-04:00\",\"2025-07-11T09:30:00-04:00\",\"2025-07-11T09:45:00-04:00\",\"2025-07-11T10:00:00-04:00\",\"2025-07-11T10:15:00-04:00\",\"2025-07-11T10:30:00-04:00\",\"2025-07-11T10:45:00-04:00\",\"2025-07-11T11:00:00-04:00\",\"2025-07-11T11:15:00-04:00\",\"2025-07-11T11:30:00-04:00\",\"2025-07-11T11:45:00-04:00\",\"2025-07-11T12:00:00-04:00\",\"2025-07-11T12:15:00-04:00\",\"2025-07-11T12:30:00-04:00\",\"2025-07-11T12:45:00-04:00\",\"2025-07-11T13:00:00-04:00\",\"2025-07-11T13:15:00-04:00\",\"2025-07-11T13:30:00-04:00\",\"2025-07-11T13:45:00-04:00\",\"2025-07-11T14:00:00-04:00\",\"2025-07-11T14:15:00-04:00\",\"2025-07-11T14:30:00-04:00\",\"2025-07-11T14:45:00-04:00\",\"2025-07-11T15:00:00-04:00\",\"2025-07-11T15:15:00-04:00\",\"2025-07-11T15:30:00-04:00\",\"2025-07-11T15:45:00-04:00\",\"2025-07-11T16:00:00-04:00\",\"2025-07-11T16:15:00-04:00\"]},\"2025-07-14\":{\"slots\":[\"2025-07-14T15:00:00-04:00\",\"2025-07-14T15:15:00-04:00\",\"2025-07-14T15:30:00-04:00\",\"2025-07-14T15:45:00-04:00\",\"2025-07-14T16:00:00-04:00\",\"2025-07-14T16:15:00-04:00\",\"2025-07-14T16:30:00-04:00\",\"2025-07-14T16:45:00-04:00\",\"2025-07-14T17:00:00-04:00\",\"2025-07-14T17:15:00-04:00\",\"2025-07-14T17:30:00-04:00\",\"2025-07-14T17:45:00-04:00\"]},\"2025-07-15\":{\"slots\":[\"2025-07-15T15:00:00-04:00\",\"2025-07-15T15:15:00-04:00\",\"2025-07-15T15:30:00-04:00\",\"2025-07-15T15:45:00-04:00\",\"2025-07-15T16:00:00-04:00\",\"2025-07-15T16:15:00-04:00\",\"2025-07-15T16:30:00-04:00\",\"2025-07-15T16:45:00-04:00\",\"2025-07-15T17:00:00-04:00\",\"2025-07-15T17:15:00-04:00\",\"2025-07-15T17:30:00-04:00\",\"2025-07-15T17:45:00-04:00\"]},\"traceId\":\"ed940f8c-1dd4-4c7e-98d4-718e4c2f76ac\"},\"slots\":[]}",
             "is_error": false,
             "tool_has_been_called": true,
-            "tool_latency_secs": 0.9964220239780843
+            "tool_latency_secs": 1.1118878684937954
           }
         ],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 64,
+        "time_in_call_secs": 101,
         "conversation_turn_metrics": null,
         "rag_retrieval_info": null,
         "llm_usage": null,
@@ -988,138 +495,53 @@
       },
       {
         "role": "agent",
-        "message": "Awesome, it sounds like we might be able to help you out! I'd love to get you booked with one of our Account Executives—they're the real pros who can dive into the details with you.\n\nWe have availability on Friday, July fourth at two-thirty AM or Monday, July seventh at three PM. Would either of those work for you?",
+        "message": "Sorry about that, I had a slight hiccup.\n\nWe have availability this afternoon, how about Tuesday, July eighth at three PM, or Wednesday, July ninth at four PM?\n",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 64,
+        "time_in_call_secs": 101,
         "conversation_turn_metrics": {
           "metrics": {
             "convai_llm_service_ttf_sentence": {
-              "elapsed_time": 2.690499883145094
+              "elapsed_time": 0.715691982768476
             },
             "convai_llm_service_ttfb": {
-              "elapsed_time": 2.690120665822178
+              "elapsed_time": 0.40084518399089575
             }
           }
         },
         "rag_retrieval_info": {
           "chunks": [
             {
-              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
-              "chunk_id": "s82ggNsRLu4nMLajM06j",
-              "vector_distance": 0.15017080307006836
-            },
-            {
-              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
-              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
-              "vector_distance": 0.16109931468963623
-            },
-            {
-              "document_id": "JxEIWFXstuR1f0QhRUb9",
-              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
-              "vector_distance": 0.16431409120559692
-            },
-            {
-              "document_id": "xlnS5kLgPhbj9TYpZwlL",
-              "chunk_id": "57EwSifW1hiPOo8fRsUR",
-              "vector_distance": 0.16867965459823608
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
-              "vector_distance": 0.17141544818878174
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "1u1pVAlYogYyeAyOjQfB",
-              "vector_distance": 0.17258483171463013
-            },
-            {
-              "document_id": "YY8EtWDXkd78TQ83CPJ5",
-              "chunk_id": "pB1MEnKWw7jtBQ0GTWVf",
-              "vector_distance": 0.17258483171463013
-            },
-            {
               "document_id": "JCBlTQEoKDWYq9wJmyE5",
               "chunk_id": "fBu2TSXO6yLxrJveTkvY",
-              "vector_distance": 0.17369449138641357
+              "vector_distance": 0.17605561017990112
             },
             {
-              "document_id": "zmQmoXCCRGVwF3AIPFZ0",
-              "chunk_id": "QytG4l5SLbDfNGssT143",
-              "vector_distance": 0.17891758680343628
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "q8rpkubMtbumpm5KDzky",
-              "vector_distance": 0.17892491817474365
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "qRApy4nqUDobSsBBvq3b",
-              "vector_distance": 0.18019020557403564
-            },
-            {
-              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
-              "chunk_id": "F98mRtgMh3bAvP1lWICR",
-              "vector_distance": 0.18183624744415283
-            },
-            {
-              "document_id": "lJdT82rUXfoYg9SzgZdQ",
-              "chunk_id": "iSZRRWqJ8VB0ALjSeW4n",
-              "vector_distance": 0.1820368766784668
-            },
-            {
-              "document_id": "ep10H8ERp4k0s7RgUvI3",
-              "chunk_id": "CLMuviQjriGrrsS9UFHa",
-              "vector_distance": 0.18281221389770508
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.17640173435211182
             },
             {
               "document_id": "Ud0ZzJKfA5Q9HpNwFMtY",
               "chunk_id": "GaWT1DdPaOon44qkSGWj",
-              "vector_distance": 0.1839585304260254
-            },
-            {
-              "document_id": "ktXBkFXhxL4yJ36nMzzk",
-              "chunk_id": "l0FEAv30wUpoYmZKdeJt",
-              "vector_distance": 0.18402314186096191
-            },
-            {
-              "document_id": "3AvYOeBINSuDoUZyBHCu",
-              "chunk_id": "UAT1H5X4NyLHYWNRG5ph",
-              "vector_distance": 0.18487560749053955
-            },
-            {
-              "document_id": "ep10H8ERp4k0s7RgUvI3",
-              "chunk_id": "I2KyzCQ9okjFp9w9hSZD",
-              "vector_distance": 0.18673765659332275
-            },
-            {
-              "document_id": "lJdT82rUXfoYg9SzgZdQ",
-              "chunk_id": "HCrpLeAFmaetPdnIQYfA",
-              "vector_distance": 0.18683838844299316
-            },
-            {
-              "document_id": "I1UYPu6BuCRRBOHlQxEp",
-              "chunk_id": "5FBXmMhXEPf6Tzamy5Y8",
-              "vector_distance": 0.1880548596382141
+              "vector_distance": 0.17923396825790405
             }
           ],
           "embedding_model": "e5_mistral_7b_instruct",
-          "retrieval_query": "I owe a significant debt and want to explore legal options for resolving it.  What can you do to help?\n",
-          "rag_latency_secs": 0.6975294258445501
+          "retrieval_query": "Can I schedule an afternoon call to discuss options for preventing eviction from my apartment, where I've received no prior legal notice?\n",
+          "rag_latency_secs": 1.0249244002625346
         },
         "llm_usage": {
           "model_usage": {
-            "gemini-2.5-flash": {
+            "gemini-2.0-flash": {
               "input": {
-                "tokens": 31162,
-                "price": 0.004674299999999999
+                "tokens": 20541,
+                "price": 0.0020541
               },
               "input_cache_read": {
-                "tokens": 8813,
+                "tokens": 0,
                 "price": 0
               },
               "input_cache_write": {
@@ -1127,8 +549,8 @@
                 "price": 0
               },
               "output_total": {
-                "tokens": 121,
-                "price": 0.0000726
+                "tokens": 44,
+                "price": 0.0000176
               }
             }
           }
@@ -1139,27 +561,517 @@
       },
       {
         "role": "user",
-        "message": "Any second.",
+        "message": "Oh, today at 3 would be fine.",
         "tool_calls": [],
         "tool_results": [],
         "feedback": null,
         "llm_override": null,
-        "time_in_call_secs": 96,
+        "time_in_call_secs": 112,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "Perfect. And can I get your full name and email, please? I'll need a second to write it down.\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 116,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.6850015046074986
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.4078725157305598
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.1473141312599182
+            },
+            {
+              "document_id": "xlnS5kLgPhbj9TYpZwlL",
+              "chunk_id": "57EwSifW1hiPOo8fRsUR",
+              "vector_distance": 0.150293231010437
+            },
+            {
+              "document_id": "JCBlTQEoKDWYq9wJmyE5",
+              "chunk_id": "fBu2TSXO6yLxrJveTkvY",
+              "vector_distance": 0.15276730060577393
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "Can I schedule a 15-minute call with Daniel English today at 3 PM to discuss a possible solution to an unexpected eviction notice with no prior legal action or financial claims involved, where my desired outcome is to remain in my apartment and continue rent payments?\n",
+          "rag_latency_secs": 0.7182356202974916
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 11004,
+                "price": 0.0011004
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 26,
+                "price": 0.0000104
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "Bob Digley.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 124,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "Thank you. And could you spell out the email address for me?\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 129,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.16479641199111938
+            },
+            {
+              "document_id": "Py61GsmRNzk0X6rxb4bu",
+              "chunk_id": "qW269PROAUbbBP4VmgBe",
+              "vector_distance": 0.1745150089263916
+            },
+            {
+              "document_id": "xlnS5kLgPhbj9TYpZwlL",
+              "chunk_id": "57EwSifW1hiPOo8fRsUR",
+              "vector_distance": 0.17527168989181519
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "Can I schedule a 15-minute call with Daniel English today at 3 PM to discuss an action proposal regarding my unexpected eviction, where I'd like to remain in my apartment and continue paying rent?\n",
+          "rag_latency_secs": 0.9278217740356922
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 11586,
+                "price": 0.0011586
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 15,
+                "price": 0.000006
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "bob dot bigley y at yahoo dot ca",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 134,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [
+          {
+            "type": "webhook",
+            "request_id": "book_meeting_64632af6001546f4b508cce6b4172ef1",
+            "tool_name": "book_meeting",
+            "params_as_json": "{\"startTime\": \"2025-07-08T15:00:00-04:00\", \"endTime\": \"2025-07-08T15:15:00-04:00\", \"phone\": \"\"}",
+            "tool_has_been_called": true,
+            "tool_details": {
+              "type": "webhook",
+              "method": "POST",
+              "url": "https://api.v1.affinitydesign.ca/tools/book-appointment",
+              "headers": {
+                "Authorization": "<REDACTED>",
+                "Content-Type": "application/json"
+              },
+              "path_params": {},
+              "query_params": {},
+              "body": "{\"startTime\": \"2025-07-08T15:00:00-04:00\", \"twilioPhone\": \"+16473606807\", \"endTime\": \"2025-07-08T15:15:00-04:00\", \"phone\": \"+19058363456\"}"
+            }
+          }
+        ],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 149,
         "conversation_turn_metrics": null,
         "rag_retrieval_info": null,
         "llm_usage": null,
         "interrupted": false,
         "original_message": null,
         "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [],
+        "tool_results": [
+          {
+            "type": "webhook",
+            "request_id": "book_meeting_64632af6001546f4b508cce6b4172ef1",
+            "tool_name": "book_meeting",
+            "result_value": "{\"requestId\":\"mcumjyw3ty7oq\",\"clientId\":\"IQUPST2vTUl67YUYZYDy\",\"clientName\":\"Daniel English\",\"businessName\":\"YLAW\",\"foundBy\":\"primaryTwilioPhone\",\"matchedAgent\":null,\"status\":\"success\",\"message\":\"Appointment booked successfully\",\"appointmentId\":\"debl4yQTHBEtqeNfPhNP\",\"details\":{\"calendarId\":\"0ecyqLVUze2zkuQlDOHz\",\"locationId\":\"IQUPST2vTUl67YUYZYDy\",\"contactId\":\"8sPHB4VOkpo5fKGJ4PCJ\",\"startTime\":\"2025-07-08T15:00:00-04:00\",\"endTime\":\"2025-07-08T15:15:00-04:00\",\"title\":\"daniel english x YLAW - Consultation\",\"status\":\"confirmed\",\"address\":\"Google Meet\",\"isRecurring\":false},\"contact\":{\"id\":\"8sPHB4VOkpo5fKGJ4PCJ\",\"name\":\"daniel english\",\"phone\":\"+19058363456\"}}",
+            "is_error": false,
+            "tool_has_been_called": true,
+            "tool_latency_secs": 1.6724060634151101
+          }
+        ],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 149,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": "Okay, Bob, just to confirm, Daniel will call you today, July eighth, at three PM at the phone number we have on file, and we will send a confirmation to bob dot bigley at yahoo dot ca. Does that sound correct?\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": "gemini-2.0-flash-lite",
+        "time_in_call_secs": 149,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.13717472553253174
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.16298627853393555
+            },
+            {
+              "document_id": "xlnS5kLgPhbj9TYpZwlL",
+              "chunk_id": "57EwSifW1hiPOo8fRsUR",
+              "vector_distance": 0.16624212265014648
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "What are the available times for a 15-minute call with Daniel English to discuss my eviction, and what information do you need from me to schedule it?\n",
+          "rag_latency_secs": 0.7021816913038492
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 12741,
+                "price": 0.0012741000000000002
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 56,
+                "price": 0.000022400000000000002
+              }
+            },
+            "gemini-2.0-flash-lite": {
+              "input": {
+                "tokens": 11706,
+                "price": 0.00087795
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 51,
+                "price": 0.0000153
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "Well no it's not yahoo dot k, it's yahoo dot ca",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 164,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "I apologize for that error. I have corrected the email to yahoo dot ca. Just to confirm, Daniel will call you today, July eighth, at three PM at the phone number we have on file, and we’ll send a confirmation to bob dot bigley at yahoo dot ca. Does that sound correct?\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 171,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.14510637521743774
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.16477662324905396
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
+              "vector_distance": 0.16531169414520264
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "Confirm Daniel's call details: July 8th, 3 PM, to Bob Digley at the phone number on file, confirmation email to bob.bigley@yahoo.ca.\n",
+          "rag_latency_secs": 1.8234667731449008
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 11805,
+                "price": 0.0011805
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 64,
+                "price": 0.000025600000000000002
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "Yeah that's fine.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 191,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "Perfect! Daniel looks forward to speaking with you then. He’ll outline your legal options and next steps. Thank you for choosing whylaw Legal Services, talk soon!\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 195,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.7664750153198838
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.5712378360331059
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.159462571144104
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
+              "vector_distance": 0.1728498935699463
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.17953413724899292
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "Confirm Daniel's call today at 3 PM and email confirmation to bob.bigley@yahoo.ca\n",
+          "rag_latency_secs": 0.48001733515411615
+        },
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [
+          {
+            "type": "system",
+            "request_id": "end_call_606c7f7cf2af4bfbafe40f53ff1c5f64",
+            "tool_name": "end_call",
+            "params_as_json": "{\"reason\": \"User booked meeting\"}",
+            "tool_has_been_called": true,
+            "tool_details": null
+          }
+        ],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 195,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [],
+        "tool_results": [
+          {
+            "type": "system",
+            "request_id": "end_call_606c7f7cf2af4bfbafe40f53ff1c5f64",
+            "tool_name": "end_call",
+            "result_value": "{\"status\": \"success\", \"reason\": \"User booked meeting\", \"message\": null}",
+            "is_error": false,
+            "tool_has_been_called": true,
+            "tool_latency_secs": 0.5006500268355012
+          }
+        ],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 195,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 11875,
+                "price": 0.0011875
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 42,
+                "price": 0.000016800000000000002
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
       }
     ],
     "metadata": {
-      "start_time_unix_secs": 1751609675,
-      "accepted_time_unix_secs": 1751609676,
-      "call_duration_secs": 103,
-      "cost": 731,
+      "start_time_unix_secs": 1751984720,
+      "accepted_time_unix_secs": 1751984720,
+      "call_duration_secs": 206,
+      "cost": 1458,
       "deletion_settings": {
-        "deletion_time_unix_secs": 1814681788,
+        "deletion_time_unix_secs": 1815056941,
         "deleted_logs_at_time_unix_secs": null,
         "deleted_audio_at_time_unix_secs": null,
         "deleted_transcript_at_time_unix_secs": null,
@@ -1179,13 +1091,13 @@
         "llm_usage": {
           "irreversible_generation": {
             "model_usage": {
-              "gemini-2_5-flash": {
+              "gemini-2_0-flash": {
                 "input": {
-                  "tokens": 112239,
-                  "price": 0.01683585
+                  "tokens": 125958,
+                  "price": 0.0125958
                 },
                 "input_cache_read": {
-                  "tokens": 16622,
+                  "tokens": 0,
                   "price": 0
                 },
                 "input_cache_write": {
@@ -1193,21 +1105,39 @@
                   "price": 0
                 },
                 "output_total": {
-                  "tokens": 190,
-                  "price": 0.000114
+                  "tokens": 379,
+                  "price": 0.0001516
+                }
+              },
+              "gemini-2_0-flash-lite": {
+                "input": {
+                  "tokens": 11706,
+                  "price": 0.00087795
+                },
+                "input_cache_read": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "input_cache_write": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "output_total": {
+                  "tokens": 51,
+                  "price": 0.0000153
                 }
               }
             }
           },
           "initiated_generation": {
             "model_usage": {
-              "gemini-2_5-flash": {
+              "gemini-2_0-flash": {
                 "input": {
-                  "tokens": 157828,
-                  "price": 0.023674200000000003
+                  "tokens": 169877,
+                  "price": 0.016987699999999998
                 },
                 "input_cache_read": {
-                  "tokens": 30312,
+                  "tokens": 0,
                   "price": 0
                 },
                 "input_cache_write": {
@@ -1215,16 +1145,34 @@
                   "price": 0
                 },
                 "output_total": {
-                  "tokens": 217,
-                  "price": 0.0001302
+                  "tokens": 433,
+                  "price": 0.00017320000000000004
+                }
+              },
+              "gemini-2_0-flash-lite": {
+                "input": {
+                  "tokens": 11706,
+                  "price": 0.00087795
+                },
+                "input_cache_read": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "input_cache_write": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "output_total": {
+                  "tokens": 51,
+                  "price": 0.0000153
                 }
               }
             }
           }
         },
-        "llm_price": 0.023804400000000003,
-        "llm_charge": 109,
-        "call_charge": 622
+        "llm_price": 0.018054149999999998,
+        "llm_charge": 84,
+        "call_charge": 1374
       },
       "phone_call": {
         "direction": "inbound",
@@ -1232,21 +1180,21 @@
         "agent_number": "+16473606807",
         "external_number": "+19058363456",
         "type": "twilio",
-        "stream_sid": "MZe02db4c361e4b2d28e6c148dc9293203",
-        "call_sid": "CA45993ff6da968e879bcc477b3bb102e7"
+        "stream_sid": "MZ7aeaebf6a1a434262d307634ca2adc37",
+        "call_sid": "CAbbff15aae45b8a3683e6438d4c5adfc0"
       },
       "batch_call": null,
-      "termination_reason": "Client disconnected: 1005",
+      "termination_reason": "end_call tool was called.",
       "error": null,
       "main_language": "en",
       "rag_usage": {
-        "usage_count": 7,
+        "usage_count": 11,
         "embedding_model": "e5_mistral_7b_instruct"
       },
       "text_only": false,
       "features_usage": {
         "language_detection": {
-          "enabled": true,
+          "enabled": false,
           "used": false
         },
         "transfer_to_agent": {
@@ -1254,7 +1202,7 @@
           "used": false
         },
         "transfer_to_number": {
-          "enabled": true,
+          "enabled": false,
           "used": false
         },
         "multivoice": {
@@ -1266,14 +1214,15 @@
       },
       "eleven_assistant": {
         "is_eleven_assistant": false
-      }
+      },
+      "initiator_id": null
     },
     "analysis": {
       "evaluation_criteria_results": {
         "qualified": {
           "criteria_id": "qualified",
           "result": "success",
-          "rationale": "The agent gathered information about the user's legal issue (debt, potential lawsuit) and then checked availability using a tool. Based on the information gathered and the availability check, the agent offered to book the user with an Account Executive, indicating a willingness to work with them. This suggests the agent determined they have a case they can work with."
+          "rationale": "The agent successfully gathered information about the user's eviction situation (user at 2025-07-08T14:25:25+00:00, user at 2025-07-08T14:25:38+00:00, user at 2025-07-08T14:26:03+00:00, user at 2025-07-08T14:26:22+00:00, user at 2025-07-08T14:26:31+00:00) and scheduled a call with Daniel English to discuss legal options (agent at 2025-07-08T14:26:39+00:00, tool call at 2025-07-08T14:27:49+00:00, tool result at 2025-07-08T14:27:49+00:00). The goal was to determine if they can work with the user, and scheduling the call is a step towards that determination."
         }
       },
       "data_collection_results": {
@@ -1286,18 +1235,29 @@
             "dynamic_variable": "",
             "constant_value": ""
           },
-          "rationale": "The user's language cannot be determined from the conversation. The user is responding in short phrases, but it is not possible to determine the language they are using."
+          "rationale": "I am unable to determine the user's language from the conversation. The user does not explicitly state their language."
         },
-        "action": {
-          "data_collection_id": "action",
-          "value": true,
+        "call_summary": {
+          "data_collection_id": "call_summary",
+          "value": "The user is being evicted and scheduled a call with Daniel English to discuss legal options.",
           "json_schema": {
-            "type": "boolean",
-            "description": "true or false, is the caller looking to start legal action?",
+            "type": "string",
+            "description": "summarize the call",
             "dynamic_variable": "",
             "constant_value": ""
           },
-          "rationale": "The user explicitly states 'yes' when asked 'Are you looking to start legal action?' at timestamp 1751609714."
+          "rationale": "The user called whylaw Legal Services because they are being evicted by their landlord. The agent scheduled a 15-minute action proposal call with Daniel English for the same day at 3 PM and confirmed the appointment details with the user, including the corrected email address."
+        },
+        "name": {
+          "data_collection_id": "name",
+          "value": "Bob Digley",
+          "json_schema": {
+            "type": "string",
+            "description": "return the users name",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user's name is explicitly stated as 'Bob Digley' in the conversation at 2025-07-08T14:27:24+00:00."
         },
         "phone": {
           "data_collection_id": "phone",
@@ -1308,18 +1268,18 @@
             "dynamic_variable": "",
             "constant_value": ""
           },
-          "rationale": "The user's phone number is not mentioned in the conversation."
+          "rationale": "The user's phone number is not explicitly mentioned in the conversation. The agent mentions calling the user at the phone number 'we have on file', but the actual number is not stated."
         },
         "outcome": {
           "data_collection_id": "outcome",
-          "value": "to not have the debt problem",
+          "value": "To stay in the apartment and continue paying rent.",
           "json_schema": {
             "type": "string",
             "description": "summarize what the caller wants as an outcome for the dispute",
             "dynamic_variable": "",
             "constant_value": ""
           },
-          "rationale": "The user wants to resolve the debt issue, ideally to the point where they \"didn't have this problem anyway\"."
+          "rationale": "The user states that they would like to stay in the apartment and continue paying rent. This is the desired outcome for the dispute."
         },
         "suit": {
           "data_collection_id": "suit",
@@ -1330,55 +1290,66 @@
             "dynamic_variable": "",
             "constant_value": ""
           },
-          "rationale": "The user states that they think they are getting sued, but when asked if they are currently engaged in any legal action, they respond 'No'. Therefore, the caller is not currently defending against an existing legal action."
+          "rationale": "The user states that this is the first time they are hearing about the eviction and that they don't have any other legal action. Therefore, they are not currently defending against an existing or pending legal action."
         },
         "money": {
           "data_collection_id": "money",
-          "value": true,
+          "value": false,
           "json_schema": {
             "type": "boolean",
             "description": "true or false, does the dispute involve a specific amount of money or damages?",
             "dynamic_variable": "",
             "constant_value": ""
           },
-          "rationale": "The agent asks 'Does the dispute involve a specific amount of money or damages?' and the user responds 'Yes'. Therefore, the value is true."
+          "rationale": "The agent asks the user \"Does this dispute involve a specific amount of money or damages that you are concerned about?\" and the user responds with \"No, not that I know of.\". Therefore, the dispute does not involve a specific amount of money or damages."
         },
         "email": {
           "data_collection_id": "email",
-          "value": null,
+          "value": "bob.bigley@yahoo.ca",
           "json_schema": {
             "type": "string",
             "description": "return the users email\n",
             "dynamic_variable": "",
             "constant_value": ""
           },
-          "rationale": "I cannot extract the user's email from the conversation, as it is not mentioned in the transcript."
+          "rationale": "The user provides their email address as 'bob dot bigley at yahoo dot ca' at 2025-07-08T14:27:34+00:00. The agent confirms this email address at 2025-07-08T14:28:11+00:00."
+        },
+        "call_outcome": {
+          "data_collection_id": "call_outcome",
+          "value": "Booked Meeting",
+          "json_schema": {
+            "type": "string",
+            "description": "Return the outcome of the call eg: Booked Meeting or Requested follow up or Hang up or Asked to Do Not Contact (dnc) or NOT QUALIFYED or not interested or left a voicemail or or something else. ",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The conversation ends with the agent confirming the meeting details and thanking the user for choosing their services. The tool call 'end_call' confirms that the user booked a meeting."
         },
         "issue": {
           "data_collection_id": "issue",
-          "value": "The caller is facing a legal issue related to owing a lot of money and potentially being sued for debt.",
+          "value": "The caller is being evicted by their landlord with little notice.",
           "json_schema": {
             "type": "string",
             "description": "Summarize what legal issue the caller is facing",
             "dynamic_variable": "",
             "constant_value": ""
           },
-          "rationale": "The user states they are getting sued and owe a lot of money. This suggests the legal issue is related to debt and potential legal action from creditors."
+          "rationale": "The user is facing an eviction issue, as stated in the conversation: \"Yeah, I'm being evicted.\" and \"My landlord came to me yesterday and said, you have to be out by the end of the month.\""
         },
-        "name": {
-          "data_collection_id": "name",
-          "value": "Daniel English",
+        "action": {
+          "data_collection_id": "action",
+          "value": true,
           "json_schema": {
-            "type": "string",
-            "description": "return the users name",
+            "type": "boolean",
+            "description": "true or false, is the caller looking to start legal action?",
             "dynamic_variable": "",
             "constant_value": ""
           },
-          "rationale": "The tool result contains the client name as 'Daniel English'."
+          "rationale": "The user is being evicted and wants to stay in the apartment, which suggests they may be looking to start legal action to prevent the eviction. Therefore, the value is true."
         }
       },
       "call_successful": "success",
-      "transcript_summary": "The user is seeking legal assistance regarding a debt issue and potential lawsuit. The agent confirmed the user's need for help and checked availability for a consultation with an Account Executive, offering slots on July 4th and July 7th. The user responded with \"Any second\".\n"
+      "transcript_summary": "Aria from whylaw Legal Services spoke with a user, Bob, who is being evicted. Bob wants to stay in his apartment. Aria scheduled a 15-minute action proposal call with Daniel English for Bob on July 8th at 3 PM. Bob's email is bob.bigley@yahoo.ca. The call will outline Bob's legal options.\n"
     },
     "conversation_initiation_client_data": {
       "conversation_config_override": {
@@ -1387,41 +1358,42 @@
         "agent": null
       },
       "custom_llm_extra_body": {},
+      "user_id": null,
       "dynamic_variables": {
         "system__agent_id": "agent_01jxxp5senerprmm60n0fnmf49",
-        "system__conversation_id": "conv_01jza153ymfybsq9gmj9140ss6",
+        "system__conversation_id": "conv_01jzn6tjgtfdrss085zw2a1vpj",
         "system__caller_id": "+19058363456",
         "system__called_number": "+16473606807",
-        "system__call_duration_secs": 102,
-        "system__time_utc": "2025-07-04T06:16:18.001461+00:00",
-        "system__call_sid": "CA45993ff6da968e879bcc477b3bb102e7"
+        "system__call_duration_secs": 206,
+        "system__time_utc": "2025-07-08T14:28:46.798272+00:00",
+        "system__call_sid": "CAbbff15aae45b8a3683e6438d4c5adfc0"
       }
     }
   },
   "headers": {
     "host": "services.leadconnectorhq.com",
-    "cf-ray": "959c7e7c2a68540f-ORD",
-    "x-forwarded-for": "34.59.11.47,10.10.0.244",
+    "cf-ray": "95c0457f8e1572e8-ORD",
+    "x-forwarded-for": "34.59.11.47,10.10.0.38",
     "cf-ipcountry": "US",
     "user-agent": "Python/3.12 aiohttp/3.11.16",
     "accept-encoding": "gzip, br",
     "cdn-loop": "cloudflare; loops=1",
     "x-forwarded-proto": "https",
     "accept": "*/*",
-    "elevenlabs-signature": "t=1751609788,v0=915af296d70e3900bb403ebce2590a66e17ce15068c61e5c69d07fa6a6c0732e",
+    "elevenlabs-signature": "t=1751984941,v0=79d5058784e75bf68eb57507f98979409ac40bf63216f49476a61e790b74e588",
     "cf-visitor": {
       "scheme": "https"
     },
     "content-type": "application/json",
-    "content-length": "37993",
+    "content-length": "36686",
     "cf-connecting-ip": "34.59.11.47",
-    "x-envoy-external-address": "10.10.0.244",
-    "x-request-id": "a8d3d225-f443-497c-a9f7-e086f4f82784",
+    "x-envoy-external-address": "10.10.0.38",
+    "x-request-id": "5d47917d-19db-4c8b-9619-adfda13d503f",
     "x-envoy-attempt-count": "1",
-    "x-forwarded-client-cert": "By=spiffe://cluster.local/ns/default/sa/default-automation-workflows;Hash=2a62b13927f63caca68c71671bbe760c28bace28e2fcaf3fe4b1ebfb94c4edd3;Subject=\"\";URI=spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account",
-    "x-b3-traceid": "c3b0fd6cd36f68a43d8d31e35301ae79",
-    "x-b3-spanid": "51dab0b6623b8dcc",
-    "x-b3-parentspanid": "3d8d31e35301ae79",
+    "x-forwarded-client-cert": "By=spiffe://cluster.local/ns/default/sa/default-automation-workflows;Hash=388adfde5336889440678525dd54c1a7ee1e1b5a9d3b489ee4dc66dd7be2095d;Subject=\"\";URI=spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account",
+    "x-b3-traceid": "ed67245279598dd4e6e1e8412316aad3",
+    "x-b3-spanid": "4d8875b688a133a2",
+    "x-b3-parentspanid": "e6e1e8412316aad3",
     "x-b3-sampled": "0"
   }
 }
