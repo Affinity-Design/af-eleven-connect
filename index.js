@@ -829,7 +829,7 @@ fastify.post(
     const four_week_date = calculateTime(0, 4);
 
     // Default first message
-    const defaultFirstMessage = "Hey, there. How may I assist you today?";
+    // const defaultFirstMessage = "Hey, there. How may I assist you today?";
 
     console.log(
       `[${requestId}] Processing inbound call personalization request:`,
@@ -867,11 +867,11 @@ fastify.post(
             one_week_date,
             four_week_date,
           },
-          conversation_config_override: {
-            agent: {
-              first_message: defaultFirstMessage,
-            },
-          },
+          // conversation_config_override: {
+          //   agent: {
+          //     first_message: defaultFirstMessage,
+          //   },
+          // },
         });
       }
 
