@@ -607,17 +607,31 @@ export default async function toolRoutes(fastify, options) {
       let defaultMeetingTitle = "Consultation"; // Final fallback
       if (matchedAgent && matchedAgent.meetingTitle) {
         defaultMeetingTitle = matchedAgent.meetingTitle;
+      } else if (!matchedAgent && client.meetingTitle) {
+        // Fallback to primary agent meeting title when no specific agent matched
+        defaultMeetingTitle = client.meetingTitle;
       }
 
       const finalMeetingTitle = meeting_title || defaultMeetingTitle;
+
+      console.log(
+        `[${requestId}] Meeting title logic: API="${meeting_title}", Agent="${matchedAgent?.meetingTitle}", Client="${client.meetingTitle}", Final="${finalMeetingTitle}"`
+      );
 
       // Get meeting location from matched agent or use API override
       let defaultMeetingLocation = "Google Meet"; // Final fallback
       if (matchedAgent && matchedAgent.meetingLocation) {
         defaultMeetingLocation = matchedAgent.meetingLocation;
+      } else if (!matchedAgent && client.meetingLocation) {
+        // Fallback to primary agent meeting location when no specific agent matched
+        defaultMeetingLocation = client.meetingLocation;
       }
 
       const finalMeetingLocation = meeting_location || defaultMeetingLocation;
+
+      console.log(
+        `[${requestId}] Meeting location logic: API="${meeting_location}", Agent="${matchedAgent?.meetingLocation}", Client="${client.meetingLocation}", Final="${finalMeetingLocation}"`
+      );
 
       const title = `${appointmentFirstName} x ${
         client.clientMeta.businessName || "Business"
