@@ -19,6 +19,7 @@ export async function addAdditionalAgent(clientId, agentData) {
       twilioPhoneNumber,
       agentName,
       agentType,
+      meetingTitle,
       inboundEnabled,
       outboundEnabled,
     } = agentData;
@@ -66,6 +67,7 @@ export async function addAdditionalAgent(clientId, agentData) {
       twilioPhoneNumber,
       agentName: agentName || `Agent ${agentId}`,
       agentType: agentType || "both",
+      meetingTitle: meetingTitle || "Consultation",
       isEnabled: true,
       inboundEnabled: inboundEnabled !== undefined ? inboundEnabled : true,
       outboundEnabled: outboundEnabled !== undefined ? outboundEnabled : true,

@@ -603,9 +603,17 @@ export default async function toolRoutes(fastify, options) {
           "Appointment";
       }
 
+      // Get meeting title from matched agent or use API override
+      let defaultMeetingTitle = "Consultation"; // Final fallback
+      if (matchedAgent && matchedAgent.meetingTitle) {
+        defaultMeetingTitle = matchedAgent.meetingTitle;
+      }
+
+      const finalMeetingTitle = meeting_title || defaultMeetingTitle;
+
       const title = `${appointmentFirstName} x ${
         client.clientMeta.businessName || "Business"
-      } - ${meeting_title || "Consultation"}`;
+      } - ${finalMeetingTitle}`;
 
       // Book the appointment
       const appointmentData = {
@@ -704,11 +712,11 @@ export default async function toolRoutes(fastify, options) {
   });
 
   // Get client info for any client (admin-authenticated)
-  fastify.post("/get-info", async (request, reply) => {
+  fastify.post("/get-client-info", async (request, reply) => {
     const requestId =
       Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
 
-    console.log(`[${requestId}] Tool: Get info request`);
+    console.log(`[${requestId}] Tool: Get client info request`);
 
     const { twilioPhone, clientId, agentId, phone } = request.body;
 

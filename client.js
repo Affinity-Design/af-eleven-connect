@@ -77,6 +77,7 @@ const additionalAgentSchema = new mongoose.Schema(
       enum: ["inbound", "outbound", "both"],
       default: "both",
     },
+    meetingTitle: { type: String, default: "Consultation" }, // Default meeting title for this agent
     isEnabled: { type: Boolean, default: true },
     inboundEnabled: { type: Boolean, default: true },
     outboundEnabled: { type: Boolean, default: true },
@@ -102,6 +103,7 @@ const clientSchema = new mongoose.Schema(
     tokenExpiresAt: { type: Date }, // When the access token expires
     agentId: { type: String, required: true }, // Primary agent (backwards compatibility)
     twilioPhoneNumber: { type: String, required: true }, // Primary Twilio number (backwards compatibility)
+    meetingTitle: { type: String, default: "Consultation" }, // Default meeting title for primary agent
     additionalAgents: [additionalAgentSchema], // New: Array of additional agents
     status: {
       type: String,
@@ -135,6 +137,7 @@ clientSchema.methods.getAllAgents = function () {
       twilioPhoneNumber: this.twilioPhoneNumber,
       agentName: "Primary Agent",
       agentType: "both",
+      meetingTitle: this.meetingTitle || "Consultation",
       isEnabled: this.status === "Active",
       inboundEnabled: true,
       outboundEnabled: true,
@@ -163,6 +166,7 @@ clientSchema.methods.findAgentByPhone = function (phoneNumber) {
       twilioPhoneNumber: this.twilioPhoneNumber,
       agentName: "Primary Agent",
       agentType: "both",
+      meetingTitle: this.meetingTitle || "Consultation",
       isEnabled: this.status === "Active",
       inboundEnabled: true,
       outboundEnabled: true,
@@ -194,6 +198,7 @@ clientSchema.methods.findAgentById = function (agentId) {
       twilioPhoneNumber: this.twilioPhoneNumber,
       agentName: "Primary Agent",
       agentType: "both",
+      meetingTitle: this.meetingTitle || "Consultation",
       isEnabled: this.status === "Active",
       inboundEnabled: true,
       outboundEnabled: true,
