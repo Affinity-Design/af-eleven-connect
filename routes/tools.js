@@ -421,11 +421,13 @@ export default async function toolRoutes(fastify, options) {
       console.log(
         `[${requestId}] Original phone: "${phone}", normalized: "${normalizedPhone}"`
       );
-      
+
       if (name && name.trim()) {
         console.log(`[${requestId}] Caller name provided: "${name}"`);
       } else {
-        console.log(`[${requestId}] No caller name provided, will use defaults if creating contact`);
+        console.log(
+          `[${requestId}] No caller name provided, will use defaults if creating contact`
+        );
       }
 
       // Use the calId from client record as the calendarId
@@ -503,13 +505,13 @@ export default async function toolRoutes(fastify, options) {
         // Parse name if provided, otherwise use defaults
         let firstName = "New";
         let lastName = "Contact";
-        
+
         if (name && name.trim()) {
-          const nameParts = name.trim().split(' ');
+          const nameParts = name.trim().split(" ");
           firstName = nameParts[0] || "New";
-          lastName = nameParts.slice(1).join(' ') || "Contact";
+          lastName = nameParts.slice(1).join(" ") || "Contact";
         }
-        
+
         const newContactData = {
           firstName: firstName,
           lastName: lastName,
@@ -593,11 +595,14 @@ export default async function toolRoutes(fastify, options) {
       // Use the provided name, or fall back to contact data, or default
       let appointmentFirstName;
       if (name && name.trim()) {
-        appointmentFirstName = name.trim().split(' ')[0];
+        appointmentFirstName = name.trim().split(" ")[0];
       } else {
-        appointmentFirstName = contactData.firstNameLowerCase || contactData.firstName || "Appointment";
+        appointmentFirstName =
+          contactData.firstNameLowerCase ||
+          contactData.firstName ||
+          "Appointment";
       }
-      
+
       const title = `${appointmentFirstName} x ${
         client.clientMeta.businessName || "Business"
       } - ${meeting_title || "Consultation"}`;
