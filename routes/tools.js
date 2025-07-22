@@ -308,7 +308,10 @@ export default async function toolRoutes(fastify, options) {
       Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
 
     console.log(`[${requestId}] Tool: Book appointment request`);
-    console.log(`[${requestId}] Request payload:`, JSON.stringify(request.body, null, 2));
+    console.log(
+      `[${requestId}] Request payload:`,
+      JSON.stringify(request.body, null, 2)
+    );
 
     const {
       twilioPhone,
@@ -319,6 +322,7 @@ export default async function toolRoutes(fastify, options) {
       phone,
       meeting_title,
       meeting_location,
+      name, // New parameter for caller's name
     } = request.body;
 
     try {
@@ -410,13 +414,19 @@ export default async function toolRoutes(fastify, options) {
 
       // Normalize phone number (remove spaces, ensure + prefix)
       let normalizedPhone = phone.trim();
-      if (!normalizedPhone.startsWith('+')) {
-        normalizedPhone = '+' + normalizedPhone;
+      if (!normalizedPhone.startsWith("+")) {
+        normalizedPhone = "+" + normalizedPhone;
       }
-      
+
       console.log(
         `[${requestId}] Original phone: "${phone}", normalized: "${normalizedPhone}"`
       );
+      
+      if (name && name.trim()) {
+        console.log(`[${requestId}] Caller name provided: "${name}"`);
+      } else {
+        console.log(`[${requestId}] No caller name provided, will use defaults if creating contact`);
+      }
 
       // Use the calId from client record as the calendarId
       const calendarId = client.calId;
@@ -445,7 +455,9 @@ export default async function toolRoutes(fastify, options) {
       // Get or refresh GHL access token
       const { accessToken } = await checkAndRefreshToken(client.clientId);
 
-      console.log(`[${requestId}] Searching for contact with phone: ${normalizedPhone}`);
+      console.log(
+        `[${requestId}] Searching for contact with phone: ${normalizedPhone}`
+      );
 
       // Search for contact
       let contactSearchResult = await searchGhlContactByPhone(
@@ -455,9 +467,11 @@ export default async function toolRoutes(fastify, options) {
       );
 
       // If not found, try without country code for North American numbers
-      if (!contactSearchResult && normalizedPhone.startsWith('+1')) {
+      if (!contactSearchResult && normalizedPhone.startsWith("+1")) {
         const withoutCountryCode = normalizedPhone.substring(2); // Remove +1
-        console.log(`[${requestId}] Retrying search without country code: ${withoutCountryCode}`);
+        console.log(
+          `[${requestId}] Retrying search without country code: ${withoutCountryCode}`
+        );
         contactSearchResult = await searchGhlContactByPhone(
           accessToken,
           withoutCountryCode,
@@ -467,7 +481,9 @@ export default async function toolRoutes(fastify, options) {
 
       // If still not found, try the original format
       if (!contactSearchResult && phone !== normalizedPhone) {
-        console.log(`[${requestId}] Retrying search with original format: ${phone}`);
+        console.log(
+          `[${requestId}] Retrying search with original format: ${phone}`
+        );
         contactSearchResult = await searchGhlContactByPhone(
           accessToken,
           phone,
@@ -479,16 +495,32 @@ export default async function toolRoutes(fastify, options) {
         console.log(
           `[${requestId}] Contact not found for phone: ${normalizedPhone} (tried multiple formats) in location: ${client.clientId}`
         );
-        console.log(`[${requestId}] Creating new contact with phone: ${normalizedPhone}`);
-        
+        console.log(
+          `[${requestId}] Creating new contact with phone: ${normalizedPhone}`
+        );
+
         // Create new contact in GoHighLevel
+        // Parse name if provided, otherwise use defaults
+        let firstName = "New";
+        let lastName = "Contact";
+        
+        if (name && name.trim()) {
+          const nameParts = name.trim().split(' ');
+          firstName = nameParts[0] || "New";
+          lastName = nameParts.slice(1).join(' ') || "Contact";
+        }
+        
         const newContactData = {
-          firstName: "New", // Default first name
-          lastName: "Contact", // Default last name
+          firstName: firstName,
+          lastName: lastName,
           phone: normalizedPhone,
           locationId: client.clientId,
           source: "ElevenLabs AI Call", // Track the source
         };
+
+        console.log(
+          `[${requestId}] Creating contact: ${firstName} ${lastName} (${normalizedPhone})`
+        );
 
         try {
           const createResponse = await fetch(
@@ -523,7 +555,7 @@ export default async function toolRoutes(fastify, options) {
           console.log(
             `[${requestId}] Successfully created contact with ID: ${createdContact.contact.id}`
           );
-          
+
           // Use the newly created contact
           contactSearchResult = createdContact.contact;
         } catch (createError) {
@@ -540,7 +572,9 @@ export default async function toolRoutes(fastify, options) {
 
       const contactData = contactSearchResult;
       const contactId = contactData.id;
-      const wasContactCreated = !contactData.dateAdded || new Date(contactData.dateAdded) > new Date(Date.now() - 60000); // Created in last minute
+      const wasContactCreated =
+        !contactData.dateAdded ||
+        new Date(contactData.dateAdded) > new Date(Date.now() - 60000); // Created in last minute
 
       if (!contactId) {
         return reply.code(500).send({
@@ -550,12 +584,21 @@ export default async function toolRoutes(fastify, options) {
       }
 
       console.log(
-        `[${requestId}] Using contact ID: ${contactId} ${wasContactCreated ? '(newly created)' : '(existing)'}`
+        `[${requestId}] Using contact ID: ${contactId} ${
+          wasContactCreated ? "(newly created)" : "(existing)"
+        }`
       );
 
       // Create the custom appointment title
-      const contactFirstName = contactData.firstNameLowerCase || "Appointment";
-      const title = `${contactFirstName} x ${
+      // Use the provided name, or fall back to contact data, or default
+      let appointmentFirstName;
+      if (name && name.trim()) {
+        appointmentFirstName = name.trim().split(' ')[0];
+      } else {
+        appointmentFirstName = contactData.firstNameLowerCase || contactData.firstName || "Appointment";
+      }
+      
+      const title = `${appointmentFirstName} x ${
         client.clientMeta.businessName || "Business"
       } - ${meeting_title || "Consultation"}`;
 
@@ -638,7 +681,10 @@ export default async function toolRoutes(fastify, options) {
         },
         contact: {
           id: contactId,
-          name: contactData.firstNameLowerCase || contactData.firstName || "New Contact",
+          name:
+            contactData.firstNameLowerCase ||
+            contactData.firstName ||
+            "New Contact",
           phone: normalizedPhone,
           wasCreated: wasContactCreated,
         },

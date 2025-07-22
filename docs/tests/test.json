@@ -1,0 +1,440 @@
+{
+  "type": "post_call_transcription",
+  "event_timestamp": 1752600128,
+  "data": {
+    "agent_id": "PuDldvcypx508TYWcHye",
+    "conversation_id": "conv_01k07hpeccfzhtybw05j7y0cpf",
+    "status": "done",
+    "user_id": null,
+    "transcript": [
+      {
+        "role": "agent",
+        "message": "Dennis?",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 0,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "Yeah. Hello?",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 1,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "Hi Dennis! This is Ella from Colour Your Life Paint and Design. You requested a free quote through our Facebook ad, is now a good time to chat about your painting project?\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 5,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.5862265732139349
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.585870367474854
+            }
+          }
+        },
+        "rag_retrieval_info": null,
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 10683,
+                "price": 0.0010683
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 37,
+                "price": 0.0000148
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "No, you already called me. So delete my number. I don't want to hear from you. Bye-bye!",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 13,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "I understand. Sorry we couldn't help, but thanks for chatting! Wishing you an awesome day...",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 20,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": true,
+        "original_message": "I understand. Sorry we couldn't help, but thanks for chatting! Wishing you an awesome day ahead!",
+        "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [
+          {
+            "type": "system",
+            "request_id": "end_call_bfcab0fa584f48bfa4f10be0880ce831",
+            "tool_name": "end_call",
+            "params_as_json": "{\"reason\": \"User requested to be removed from the call list.\"}",
+            "tool_has_been_called": true,
+            "tool_details": null
+          }
+        ],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 20,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [],
+        "tool_results": [
+          {
+            "type": "system",
+            "request_id": "end_call_bfcab0fa584f48bfa4f10be0880ce831",
+            "tool_name": "end_call",
+            "result_value": "{\"status\": \"success\", \"reason\": \"User requested to be removed from the call list.\", \"message\": null}",
+            "is_error": false,
+            "tool_has_been_called": true,
+            "tool_latency_secs": 0.5012769820168614
+          }
+        ],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 20,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 10746,
+                "price": 0.0010746000000000002
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 37,
+                "price": 0.0000148
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      }
+    ],
+    "metadata": {
+      "start_time_unix_secs": 1752600099,
+      "accepted_time_unix_secs": 1752600099,
+      "call_duration_secs": 24,
+      "cost": 184,
+      "deletion_settings": {
+        "deletion_time_unix_secs": 1815672128,
+        "deleted_logs_at_time_unix_secs": null,
+        "deleted_audio_at_time_unix_secs": null,
+        "deleted_transcript_at_time_unix_secs": null,
+        "delete_transcript_and_pii": true,
+        "delete_audio": true
+      },
+      "feedback": {
+        "overall_score": null,
+        "likes": 0,
+        "dislikes": 0
+      },
+      "authorization_method": "signed_url",
+      "charging": {
+        "dev_discount": false,
+        "is_burst": false,
+        "tier": "creator",
+        "llm_usage": {
+          "irreversible_generation": {
+            "model_usage": {
+              "gemini-2_0-flash": {
+                "input": {
+                  "tokens": 21429,
+                  "price": 0.0021429
+                },
+                "input_cache_read": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "input_cache_write": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "output_total": {
+                  "tokens": 74,
+                  "price": 0.0000296
+                }
+              }
+            }
+          },
+          "initiated_generation": {
+            "model_usage": {
+              "gemini-2_0-flash": {
+                "input": {
+                  "tokens": 42009,
+                  "price": 0.0042009000000000005
+                },
+                "input_cache_read": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "input_cache_write": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "output_total": {
+                  "tokens": 106,
+                  "price": 0.0000424
+                }
+              }
+            }
+          }
+        },
+        "llm_price": 0.0042433,
+        "llm_charge": 21,
+        "call_charge": 163
+      },
+      "phone_call": null,
+      "batch_call": null,
+      "termination_reason": "Client disconnected: 1000",
+      "error": null,
+      "main_language": "en",
+      "rag_usage": null,
+      "text_only": false,
+      "features_usage": {
+        "language_detection": {
+          "enabled": false,
+          "used": false
+        },
+        "transfer_to_agent": {
+          "enabled": false,
+          "used": false
+        },
+        "transfer_to_number": {
+          "enabled": true,
+          "used": false
+        },
+        "multivoice": {
+          "enabled": false,
+          "used": false
+        },
+        "pii_zrm_workspace": false,
+        "pii_zrm_agent": false
+      },
+      "eleven_assistant": {
+        "is_eleven_assistant": false
+      },
+      "initiator_id": null,
+      "conversation_initiation_source": "unknown",
+      "conversation_initiation_source_version": null
+    },
+    "analysis": {
+      "evaluation_criteria_results": {
+        "booked_appointment": {
+          "criteria_id": "booked_appointment",
+          "result": "failure",
+          "rationale": "The book_meeting tool was not called in the conversation. Therefore, the condition that the book_meeting tool was called and the appointment was confirmed with successful response was not met."
+        }
+      },
+      "data_collection_results": {
+        "time_frame": {
+          "data_collection_id": "time_frame",
+          "value": null,
+          "json_schema": {
+            "type": "string",
+            "description": "when the caller is looking to start their project",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user did not discuss when they are looking to start their project. The user requested to be removed from the call list."
+        },
+        "project_description": {
+          "data_collection_id": "project_description",
+          "value": "painting project",
+          "json_schema": {
+            "type": "string",
+            "description": "describe the scope of the project the caller wishes to get done",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user requested a free quote for a painting project through a Facebook ad, so the scope of the project is painting."
+        },
+        "previous_experiance": {
+          "data_collection_id": "previous_experiance",
+          "value": null,
+          "json_schema": {
+            "type": "string",
+            "description": "the experience a caller had with previous contractors or painters if any",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user did not provide any information about their experience with previous contractors or painters. The user requested to be removed from the call list."
+        },
+        "call_back_time": {
+          "data_collection_id": "call_back_time",
+          "value": null,
+          "json_schema": {
+            "type": "string",
+            "description": "Return a call back time or appointment time, eg: Callback: Saturday 15th 2024 @ 11:30am or booked meeting: Friday 22nd 2025 @ 1:30pm",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The conversation does not contain any information about a call back time or appointment time. The user requested to be removed from the call list."
+        },
+        "call_summery": {
+          "data_collection_id": "call_summery",
+          "value": "Dennis requested to be removed from the call list.",
+          "json_schema": {
+            "type": "string",
+            "description": "summarize the transcript between ai and human and give me the most relevant information. ",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The conversation is about a call from Colour Your Life Paint and Design to Dennis, who requested a quote. Dennis states that he has already been called and requests to be removed from the call list. The agent ends the call and the tool confirms the call was ended because the user requested to be removed from the call list. Therefore, the summary is that the user requested to be removed from the call list."
+        },
+        "client_budjet": {
+          "data_collection_id": "client_budjet",
+          "value": null,
+          "json_schema": {
+            "type": "string",
+            "description": "what the client budget is for their project",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user did not discuss their project or budget in the conversation. Therefore, it is not possible to extract the client's budget for their project."
+        },
+        "call_outcome": {
+          "data_collection_id": "call_outcome",
+          "value": "Asked to Do Not Contact (dnc)",
+          "json_schema": {
+            "type": "string",
+            "description": "Return the outcome of the call eg: Booked Meeting or Requested follow up or Hang up or Asked to Do Not Contact (dnc) or NOT QUALIFYED or not interested or left a voicemail or or something else. ",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user explicitly asked to be removed from the call list and stated they didn't want to hear from the agent, indicating a 'Do Not Contact' request."
+        }
+      },
+      "call_successful": "failure",
+      "transcript_summary": "Ella from Colour Your Life Paint and Design called Dennis, who had requested a quote via Facebook. Dennis stated he'd already been called and requested his number be deleted and to not be contacted again. The call was ended, and the reason noted as user request to be removed.\n"
+    },
+    "conversation_initiation_client_data": {
+      "conversation_config_override": {
+        "tts": null,
+        "conversation": null,
+        "agent": {
+          "first_message": "Dennis?",
+          "language": null,
+          "prompt": null
+        }
+      },
+      "custom_llm_extra_body": {},
+      "user_id": null,
+      "dynamic_variables": {
+        "full_name": "Dennis Kirk",
+        "email": "denkirk@gmail.com",
+        "phone": "+15192809705",
+        "agentId": "PuDldvcypx508TYWcHye",
+        "address": "15 Discovery Court, N7L0A3",
+        "todays_date": "2025-07-15",
+        "one_week_date": "2025-07-22",
+        "four_week_date": "2025-08-12",
+        "system__agent_id": "PuDldvcypx508TYWcHye",
+        "system__conversation_id": "conv_01k07hpeccfzhtybw05j7y0cpf",
+        "system__caller_id": null,
+        "system__called_number": null,
+        "system__call_duration_secs": 24,
+        "system__time_utc": "2025-07-15T17:22:03.600528+00:00",
+        "system__call_sid": null
+      }
+    }
+  },
+  "headers": {
+    "host": "services.leadconnectorhq.com",
+    "cf-ray": "95faf0b6da0ee450-ORD",
+    "x-forwarded-for": "34.59.11.47,10.10.31.184",
+    "cf-ipcountry": "US",
+    "user-agent": "Python/3.12 aiohttp/3.11.16",
+    "accept-encoding": "gzip, br",
+    "cdn-loop": "cloudflare; loops=1",
+    "x-forwarded-proto": "https",
+    "accept": "*/*",
+    "elevenlabs-signature": "t=1752600129,v0=26f33625d7c15b3d9777658e7e3c2964ea20946633b7624205c8bec4b12d4c94",
+    "cf-visitor": {
+      "scheme": "https"
+    },
+    "content-type": "application/json",
+    "content-length": "10508",
+    "cf-connecting-ip": "34.59.11.47",
+    "x-envoy-external-address": "10.10.31.184",
+    "x-request-id": "9bd85c0c-62ac-4e85-af94-cfffe5eeb031",
+    "x-envoy-attempt-count": "1",
+    "x-forwarded-client-cert": "By=spiffe://cluster.local/ns/default/sa/default-automation-workflows;Hash=4296b5c67c7fcd5a86f129a90b36afd18b6e3355e93a5514453639c0a6de90c2;Subject=\"\";URI=spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account",
+    "x-b3-traceid": "fba1d05f05bdd43e0598d3d552b29303",
+    "x-b3-spanid": "37d7ebc1ae129c2d",
+    "x-b3-parentspanid": "0598d3d552b29303",
+    "x-b3-sampled": "0"
+  }
+}
