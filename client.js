@@ -78,6 +78,7 @@ const additionalAgentSchema = new mongoose.Schema(
       default: "both",
     },
     meetingTitle: { type: String, default: "Consultation" }, // Default meeting title for this agent
+    meetingLocation: { type: String, default: "Google Meet" }, // Default meeting location for this agent
     isEnabled: { type: Boolean, default: true },
     inboundEnabled: { type: Boolean, default: true },
     outboundEnabled: { type: Boolean, default: true },
@@ -104,6 +105,7 @@ const clientSchema = new mongoose.Schema(
     agentId: { type: String, required: true }, // Primary agent (backwards compatibility)
     twilioPhoneNumber: { type: String, required: true }, // Primary Twilio number (backwards compatibility)
     meetingTitle: { type: String, default: "Consultation" }, // Default meeting title for primary agent
+    meetingLocation: { type: String, default: "Google Meet" }, // Default meeting location for primary agent
     additionalAgents: [additionalAgentSchema], // New: Array of additional agents
     status: {
       type: String,
@@ -138,6 +140,7 @@ clientSchema.methods.getAllAgents = function () {
       agentName: "Primary Agent",
       agentType: "both",
       meetingTitle: this.meetingTitle || "Consultation",
+      meetingLocation: this.meetingLocation || "Google Meet",
       isEnabled: this.status === "Active",
       inboundEnabled: true,
       outboundEnabled: true,
@@ -167,6 +170,7 @@ clientSchema.methods.findAgentByPhone = function (phoneNumber) {
       agentName: "Primary Agent",
       agentType: "both",
       meetingTitle: this.meetingTitle || "Consultation",
+      meetingLocation: this.meetingLocation || "Google Meet",
       isEnabled: this.status === "Active",
       inboundEnabled: true,
       outboundEnabled: true,
@@ -199,6 +203,7 @@ clientSchema.methods.findAgentById = function (agentId) {
       agentName: "Primary Agent",
       agentType: "both",
       meetingTitle: this.meetingTitle || "Consultation",
+      meetingLocation: this.meetingLocation || "Google Meet",
       isEnabled: this.status === "Active",
       inboundEnabled: true,
       outboundEnabled: true,

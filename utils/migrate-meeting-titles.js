@@ -33,21 +33,43 @@ async function migrateMeetingTitles() {
         );
       }
 
-      // Check additional agents for missing meeting titles
+      // Check if primary agent needs meeting location
+      if (!client.meetingLocation) {
+        updates.meetingLocation = "Google Meet";
+        needsUpdate = true;
+        console.log(
+          `Adding primary agent meeting location for client: ${client.clientId}`
+        );
+      }
+
+      // Check additional agents for missing meeting titles and locations
       if (client.additionalAgents && client.additionalAgents.length > 0) {
         const updatedAgents = client.additionalAgents.map((agent, index) => {
+          let agentUpdated = { ...agent.toObject() };
+          let hasUpdates = false;
+
           if (!agent.meetingTitle) {
             console.log(
               `Adding meeting title for additional agent: ${agent.agentId} (client: ${client.clientId})`
             );
-            return { ...agent.toObject(), meetingTitle: "Consultation" };
+            agentUpdated.meetingTitle = "Consultation";
+            hasUpdates = true;
           }
-          return agent;
+
+          if (!agent.meetingLocation) {
+            console.log(
+              `Adding meeting location for additional agent: ${agent.agentId} (client: ${client.clientId})`
+            );
+            agentUpdated.meetingLocation = "Google Meet";
+            hasUpdates = true;
+          }
+
+          return hasUpdates ? agentUpdated : agent;
         });
 
         // Check if any agents were updated
         const needsAgentUpdate = client.additionalAgents.some(
-          (agent) => !agent.meetingTitle
+          (agent) => !agent.meetingTitle || !agent.meetingLocation
         );
         if (needsAgentUpdate) {
           updates.additionalAgents = updatedAgents;

@@ -611,6 +611,14 @@ export default async function toolRoutes(fastify, options) {
 
       const finalMeetingTitle = meeting_title || defaultMeetingTitle;
 
+      // Get meeting location from matched agent or use API override
+      let defaultMeetingLocation = "Google Meet"; // Final fallback
+      if (matchedAgent && matchedAgent.meetingLocation) {
+        defaultMeetingLocation = matchedAgent.meetingLocation;
+      }
+
+      const finalMeetingLocation = meeting_location || defaultMeetingLocation;
+
       const title = `${appointmentFirstName} x ${
         client.clientMeta.businessName || "Business"
       } - ${finalMeetingTitle}`;
@@ -625,7 +633,7 @@ export default async function toolRoutes(fastify, options) {
         title,
         meetingLocationType: "default",
         appointmentStatus: "confirmed",
-        address: meeting_location || "Google Meet",
+        address: finalMeetingLocation,
         ignoreDateRange: false,
         toNotify: true,
         ignoreFreeSlotValidation: false,
@@ -689,7 +697,7 @@ export default async function toolRoutes(fastify, options) {
           endTime,
           title,
           status: "confirmed",
-          address: meeting_location || "Google Meet",
+          address: finalMeetingLocation,
           isRecurring: false,
         },
         contact: {
