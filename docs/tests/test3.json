@@ -1,0 +1,1228 @@
+{
+  "type": "post_call_transcription",
+  "event_timestamp": 1753908969,
+  "data": {
+    "agent_id": "agent_01jxxp5senerprmm60n0fnmf49",
+    "conversation_id": "conv_1201k1ehrs96f8hsn3gwbhyewy0x",
+    "status": "done",
+    "user_id": null,
+    "transcript": [
+      {
+        "role": "agent",
+        "message": "Hey its Aria from whylaw, I'm Daniels assistance and here to schedule a phone appointments for him. Before we dive in, may I ask who’s calling?",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 0,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "My name is Cairo.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 10,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "Thanks Cairo, I'll just take a moment to write that down. You must have a legal concern, am I right?\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 15,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.8207708229310811
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.5649708469863981
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.2482554316520691
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.2596830129623413
+            },
+            {
+              "document_id": "JxEIWFXstuR1f0QhRUb9",
+              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
+              "vector_distance": 0.26466453075408936
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "Who is Cairo?\n",
+          "rag_latency_secs": 0.3428224080707878
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 8737,
+                "price": 0.0008737
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 27,
+                "price": 0.0000108
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "Yes.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 21,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "Okay, does the dispute involve a specific amount of money or damages?\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 23,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.6765436129644513
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.47464758693240583
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
+              "vector_distance": 0.1821664571762085
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.18449103832244873
+            },
+            {
+              "document_id": "JxEIWFXstuR1f0QhRUb9",
+              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
+              "vector_distance": 0.18683075904846191
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "Do you have a legal concern?\n",
+          "rag_latency_secs": 0.3694102941080928
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 8310,
+                "price": 0.000831
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 15,
+                "price": 0.000006
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "No.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 31,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "Okay, one moment while I check Daniel's availability.\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 33,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.6038257968612015
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.35837382287718356
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.20106655359268188
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.211539626121521
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "qRApy4nqUDobSsBBvq3b",
+              "vector_distance": 0.2196710705757141
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "Does the dispute involve a specific amount?\n",
+          "rag_latency_secs": 0.40348463389091194
+        },
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [
+          {
+            "type": "webhook",
+            "request_id": "get_availability_ab181556506a4fb0824dd1d01f236e7a",
+            "tool_name": "get_availability",
+            "params_as_json": "{\"twilioPhone\": \"unknown\"}",
+            "tool_has_been_called": true,
+            "tool_details": {
+              "type": "webhook",
+              "method": "POST",
+              "url": "https://api.v1.affinitydesign.ca/tools/get-availability",
+              "headers": {
+                "Authorization": "<REDACTED>",
+                "Content-Type": "application/json"
+              },
+              "path_params": {},
+              "query_params": {},
+              "body": "{\"twilioPhone\": \"+16473606807\"}"
+            }
+          }
+        ],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 33,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [],
+        "tool_results": [
+          {
+            "request_id": "get_availability_ab181556506a4fb0824dd1d01f236e7a",
+            "tool_name": "get_availability",
+            "result_value": "{\"requestId\":\"mdqg19a7zm9zf\",\"clientId\":\"IQUPST2vTUl67YUYZYDy\",\"clientName\":\"Daniel English\",\"businessName\":\"YLAW\",\"foundBy\":\"primaryTwilioPhone\",\"matchedAgent\":null,\"dateRange\":{\"start\":\"2025-07-30T20:53:53.787Z\",\"end\":\"2025-08-06T20:53:53.787Z\"},\"timezone\":\"America/New_York\",\"availability\":{\"2025-07-31\":{\"slots\":[\"2025-07-31T15:15:00-04:00\",\"2025-07-31T15:30:00-04:00\",\"2025-07-31T15:45:00-04:00\",\"2025-07-31T16:00:00-04:00\",\"2025-07-31T16:15:00-04:00\",\"2025-07-31T16:30:00-04:00\",\"2025-07-31T16:45:00-04:00\",\"2025-07-31T17:00:00-04:00\",\"2025-07-31T17:15:00-04:00\",\"2025-07-31T17:30:00-04:00\",\"2025-07-31T17:45:00-04:00\"]},\"2025-08-01\":{\"slots\":[\"2025-08-01T15:00:00-04:00\",\"2025-08-01T15:15:00-04:00\",\"2025-08-01T15:30:00-04:00\",\"2025-08-01T15:45:00-04:00\",\"2025-08-01T16:00:00-04:00\",\"2025-08-01T16:15:00-04:00\"]},\"2025-08-04\":{\"slots\":[\"2025-08-04T15:00:00-04:00\",\"2025-08-04T15:15:00-04:00\",\"2025-08-04T15:30:00-04:00\",\"2025-08-04T15:45:00-04:00\",\"2025-08-04T16:00:00-04:00\",\"2025-08-04T16:15:00-04:00\",\"2025-08-04T16:30:00-04:00\",\"2025-08-04T16:45:00-04:00\",\"2025-08-04T17:00:00-04:00\",\"2025-08-04T17:15:00-04:00\",\"2025-08-04T17:30:00-04:00\",\"2025-08-04T17:45:00-04:00\"]},\"2025-08-05\":{\"slots\":[\"2025-08-05T15:00:00-04:00\",\"2025-08-05T15:15:00-04:00\",\"2025-08-05T15:30:00-04:00\",\"2025-08-05T15:45:00-04:00\",\"2025-08-05T16:00:00-04:00\",\"2025-08-05T16:15:00-04:00\",\"2025-08-05T16:30:00-04:00\",\"2025-08-05T16:45:00-04:00\",\"2025-08-05T17:00:00-04:00\",\"2025-08-05T17:15:00-04:00\",\"2025-08-05T17:30:00-04:00\",\"2025-08-05T17:45:00-04:00\"]},\"2025-08-06\":{\"slots\":[\"2025-08-06T15:00:00-04:00\",\"2025-08-06T15:15:00-04:00\",\"2025-08-06T15:30:00-04:00\",\"2025-08-06T15:45:00-04:00\",\"2025-08-06T16:00:00-04:00\",\"2025-08-06T16:15:00-04:00\",\"2025-08-06T16:30:00-04:00\",\"2025-08-06T16:45:00-04:00\",\"2025-08-06T17:00:00-04:00\",\"2025-08-06T17:15:00-04:00\",\"2025-08-06T17:30:00-04:00\",\"2025-08-06T17:45:00-04:00\"]},\"traceId\":\"656d5ed7-f574-4cf8-a3c6-09e89ea87a8f\"},\"slots\":[]}",
+            "is_error": false,
+            "tool_has_been_called": true,
+            "tool_latency_secs": 1.0275686089880764,
+            "dynamic_variable_updates": [],
+            "type": "webhook"
+          }
+        ],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 33,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": "Daniel is busy Cairo, but he does have a fifteen minute Action Proposal opening on Thursday, July thirty first at three fifteen PM or Friday, August first at three PM. Which works better for you?",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 33,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.9512097830884159
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.6386259610299021
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.1813841462135315
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.2137291431427002
+            },
+            {
+              "document_id": "Ze0GOP9PDMLiLW9zCkTT",
+              "chunk_id": "qRApy4nqUDobSsBBvq3b",
+              "vector_distance": 0.23181486129760742
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "Is Daniel available for a phone appointment?\n",
+          "rag_latency_secs": 0.4683136420790106
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 19989,
+                "price": 0.0019989
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 61,
+                "price": 0.000024400000000000004
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "...",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 55,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "Are you still there Cairo?\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 56,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 1.0018028609920293
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.831638660049066
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.25354307889938354
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.25768065452575684
+            },
+            {
+              "document_id": "JxEIWFXstuR1f0QhRUb9",
+              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
+              "vector_distance": 0.2597252130508423
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "Which time works better for you?\n",
+          "rag_latency_secs": 0.4251871050801128
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 10459,
+                "price": 0.0010459
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 7,
+                "price": 0.0000028000000000000003
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "Friday works better.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 58,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "Okay, before we book that, can I get your email and phone number?\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 61,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.6247557231690735
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.49838947015814483
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.2250669002532959
+            },
+            {
+              "document_id": "lJdT82rUXfoYg9SzgZdQ",
+              "chunk_id": "HCrpLeAFmaetPdnIQYfA",
+              "vector_distance": 0.23276519775390625
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.23325926065444946
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "Can I book the Friday, August 1st at 3 PM slot?\n",
+          "rag_latency_secs": 0.44332569907419384
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 10547,
+                "price": 0.0010547
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 17,
+                "price": 0.000006800000000000001
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "My phone number is 226-868-8976.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 67,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "Thank you. And what's your email address?\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 74,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.6179318220820278
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.4142368601169437
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
+              "vector_distance": 0.22197186946868896
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.22294163703918457
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.22812235355377197
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "What is your email address?\n",
+          "rag_latency_secs": 0.38315956317819655
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 10259,
+                "price": 0.0010259000000000002
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 12,
+                "price": 0.000004800000000000001
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "My email address is khairulvi at gmail.com.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 79,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "Could you spell that out for me please?\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 89,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.6283616309519857
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.43298983899876475
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.22916817665100098
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.23491805791854858
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
+              "vector_distance": 0.2374488115310669
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "What is the email address?\n",
+          "rag_latency_secs": 0.8493273409549147
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 10284,
+                "price": 0.0010284
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 10,
+                "price": 0.000004
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": "k-h-a-i-r-u-l-a-l-v-i at gmail.com, at G M A I L dot C O M",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 95,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": "Okay, just to confirm, Daniel will call you on Friday, August first at three PM at two two six, eight six eight, eight nine seven six. Before we wrap up, what specific result are you hoping we’ll secure for you?\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 116,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 1.7257235450670123
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 1.3152375041972846
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "lJdT82rUXfoYg9SzgZdQ",
+              "chunk_id": "HCrpLeAFmaetPdnIQYfA",
+              "vector_distance": 0.2409769892692566
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.24571096897125244
+            },
+            {
+              "document_id": "ktXBkFXhxL4yJ36nMzzk",
+              "chunk_id": "hr9puTEzbmcXZFjSHu1C",
+              "vector_distance": 0.24584221839904785
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "Please confirm the appointment.\n",
+          "rag_latency_secs": 0.4187502160202712
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 10197,
+                "price": 0.0010197000000000001
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 51,
+                "price": 0.0000204
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "user",
+        "message": ". We can discuss more in the call.",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 131,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": "audio"
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [
+          {
+            "type": "webhook",
+            "request_id": "book_meeting_3cb9124da72a490b8eac307964999d1b",
+            "tool_name": "book_meeting",
+            "params_as_json": "{\"startTime\": \"2025-08-01T15:00:00-04:00\", \"twilioPhone\": \"unknown\", \"endTime\": \"2025-08-01T15:15:00-04:00\", \"phone\": \"226-868-8976\", \"name\": \"Cairo\"}",
+            "tool_has_been_called": true,
+            "tool_details": {
+              "type": "webhook",
+              "method": "POST",
+              "url": "https://api.v1.affinitydesign.ca/tools/book-appointment",
+              "headers": {
+                "Authorization": "<REDACTED>",
+                "Content-Type": "application/json"
+              },
+              "path_params": {},
+              "query_params": {},
+              "body": "{\"startTime\": \"2025-08-01T15:00:00-04:00\", \"twilioPhone\": \"+16473606807\", \"endTime\": \"2025-08-01T15:15:00-04:00\", \"phone\": \"+12268688976\", \"name\": \"Cairo\"}"
+            }
+          }
+        ],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 140,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": null,
+        "tool_calls": [],
+        "tool_results": [
+          {
+            "request_id": "book_meeting_3cb9124da72a490b8eac307964999d1b",
+            "tool_name": "book_meeting",
+            "result_value": "{\"requestId\":\"mdqg3glqs43ys\",\"clientId\":\"IQUPST2vTUl67YUYZYDy\",\"clientName\":\"Daniel English\",\"businessName\":\"YLAW\",\"foundBy\":\"primaryTwilioPhone\",\"matchedAgent\":null,\"status\":\"success\",\"message\":\"Appointment booked successfully\",\"appointmentId\":\"w00pW4oc6LhBod2IN4lR\",\"details\":{\"calendarId\":\"0ecyqLVUze2zkuQlDOHz\",\"locationId\":\"IQUPST2vTUl67YUYZYDy\",\"contactId\":\"DrokmUwI2wO3HaqU2ZY4\",\"startTime\":\"2025-08-01T15:00:00-04:00\",\"endTime\":\"2025-08-01T15:15:00-04:00\",\"title\":\"Cairo x YLAW - Action Proposal\",\"status\":\"confirmed\",\"address\":\"Phone Call\",\"isRecurring\":false},\"contact\":{\"id\":\"DrokmUwI2wO3HaqU2ZY4\",\"name\":\"cairo\",\"phone\":\"+12268688976\",\"wasCreated\":true}}",
+            "is_error": false,
+            "tool_has_been_called": true,
+            "tool_latency_secs": 1.9574225801043212,
+            "dynamic_variable_updates": [],
+            "type": "webhook"
+          }
+        ],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 140,
+        "conversation_turn_metrics": null,
+        "rag_retrieval_info": null,
+        "llm_usage": null,
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      },
+      {
+        "role": "agent",
+        "message": "Awesome! Appointment booked. On your action proposal call Daniel will get more granular on how we might achieve this in your case! He’ll outline your legal options and recommended next steps to take. Daniel has been notified and will reach out to you then. Have a great day!\n",
+        "tool_calls": [],
+        "tool_results": [],
+        "feedback": null,
+        "llm_override": null,
+        "time_in_call_secs": 140,
+        "conversation_turn_metrics": {
+          "metrics": {
+            "convai_llm_service_ttf_sentence": {
+              "elapsed_time": 0.5840423051267862
+            },
+            "convai_llm_service_ttfb": {
+              "elapsed_time": 0.3830723240971565
+            }
+          }
+        },
+        "rag_retrieval_info": {
+          "chunks": [
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "s82ggNsRLu4nMLajM06j",
+              "vector_distance": 0.23823881149291992
+            },
+            {
+              "document_id": "tGi9LQqtqXmM3Y9l8rRw",
+              "chunk_id": "hpHJagzalLGm0yKKO4Qw",
+              "vector_distance": 0.24320048093795776
+            },
+            {
+              "document_id": "JxEIWFXstuR1f0QhRUb9",
+              "chunk_id": "DRm4tAtmvwnsSgLqOLwS",
+              "vector_distance": 0.24661552906036377
+            }
+          ],
+          "embedding_model": "e5_mistral_7b_instruct",
+          "retrieval_query": "What outcome are you hoping for?\n",
+          "rag_latency_secs": 0.4610449930187315
+        },
+        "llm_usage": {
+          "model_usage": {
+            "gemini-2.0-flash": {
+              "input": {
+                "tokens": 21605,
+                "price": 0.0021605
+              },
+              "input_cache_read": {
+                "tokens": 0,
+                "price": 0
+              },
+              "input_cache_write": {
+                "tokens": 0,
+                "price": 0
+              },
+              "output_total": {
+                "tokens": 131,
+                "price": 0.0000524
+              }
+            }
+          }
+        },
+        "interrupted": false,
+        "original_message": null,
+        "source_medium": null
+      }
+    ],
+    "metadata": {
+      "start_time_unix_secs": 1753908798,
+      "accepted_time_unix_secs": 1753908799,
+      "call_duration_secs": 160,
+      "cost": 1136,
+      "deletion_settings": {
+        "deletion_time_unix_secs": 1816980968,
+        "deleted_logs_at_time_unix_secs": null,
+        "deleted_audio_at_time_unix_secs": null,
+        "deleted_transcript_at_time_unix_secs": null,
+        "delete_transcript_and_pii": true,
+        "delete_audio": true
+      },
+      "feedback": {
+        "overall_score": null,
+        "likes": 0,
+        "dislikes": 0
+      },
+      "authorization_method": "signed_url",
+      "charging": {
+        "dev_discount": false,
+        "is_burst": false,
+        "tier": "creator",
+        "llm_usage": {
+          "irreversible_generation": {
+            "model_usage": {
+              "gemini-2_0-flash": {
+                "input": {
+                  "tokens": 110387,
+                  "price": 0.011038700000000002
+                },
+                "input_cache_read": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "input_cache_write": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "output_total": {
+                  "tokens": 331,
+                  "price": 0.00013240000000000002
+                }
+              }
+            }
+          },
+          "initiated_generation": {
+            "model_usage": {
+              "gemini-2_0-flash": {
+                "input": {
+                  "tokens": 148922,
+                  "price": 0.014892200000000003
+                },
+                "input_cache_read": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "input_cache_write": {
+                  "tokens": 0,
+                  "price": 0
+                },
+                "output_total": {
+                  "tokens": 364,
+                  "price": 0.00014560000000000002
+                }
+              }
+            }
+          }
+        },
+        "llm_price": 0.015037800000000002,
+        "llm_charge": 69,
+        "call_charge": 1067
+      },
+      "phone_call": {
+        "direction": "inbound",
+        "phone_number_id": "phnum_01jz88xevee6w9e61yt9e8bbxg",
+        "agent_number": "+16473606807",
+        "external_number": "+12268688976",
+        "type": "twilio",
+        "stream_sid": "MZ946f34a21c0420d90ad6819bbd9a4f2e",
+        "call_sid": "CAc8270c31ef8469a9616736ab3418ff28"
+      },
+      "batch_call": null,
+      "termination_reason": "Call ended by remote party",
+      "error": null,
+      "main_language": "en",
+      "rag_usage": {
+        "usage_count": 10,
+        "embedding_model": "e5_mistral_7b_instruct"
+      },
+      "text_only": false,
+      "features_usage": {
+        "language_detection": {
+          "enabled": false,
+          "used": false
+        },
+        "transfer_to_agent": {
+          "enabled": false,
+          "used": false
+        },
+        "transfer_to_number": {
+          "enabled": false,
+          "used": false
+        },
+        "multivoice": {
+          "enabled": false,
+          "used": false
+        },
+        "pii_zrm_workspace": false,
+        "pii_zrm_agent": false
+      },
+      "eleven_assistant": {
+        "is_eleven_assistant": false
+      },
+      "initiator_id": null,
+      "conversation_initiation_source": "unknown",
+      "conversation_initiation_source_version": null,
+      "timezone": null
+    },
+    "analysis": {
+      "evaluation_criteria_results": {
+        "qualified": {
+          "criteria_id": "qualified",
+          "result": "unknown",
+          "rationale": "The agent booked a meeting with the user to discuss their legal options. However, the transcript does not contain information on whether the firm will take on the case. The user states that they will discuss more in the call, so it is unknown if the goal was met."
+        }
+      },
+      "data_collection_results": {
+        "language": {
+          "data_collection_id": "language",
+          "value": null,
+          "json_schema": {
+            "type": "string",
+            "description": "return the users language ",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user's language is not explicitly stated in the conversation. Therefore, it is not possible to extract the user's language from the provided transcript."
+        },
+        "call_summary": {
+          "data_collection_id": "call_summary",
+          "value": "Scheduled a 15-minute action proposal phone appointment for Cairo with Daniel English for Friday, August 1st at 3 PM. Cairo's phone number is 226-868-8976 and email is khairulalvi@gmail.com. The call is regarding a legal concern that does not involve a specific amount of money or damages.",
+          "json_schema": {
+            "type": "string",
+            "description": "summarize the call",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The agent, Aria, scheduled a 15-minute action proposal phone appointment for Cairo with Daniel English for Friday, August 1st at 3 PM. Cairo's phone number is 226-868-8976 and email is khairulalvi@gmail.com. The call is regarding a legal concern that does not involve a specific amount of money or damages."
+        },
+        "name": {
+          "data_collection_id": "name",
+          "value": "Cairo",
+          "json_schema": {
+            "type": "string",
+            "description": "return the name of the caller",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user states their name is Cairo in the conversation: 'My name is Cairo.'"
+        },
+        "phone": {
+          "data_collection_id": "phone",
+          "value": "226-868-8976",
+          "json_schema": {
+            "type": "string",
+            "description": "return the users phone number",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user provided their phone number as '226-868-8976' in the conversation."
+        },
+        "outcome": {
+          "data_collection_id": "outcome",
+          "value": null,
+          "json_schema": {
+            "type": "string",
+            "description": "summarize what the caller wants as an outcome for the dispute",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user did not specify what outcome they want for the dispute. They said they would discuss it more in the call. Therefore, I cannot extract the data."
+        },
+        "suit": {
+          "data_collection_id": "suit",
+          "value": null,
+          "json_schema": {
+            "type": "boolean",
+            "description": "True or false: Is the caller currently defending against an existing or pending legal action? Only for existing cases should you say true, if they are starting something new or haven't started its false. ",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The conversation does not provide any information about whether Cairo is currently defending against an existing or pending legal action. Therefore, it is not possible to determine if the caller is defending against an existing legal action."
+        },
+        "money": {
+          "data_collection_id": "money",
+          "value": 0,
+          "json_schema": {
+            "type": "integer",
+            "description": "return the amount of money the case could be worth, if nothing return 0 ",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user did not mention any specific amount of money or damages during the conversation. Therefore, the value is 0."
+        },
+        "email": {
+          "data_collection_id": "email",
+          "value": "khairulvi at gmail.com",
+          "json_schema": {
+            "type": "string",
+            "description": "return the users email\n",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user's email address is explicitly stated in the conversation as 'khairulvi at gmail.com' and then spelled out as 'k-h-a-i-r-u-l-a-l-v-i at gmail.com, at G M A I L dot C O M'."
+        },
+        "call_outcome": {
+          "data_collection_id": "call_outcome",
+          "value": "Booked Meeting",
+          "json_schema": {
+            "type": "string",
+            "description": "Return the outcome of the call eg: Booked Meeting or Requested follow up or Personal Followup or Hang up or Asked to Do Not Contact (dnc) or NOT QUALIFYED or not interested or left a voicemail or something else. ",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The agent successfully booked an appointment for the user. Therefore, the outcome of the call is 'Booked Meeting'."
+        },
+        "issue": {
+          "data_collection_id": "issue",
+          "value": null,
+          "json_schema": {
+            "type": "string",
+            "description": "Summarize what legal issue the caller is facing",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user indicates they have a legal concern, but does not specify what the issue is. They state that the dispute does not involve a specific amount of money or damages. When asked what specific result they are hoping to secure, they state that they can discuss more in the call. Therefore, it is not possible to extract the legal issue the caller is facing."
+        },
+        "action": {
+          "data_collection_id": "action",
+          "value": true,
+          "json_schema": {
+            "type": "boolean",
+            "description": "true or false, is the caller looking to start legal action?",
+            "dynamic_variable": "",
+            "constant_value": ""
+          },
+          "rationale": "The user is scheduling a call with a lawyer, indicating they are likely considering legal action. Therefore, the value is true."
+        }
+      },
+      "call_successful": "unknown",
+      "transcript_summary": "Aria from whylaw scheduled a phone appointment for Daniel with Cairo, who has a legal concern. The dispute does not involve a specific amount of money. Cairo chose Friday, August 1st at 3 PM for the 15-minute call. Aria confirmed Cairo's phone number (226-868-8976) and email (khairulalvi@gmail.com), and booked the meeting.\n",
+      "call_summary_title": "Schedule Legal Consultation"
+    },
+    "conversation_initiation_client_data": {
+      "conversation_config_override": {
+        "tts": null,
+        "conversation": null,
+        "agent": null
+      },
+      "custom_llm_extra_body": {},
+      "user_id": null,
+      "source_info": {
+        "source": null,
+        "version": null
+      },
+      "dynamic_variables": {
+        "system__agent_id": "agent_01jxxp5senerprmm60n0fnmf49",
+        "system__current_agent_id": "agent_01jxxp5senerprmm60n0fnmf49",
+        "system__conversation_id": "conv_1201k1ehrs96f8hsn3gwbhyewy0x",
+        "system__caller_id": "+12268688976",
+        "system__called_number": "+16473606807",
+        "system__call_duration_secs": 159,
+        "system__time_utc": "2025-07-30T20:55:58.958361+00:00",
+        "system__time": "Wednesday, 20:55 30 July 2025",
+        "system__timezone": null,
+        "system__call_sid": "CAc8270c31ef8469a9616736ab3418ff28"
+      }
+    }
+  },
+  "headers": {
+    "host": "services.leadconnectorhq.com",
+    "cf-ray": "9677c2d26847c694-ORD",
+    "x-forwarded-for": "34.59.11.47,10.10.0.227",
+    "cf-ipcountry": "US",
+    "user-agent": "Python/3.12 aiohttp/3.11.16",
+    "accept-encoding": "gzip, br",
+    "cdn-loop": "cloudflare; loops=1",
+    "x-forwarded-proto": "https",
+    "accept": "*/*",
+    "elevenlabs-signature": "t=1753908969,v0=ba7bf0bbec1c6c3c44744a25a104d4664f6b8bea72121546e7f4dd0c13540b46",
+    "cf-visitor": {
+      "scheme": "https"
+    },
+    "content-type": "application/json",
+    "content-length": "30715",
+    "cf-connecting-ip": "34.59.11.47",
+    "x-envoy-external-address": "10.10.0.227",
+    "x-request-id": "cf9a4e87-8436-41f5-9d59-db486cd9a461",
+    "x-envoy-attempt-count": "1",
+    "x-forwarded-client-cert": "By=spiffe://cluster.local/ns/default/sa/default-automation-workflows;Hash=5ae0abada03bb8fe0f06cdd4b8e4d87d3f105ea3f3713e0d55ae4ace361844c5;Subject=\"\";URI=spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account",
+    "x-b3-traceid": "059cfeca8073349b64fbb8071c68384b",
+    "x-b3-spanid": "8986f78507e53da2",
+    "x-b3-parentspanid": "64fbb8071c68384b",
+    "x-b3-sampled": "0"
+  }
+}

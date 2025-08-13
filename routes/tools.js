@@ -320,8 +320,8 @@ export default async function toolRoutes(fastify, options) {
       startTime,
       endTime,
       phone,
-      meeting_title,
-      meeting_location,
+      meetingTitle,
+      meetingLocation,
       name, // New parameter for caller's name
     } = request.body;
 
@@ -612,10 +612,10 @@ export default async function toolRoutes(fastify, options) {
         defaultMeetingTitle = client.meetingTitle;
       }
 
-      const finalMeetingTitle = meeting_title || defaultMeetingTitle;
+      const finalMeetingTitle = meetingTitle || defaultMeetingTitle;
 
       console.log(
-        `[${requestId}] Meeting title logic: API="${meeting_title}", Agent="${matchedAgent?.meetingTitle}", Client="${client.meetingTitle}", Final="${finalMeetingTitle}"`
+        `[${requestId}] Meeting title logic: API="${meetingTitle}", Agent="${matchedAgent?.meetingTitle}", Client="${client.meetingTitle}", Final="${finalMeetingTitle}"`
       );
 
       // Get meeting location from matched agent or use API override
@@ -627,10 +627,10 @@ export default async function toolRoutes(fastify, options) {
         defaultMeetingLocation = client.meetingLocation;
       }
 
-      const finalMeetingLocation = meeting_location || defaultMeetingLocation;
+      const finalMeetingLocation = meetingLocation || defaultMeetingLocation;
 
       console.log(
-        `[${requestId}] Meeting location logic: API="${meeting_location}", Agent="${matchedAgent?.meetingLocation}", Client="${client.meetingLocation}", Final="${finalMeetingLocation}"`
+        `[${requestId}] Meeting location logic: API="${meetingLocation}", Agent="${matchedAgent?.meetingLocation}", Client="${client.meetingLocation}", Final="${finalMeetingLocation}"`
       );
 
       const title = `${appointmentFirstName} x ${
