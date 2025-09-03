@@ -695,3 +695,59 @@ export async function syncElevenLabsMetrics(clientId, agentId, year, month, apiK
     };
   }
 }
+
+/**
+ * Sync ElevenLabs metrics for a client and specific period (client-level function)
+ * This function finds the primary agent and syncs their ElevenLabs data
+ * @param {string} clientId - The client ID
+ * @param {number} year - The year
+ * @param {number} month - The month (1-12)
+ * @returns {Promise<Object>} - Sync result
+ */
+export async function syncElevenLabsMetricsForClient(clientId, year, month) {
+  try {
+    const { findClientById } = await import('../crud.js');
+    
+    const client = await findClientById(clientId);
+    if (!client) {
+      throw new Error(`Client not found: ${clientId}`);
+    }
+
+    // Get the primary agent's ElevenLabs agent ID
+    const agents = client.getAllAgents();
+    const primaryAgent = agents.find(agent => agent.isPrimary);
+    
+    if (!primaryAgent || !primaryAgent.elevenLabsAgentId) {
+      return {
+        success: false,
+        error: 'No primary agent with ElevenLabs agent ID found',
+        period: `${year}-${String(month).padStart(2, '0')}`,
+        clientId
+      };
+    }
+
+    // Use environment API key
+    const apiKey = process.env.ELEVENLABS_API_KEY;
+    if (!apiKey) {
+      return {
+        success: false,
+        error: 'ElevenLabs API key not configured',
+        period: `${year}-${String(month).padStart(2, '0')}`,
+        clientId
+      };
+    }
+
+    console.log(`[ElevenLabs-Client-Sync] Syncing metrics for client ${clientId}, agent ${primaryAgent.elevenLabsAgentId}, period ${year}-${month}`);
+    
+    // Call the existing agent-specific function
+    return await syncElevenLabsMetrics(clientId, primaryAgent.elevenLabsAgentId, year, month, apiKey);
+  } catch (error) {
+    console.error('[ElevenLabs-Client-Sync] Error syncing metrics:', error);
+    return {
+      success: false,
+      error: error.message,
+      period: `${year}-${String(month).padStart(2, '0')}`,
+      clientId
+    };
+  }
+}

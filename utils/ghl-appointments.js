@@ -322,7 +322,7 @@ export async function syncAppointmentMetrics(clientId, year, month) {
         client.updateAgentMetrics(agentId, year, month, {
           successfulBookings: newBookingCount,
           lastUpdated: new Date()
-        });
+        }, "ghl"); // Specify GHL as the source
         
         updates[agentId] = {
           agentName: agentData.agentName,

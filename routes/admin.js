@@ -1661,11 +1661,11 @@ export default async function adminRoutes(fastify, options) {
       // Sync ElevenLabs data for each month
       if (syncElevenLabs) {
         console.log(`[Admin-Bootstrap] Syncing ElevenLabs data...`);
-        const { syncElevenLabsMetrics } = await import('../utils/elevenlabs.js');
+        const { syncElevenLabsMetricsForClient } = await import('../utils/elevenlabs.js');
         
         for (const { year, month } of months) {
           try {
-            const result = await syncElevenLabsMetrics(clientId, year, month);
+            const result = await syncElevenLabsMetricsForClient(clientId, year, month);
             results.elevenLabsSync.results.push({
               period: `${year}-${month.toString().padStart(2, '0')}`,
               success: result.success,

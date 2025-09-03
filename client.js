@@ -42,7 +42,7 @@ const agentMetricsHistorySchema = new mongoose.Schema(
     metrics: agentMetricsSchema,
     source: {
       type: String,
-      enum: ["elevenlabs", "internal", "combined"],
+      enum: ["elevenlabs", "ghl", "internal", "combined"],
       default: "internal",
     },
     createdAt: { type: Date, default: Date.now },
@@ -286,7 +286,7 @@ clientSchema.methods.getAgentMetrics = function (agentId, year, month) {
   return this.metricsHistory.find(m => m.agentId === agentId && m.period === period);
 };
 
-clientSchema.methods.updateAgentMetrics = function (agentId, year, month, updates) {
+clientSchema.methods.updateAgentMetrics = function (agentId, year, month, updates, source = "internal") {
   if (!this.metricsHistory) this.metricsHistory = [];
   
   const period = `${year}-${String(month).padStart(2, '0')}`;
@@ -296,6 +296,10 @@ clientSchema.methods.updateAgentMetrics = function (agentId, year, month, update
     // Update existing metrics
     Object.assign(existingMetrics.metrics, updates);
     existingMetrics.metrics.lastUpdated = new Date();
+    // Update source if it's more specific (e.g., elevenlabs or ghl over internal)
+    if (source !== "internal" && existingMetrics.source === "internal") {
+      existingMetrics.source = source;
+    }
   } else {
     // Create new metrics entry
     this.metricsHistory.push({
@@ -316,7 +320,7 @@ clientSchema.methods.updateAgentMetrics = function (agentId, year, month, update
         ...updates,
         lastUpdated: new Date()
       },
-      source: "internal"
+      source: source
     });
   }
   

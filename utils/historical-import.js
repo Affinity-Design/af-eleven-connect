@@ -4,7 +4,7 @@
  * Combines ElevenLabs conversation data and GoHighLevel appointments
  */
 
-import { syncElevenLabsMetrics } from './elevenlabs.js';
+import { syncElevenLabsMetricsForClient } from './elevenlabs.js';
 import { syncAppointmentMetrics, getHistoricalAppointmentData } from './ghl-appointments.js';
 import { getAllAgentMetrics } from './metrics.js';
 import { findClientById } from '../crud.js';
@@ -86,7 +86,7 @@ export async function importHistoricalData(clientId, startDate, endDate, options
           if (includeElevenLabs) {
             try {
               console.log(`[Historical-Import] Importing ElevenLabs data for ${year}-${month}`);
-              const elevenLabsResult = await syncElevenLabsMetrics(clientId, year, month);
+              const elevenLabsResult = await syncElevenLabsMetricsForClient(clientId, year, month);
               monthResults.elevenLabs = {
                 processed: true,
                 success: elevenLabsResult.success,
