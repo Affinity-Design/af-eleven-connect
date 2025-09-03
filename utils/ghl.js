@@ -103,7 +103,9 @@ async function refreshGhlToken(clientId) {
     const data = await response.json();
     if (!response.ok) {
       console.error(`Token refresh failed for client ${clientId}:`, data);
-      console.error(`Response status: ${response.status} ${response.statusText}`);
+      console.error(
+        `Response status: ${response.status} ${response.statusText}`
+      );
       throw new Error(`Token refresh failed: ${JSON.stringify(data)}`);
     }
 
@@ -408,7 +410,9 @@ async function fetchGhlAppointments(clientId, startDate, endDate) {
       },
     });
 
-    console.log(`[GHL] API Response status: ${response.status} ${response.statusText}`);
+    console.log(
+      `[GHL] API Response status: ${response.status} ${response.statusText}`
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -433,7 +437,9 @@ async function fetchGhlAppointments(clientId, startDate, endDate) {
           const altData = await altResponse.json();
           return altData.events || [];
         } else {
-          console.error(`[GHL] Alternative endpoint also failed: ${altResponse.status}`);
+          console.error(
+            `[GHL] Alternative endpoint also failed: ${altResponse.status}`
+          );
         }
       }
 

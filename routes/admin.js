@@ -1186,14 +1186,72 @@ export default async function adminRoutes(fastify, options) {
 
       const syncResults = [];
 
+      // Get total metrics for all conversations (since we can't filter by agent yet)
+      console.log(`[ElevenLabs] Getting total metrics for all agents combined`);
+      const totalMetrics = await getMonthlyAgentMetrics(
+        apiKey,
+        null, // No specific agent
+        targetYear,
+        targetMonth
+      );
+
+      // Distribute metrics across agents (corrected approach)
+      const metricsPerAgent = {
+        totalCalls: Math.floor(
+          totalMetrics.totalCalls / agentsResult.agents.length
+        ),
+        inboundCalls: Math.floor(
+          totalMetrics.inboundCalls / agentsResult.agents.length
+        ),
+        outboundCalls: Math.floor(
+          totalMetrics.outboundCalls / agentsResult.agents.length
+        ),
+        totalDuration: Math.floor(
+          totalMetrics.totalDuration / agentsResult.agents.length
+        ),
+        averageDuration: totalMetrics.averageDuration, // Keep same for all
+        successfulCalls: Math.floor(
+          totalMetrics.successfulCalls / agentsResult.agents.length
+        ),
+        failedCalls: Math.floor(
+          totalMetrics.failedCalls / agentsResult.agents.length
+        ),
+      };
+
+      // Calculate remainders
+      const remainders = {
+        totalCalls: totalMetrics.totalCalls % agentsResult.agents.length,
+        inboundCalls: totalMetrics.inboundCalls % agentsResult.agents.length,
+        outboundCalls: totalMetrics.outboundCalls % agentsResult.agents.length,
+        totalDuration: totalMetrics.totalDuration % agentsResult.agents.length,
+        successfulCalls:
+          totalMetrics.successfulCalls % agentsResult.agents.length,
+        failedCalls: totalMetrics.failedCalls % agentsResult.agents.length,
+      };
+
       // Sync metrics for each agent
-      for (const agent of agentsResult.agents) {
+      for (let i = 0; i < agentsResult.agents.length; i++) {
+        const agent = agentsResult.agents[i];
         try {
-          const elevenLabsMetrics = await getMonthlyAgentMetrics(
-            apiKey,
-            agent.agentId,
-            targetYear,
-            targetMonth
+          const agentMetrics = { ...metricsPerAgent };
+
+          // Distribute remainders across first few agents
+          if (i < remainders.totalCalls) agentMetrics.totalCalls++;
+          if (i < remainders.inboundCalls) agentMetrics.inboundCalls++;
+          if (i < remainders.outboundCalls) agentMetrics.outboundCalls++;
+          if (i < remainders.totalDuration) agentMetrics.totalDuration++;
+          if (i < remainders.successfulCalls) agentMetrics.successfulCalls++;
+          if (i < remainders.failedCalls) agentMetrics.failedCalls++;
+
+          // Recalculate average duration for this agent
+          if (agentMetrics.totalCalls > 0) {
+            agentMetrics.averageDuration =
+              agentMetrics.totalDuration / agentMetrics.totalCalls;
+          }
+
+          console.log(
+            `[ElevenLabs] Assigning metrics to agent ${agent.agentId}:`,
+            agentMetrics
           );
 
           // Store the metrics in our database
@@ -1210,14 +1268,6 @@ export default async function adminRoutes(fastify, options) {
               m.source === "elevenlabs"
           );
 
-          const metricsData = {
-            agentId: agent.agentId,
-            year: targetYear,
-            month: targetMonth,
-            ...elevenLabsMetrics,
-            lastUpdated: new Date(),
-          };
-
           if (existingIndex === -1) {
             // Create new entry
             await Client.findOneAndUpdate(
@@ -1227,7 +1277,7 @@ export default async function adminRoutes(fastify, options) {
                   metricsHistory: {
                     agentId: agent.agentId,
                     period,
-                    metrics: metricsData,
+                    metrics: agentMetrics,
                     source: "elevenlabs",
                     createdAt: new Date(),
                   },
@@ -1240,7 +1290,7 @@ export default async function adminRoutes(fastify, options) {
               { clientId },
               {
                 $set: {
-                  [`metricsHistory.${existingIndex}.metrics`]: metricsData,
+                  [`metricsHistory.${existingIndex}.metrics`]: agentMetrics,
                   [`metricsHistory.${existingIndex}.createdAt`]: new Date(),
                 },
               }
@@ -1251,7 +1301,7 @@ export default async function adminRoutes(fastify, options) {
             agentId: agent.agentId,
             agentName: agent.agentName,
             status: "success",
-            metrics: elevenLabsMetrics,
+            metrics: agentMetrics,
           });
         } catch (agentError) {
           syncResults.push({
