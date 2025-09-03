@@ -359,6 +359,182 @@ async function findClientForTool(params) {
   return null;
 }
 
+/**
+ * Fetch appointments from GHL for a specific date range
+ * @param {string} clientId - Client ID in our system
+ * @param {Date} startDate - Start date for appointments
+ * @param {Date} endDate - End date for appointments
+ * @returns {Promise<Array>} - Array of appointments
+ */
+async function fetchGhlAppointments(clientId, startDate, endDate) {
+  try {
+    const { accessToken, locationId } = await checkAndRefreshToken(clientId);
+
+    const params = new URLSearchParams({
+      startDate: startDate.toISOString().split("T")[0],
+      endDate: endDate.toISOString().split("T")[0],
+      includeAll: "true",
+    });
+
+    const response = await fetch(
+      `https://services.leadconnectorhq.com/calendars/events?${params.toString()}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Version: "2021-07-28",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `GHL API error: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const data = await response.json();
+    return data.events || [];
+  } catch (error) {
+    console.error("Error fetching GHL appointments:", error);
+    throw error;
+  }
+}
+
+/**
+ * Get monthly appointment metrics from GHL
+ * @param {string} clientId - Client ID in our system
+ * @param {number} year - Year
+ * @param {number} month - Month (1-12)
+ * @returns {Promise<Object>} - Appointment metrics
+ */
+export async function getMonthlyGhlAppointments(clientId, year, month) {
+  try {
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 1); // First day of next month
+
+    const appointments = await fetchGhlAppointments(
+      clientId,
+      startDate,
+      endDate
+    );
+
+    const metrics = {
+      totalAppointments: appointments.length,
+      successfulAppointments: 0,
+      cancelledAppointments: 0,
+      noShowAppointments: 0,
+      completedAppointments: 0,
+    };
+
+    appointments.forEach((appointment) => {
+      switch (appointment.status?.toLowerCase()) {
+        case "confirmed":
+        case "completed":
+          metrics.successfulAppointments++;
+          if (appointment.status?.toLowerCase() === "completed") {
+            metrics.completedAppointments++;
+          }
+          break;
+        case "cancelled":
+          metrics.cancelledAppointments++;
+          break;
+        case "no_show":
+          metrics.noShowAppointments++;
+          break;
+      }
+    });
+
+    return {
+      year,
+      month,
+      period: `${year}-${month.toString().padStart(2, "0")}`,
+      ...metrics,
+      appointments,
+    };
+  } catch (error) {
+    console.error("Error getting monthly GHL appointments:", error);
+    throw error;
+  }
+}
+
+/**
+ * Aggregate appointment metrics by agent from GHL data
+ * @param {Array} appointments - Array of GHL appointments
+ * @param {Array} agents - Array of agent objects with agentId and other details
+ * @returns {Object} - Metrics aggregated by agent
+ */
+export function aggregateAppointmentsByAgent(appointments, agents) {
+  const agentMetrics = {};
+
+  // Initialize metrics for all agents
+  agents.forEach((agent) => {
+    agentMetrics[agent.agentId] = {
+      agentId: agent.agentId,
+      agentName: agent.agentName || `Agent ${agent.agentId}`,
+      totalAppointments: 0,
+      successfulAppointments: 0,
+      cancelledAppointments: 0,
+      noShowAppointments: 0,
+      completedAppointments: 0,
+    };
+  });
+
+  // Aggregate appointments
+  appointments.forEach((appointment) => {
+    // Try to match appointment to agent (this might need customization based on GHL data structure)
+    let matchedAgentId = null;
+
+    // Look for agent identifier in appointment data
+    // This is a placeholder - adjust based on actual GHL appointment structure
+    if (appointment.agentId) {
+      matchedAgentId = appointment.agentId;
+    } else if (appointment.assignedTo) {
+      // Try to match by assigned user
+      const matchedAgent = agents.find(
+        (agent) =>
+          agent.agentName
+            ?.toLowerCase()
+            .includes(appointment.assignedTo?.toLowerCase()) ||
+          appointment.assignedTo
+            ?.toLowerCase()
+            .includes(agent.agentName?.toLowerCase())
+      );
+      if (matchedAgent) {
+        matchedAgentId = matchedAgent.agentId;
+      }
+    }
+
+    // If no specific agent matched, distribute evenly or use primary agent
+    if (!matchedAgentId && agents.length > 0) {
+      matchedAgentId = agents[0].agentId; // Default to first agent
+    }
+
+    if (matchedAgentId && agentMetrics[matchedAgentId]) {
+      agentMetrics[matchedAgentId].totalAppointments++;
+
+      switch (appointment.status?.toLowerCase()) {
+        case "confirmed":
+        case "completed":
+          agentMetrics[matchedAgentId].successfulAppointments++;
+          if (appointment.status?.toLowerCase() === "completed") {
+            agentMetrics[matchedAgentId].completedAppointments++;
+          }
+          break;
+        case "cancelled":
+          agentMetrics[matchedAgentId].cancelledAppointments++;
+          break;
+        case "no_show":
+          agentMetrics[matchedAgentId].noShowAppointments++;
+          break;
+      }
+    }
+  });
+
+  return agentMetrics;
+}
+
 export {
   refreshGhlToken,
   makeGhlApiCall,
@@ -367,4 +543,7 @@ export {
   isTokenValid,
   migrateClientTokens,
   findClientForTool,
+  fetchGhlAppointments,
+  getMonthlyGhlAppointments,
+  aggregateAppointmentsByAgent,
 };

@@ -15,6 +15,39 @@ const clientMetaSchema = new mongoose.Schema(
   { _id: false }
 ); // Prevents creating an _id for this subdocument
 
+// Agent Metrics Schema for tracking call and appointment statistics
+const agentMetricsSchema = new mongoose.Schema(
+  {
+    agentId: { type: String, required: true },
+    year: { type: Number, required: true },
+    month: { type: Number, required: true, min: 1, max: 12 },
+    inboundCalls: { type: Number, default: 0 },
+    outboundCalls: { type: Number, default: 0 },
+    totalCalls: { type: Number, default: 0 },
+    successfulBookings: { type: Number, default: 0 },
+    totalDuration: { type: Number, default: 0 }, // in seconds
+    averageDuration: { type: Number, default: 0 }, // in seconds
+    lastUpdated: { type: Date, default: Date.now },
+  },
+  { _id: false }
+);
+
+// Agent Metrics History Schema
+const agentMetricsHistorySchema = new mongoose.Schema(
+  {
+    agentId: { type: String, required: true },
+    period: { type: String, required: true }, // Format: "YYYY-MM"
+    metrics: agentMetricsSchema,
+    source: {
+      type: String,
+      enum: ["elevenlabs", "internal", "combined"],
+      default: "internal",
+    },
+    createdAt: { type: Date, default: Date.now },
+  },
+  { _id: true }
+);
+
 const callDataSchema = new mongoose.Schema(
   {
     callSid: { type: String, required: true },
@@ -114,6 +147,7 @@ const clientSchema = new mongoose.Schema(
     },
     clientMeta: clientMetaSchema,
     callHistory: [callHistorySchema],
+    metricsHistory: [agentMetricsHistorySchema], // New: Historical metrics for all agents
   },
   {
     timestamps: true, // Adds and manages createdAt and updatedAt automatically

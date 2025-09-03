@@ -68,6 +68,33 @@ export async function addCallToHistory(clientId, callData) {
       },
       { new: true, runValidators: true }
     );
+
+    // Increment call metrics for the agent
+    try {
+      const { incrementAgentCallMetrics } = await import(
+        "./utils/agentManager.js"
+      );
+      const agentId = callData.callData.agentId;
+      const direction = callData.callData.direction || "inbound"; // Default to inbound if not specified
+      const duration = callData.callData.duration || 0;
+      const wasSuccessful =
+        callData.callData.status === "completed" ||
+        callData.callData.status === "booked_appointment";
+
+      await incrementAgentCallMetrics(clientId, agentId, {
+        direction,
+        duration,
+        wasSuccessful,
+      });
+
+      console.log(
+        `Incremented call metrics for agent ${agentId}: ${direction} call, ${duration}s, success: ${wasSuccessful}`
+      );
+    } catch (metricsError) {
+      console.error("Failed to increment call metrics:", metricsError);
+      // Don't fail the call logging if metrics update fails
+    }
+
     return client;
   } catch (error) {
     console.error("Error adding call to history:", error);

@@ -319,3 +319,302 @@ export async function findClientByAnyAgent(searchParams) {
     };
   }
 }
+
+/**
+ * Increment call metrics for an agent
+ * @param {string} clientId - Client ID
+ * @param {string} agentId - Agent ID
+ * @param {Object} callData - Call data
+ * @param {string} callData.direction - 'inbound' or 'outbound'
+ * @param {number} callData.duration - Call duration in seconds
+ * @param {boolean} callData.wasSuccessful - Whether the call was successful
+ * @returns {Promise<Object>} - Update result
+ */
+export async function incrementAgentCallMetrics(clientId, agentId, callData) {
+  try {
+    const { direction, duration = 0, wasSuccessful = false } = callData;
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1; // JavaScript months are 0-indexed
+    const period = `${year}-${month.toString().padStart(2, "0")}`;
+
+    // Find the client
+    const client = await Client.findOne({ clientId, status: "Active" });
+    if (!client) {
+      throw new Error("Client not found or inactive");
+    }
+
+    // Check if agent exists for this client
+    const agent = client.getAllAgents().find((a) => a.agentId === agentId);
+    if (!agent) {
+      throw new Error("Agent not found for this client");
+    }
+
+    // Find existing metrics for this period and agent
+    let existingMetricsIndex = client.metricsHistory.findIndex(
+      (m) =>
+        m.agentId === agentId && m.period === period && m.source === "internal"
+    );
+
+    if (existingMetricsIndex === -1) {
+      // Create new metrics entry
+      const newMetrics = {
+        agentId,
+        period,
+        metrics: {
+          agentId,
+          year,
+          month,
+          inboundCalls: direction === "inbound" ? 1 : 0,
+          outboundCalls: direction === "outbound" ? 1 : 0,
+          totalCalls: 1,
+          successfulBookings: 0,
+          totalDuration: duration,
+          averageDuration: duration,
+          lastUpdated: now,
+        },
+        source: "internal",
+        createdAt: now,
+      };
+
+      await Client.findOneAndUpdate(
+        { clientId },
+        { $push: { metricsHistory: newMetrics } }
+      );
+    } else {
+      // Update existing metrics
+      const updatePath = `metricsHistory.${existingMetricsIndex}.metrics`;
+
+      const updateObj = {
+        $inc: {
+          [`${updatePath}.totalCalls`]: 1,
+          [`${updatePath}.totalDuration`]: duration,
+        },
+        $set: {
+          [`${updatePath}.lastUpdated`]: now,
+        },
+      };
+
+      if (direction === "inbound") {
+        updateObj.$inc[`${updatePath}.inboundCalls`] = 1;
+      } else {
+        updateObj.$inc[`${updatePath}.outboundCalls`] = 1;
+      }
+
+      await Client.findOneAndUpdate({ clientId }, updateObj);
+
+      // Recalculate average duration
+      const updatedClient = await Client.findOne({ clientId });
+      const metrics =
+        updatedClient.metricsHistory[existingMetricsIndex].metrics;
+      if (metrics.totalCalls > 0) {
+        metrics.averageDuration = metrics.totalDuration / metrics.totalCalls;
+        await Client.findOneAndUpdate(
+          { clientId },
+          {
+            $set: {
+              [`${updatePath}.averageDuration`]: metrics.averageDuration,
+            },
+          }
+        );
+      }
+    }
+
+    return {
+      success: true,
+      message: "Call metrics updated successfully",
+      agentId,
+      period,
+      direction,
+      duration,
+    };
+  } catch (error) {
+    console.error("Error incrementing agent call metrics:", error);
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+}
+
+/**
+ * Increment booking metrics for an agent
+ * @param {string} clientId - Client ID
+ * @param {string} agentId - Agent ID
+ * @returns {Promise<Object>} - Update result
+ */
+export async function incrementAgentBookingMetrics(clientId, agentId) {
+  try {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const period = `${year}-${month.toString().padStart(2, "0")}`;
+
+    // Find the client
+    const client = await Client.findOne({ clientId, status: "Active" });
+    if (!client) {
+      throw new Error("Client not found or inactive");
+    }
+
+    // Check if agent exists for this client
+    const agent = client.getAllAgents().find((a) => a.agentId === agentId);
+    if (!agent) {
+      throw new Error("Agent not found for this client");
+    }
+
+    // Find existing metrics for this period and agent
+    let existingMetricsIndex = client.metricsHistory.findIndex(
+      (m) =>
+        m.agentId === agentId && m.period === period && m.source === "internal"
+    );
+
+    if (existingMetricsIndex === -1) {
+      // Create new metrics entry
+      const newMetrics = {
+        agentId,
+        period,
+        metrics: {
+          agentId,
+          year,
+          month,
+          inboundCalls: 0,
+          outboundCalls: 0,
+          totalCalls: 0,
+          successfulBookings: 1,
+          totalDuration: 0,
+          averageDuration: 0,
+          lastUpdated: now,
+        },
+        source: "internal",
+        createdAt: now,
+      };
+
+      await Client.findOneAndUpdate(
+        { clientId },
+        { $push: { metricsHistory: newMetrics } }
+      );
+    } else {
+      // Update existing metrics
+      const updatePath = `metricsHistory.${existingMetricsIndex}.metrics`;
+
+      await Client.findOneAndUpdate(
+        { clientId },
+        {
+          $inc: { [`${updatePath}.successfulBookings`]: 1 },
+          $set: { [`${updatePath}.lastUpdated`]: now },
+        }
+      );
+    }
+
+    return {
+      success: true,
+      message: "Booking metrics updated successfully",
+      agentId,
+      period,
+    };
+  } catch (error) {
+    console.error("Error incrementing agent booking metrics:", error);
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+}
+
+/**
+ * Get agent metrics for a specific period
+ * @param {string} clientId - Client ID
+ * @param {string} agentId - Agent ID
+ * @param {string} period - Period in format "YYYY-MM"
+ * @returns {Promise<Object>} - Metrics data
+ */
+export async function getAgentMetrics(clientId, agentId, period = null) {
+  try {
+    const client = await Client.findOne({ clientId, status: "Active" });
+    if (!client) {
+      throw new Error("Client not found or inactive");
+    }
+
+    let metrics = [];
+
+    if (period) {
+      // Get metrics for specific period
+      metrics = client.metricsHistory.filter(
+        (m) => m.agentId === agentId && m.period === period
+      );
+    } else {
+      // Get all metrics for agent
+      metrics = client.metricsHistory.filter((m) => m.agentId === agentId);
+    }
+
+    // Sort by period descending (most recent first)
+    metrics.sort((a, b) => b.period.localeCompare(a.period));
+
+    return {
+      success: true,
+      agentId,
+      clientId,
+      period: period || "all",
+      metricsCount: metrics.length,
+      metrics,
+    };
+  } catch (error) {
+    console.error("Error getting agent metrics:", error);
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+}
+
+/**
+ * Get all agent metrics for a client
+ * @param {string} clientId - Client ID
+ * @param {string} period - Optional period filter
+ * @returns {Promise<Object>} - All agent metrics
+ */
+export async function getAllAgentMetrics(clientId, period = null) {
+  try {
+    const client = await Client.findOne({ clientId, status: "Active" });
+    if (!client) {
+      throw new Error("Client not found or inactive");
+    }
+
+    let metrics = [];
+
+    if (period) {
+      metrics = client.metricsHistory.filter((m) => m.period === period);
+    } else {
+      metrics = client.metricsHistory;
+    }
+
+    // Group by agent
+    const metricsByAgent = {};
+    metrics.forEach((m) => {
+      if (!metricsByAgent[m.agentId]) {
+        metricsByAgent[m.agentId] = [];
+      }
+      metricsByAgent[m.agentId].push(m);
+    });
+
+    // Sort each agent's metrics by period
+    Object.keys(metricsByAgent).forEach((agentId) => {
+      metricsByAgent[agentId].sort((a, b) => b.period.localeCompare(a.period));
+    });
+
+    return {
+      success: true,
+      clientId,
+      period: period || "all",
+      totalMetrics: metrics.length,
+      agentsCount: Object.keys(metricsByAgent).length,
+      metricsByAgent,
+    };
+  } catch (error) {
+    console.error("Error getting all agent metrics:", error);
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+}

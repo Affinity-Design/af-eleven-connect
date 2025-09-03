@@ -1097,4 +1097,409 @@ export default async function adminRoutes(fastify, options) {
       }
     }
   );
+
+  // Get agent metrics report
+  fastify.get("/reports/agent-metrics", async (request, reply) => {
+    try {
+      const { clientId, agentId, period, year, month } = request.query;
+
+      if (!clientId) {
+        return reply.code(400).send({
+          error: "clientId is required",
+        });
+      }
+
+      // Import metrics functions
+      const { getAgentMetrics, getAllAgentMetrics } = await import(
+        "../utils/agentManager.js"
+      );
+
+      let result;
+      if (agentId) {
+        // Get metrics for specific agent
+        const targetPeriod =
+          period ||
+          (year && month
+            ? `${year}-${month.toString().padStart(2, "0")}`
+            : null);
+        result = await getAgentMetrics(clientId, agentId, targetPeriod);
+      } else {
+        // Get metrics for all agents
+        const targetPeriod =
+          period ||
+          (year && month
+            ? `${year}-${month.toString().padStart(2, "0")}`
+            : null);
+        result = await getAllAgentMetrics(clientId, targetPeriod);
+      }
+
+      if (!result.success) {
+        return reply.code(404).send({
+          error: result.error,
+        });
+      }
+
+      reply.send(result);
+    } catch (error) {
+      fastify.log.error("Error getting agent metrics report:", error);
+      reply.code(500).send({
+        error: "Failed to get agent metrics report",
+        details: error.message,
+      });
+    }
+  });
+
+  // Sync ElevenLabs metrics for a client
+  fastify.post("/reports/sync-elevenlabs", async (request, reply) => {
+    try {
+      const { clientId, year, month } = request.body;
+
+      if (!clientId) {
+        return reply.code(400).send({
+          error: "clientId is required",
+        });
+      }
+
+      const targetYear = year || new Date().getFullYear();
+      const targetMonth = month || new Date().getMonth() + 1;
+
+      // Import ElevenLabs functions
+      const { getMonthlyAgentMetrics } = await import("../utils/elevenlabs.js");
+      const { getAllAgentsForClient } = await import(
+        "../utils/agentManager.js"
+      );
+
+      // Get all agents for the client
+      const agentsResult = await getAllAgentsForClient(clientId);
+      if (!agentsResult.success) {
+        return reply.code(404).send({
+          error: agentsResult.error,
+        });
+      }
+
+      const apiKey = process.env.ELEVENLABS_API_KEY;
+      if (!apiKey) {
+        return reply.code(500).send({
+          error: "ElevenLabs API key not configured",
+        });
+      }
+
+      const syncResults = [];
+
+      // Sync metrics for each agent
+      for (const agent of agentsResult.agents) {
+        try {
+          const elevenLabsMetrics = await getMonthlyAgentMetrics(
+            apiKey,
+            agent.agentId,
+            targetYear,
+            targetMonth
+          );
+
+          // Store the metrics in our database
+          const period = `${targetYear}-${targetMonth
+            .toString()
+            .padStart(2, "0")}`;
+
+          // Check if metrics already exist
+          const client = await Client.findOne({ clientId });
+          const existingIndex = client.metricsHistory.findIndex(
+            (m) =>
+              m.agentId === agent.agentId &&
+              m.period === period &&
+              m.source === "elevenlabs"
+          );
+
+          const metricsData = {
+            agentId: agent.agentId,
+            year: targetYear,
+            month: targetMonth,
+            ...elevenLabsMetrics,
+            lastUpdated: new Date(),
+          };
+
+          if (existingIndex === -1) {
+            // Create new entry
+            await Client.findOneAndUpdate(
+              { clientId },
+              {
+                $push: {
+                  metricsHistory: {
+                    agentId: agent.agentId,
+                    period,
+                    metrics: metricsData,
+                    source: "elevenlabs",
+                    createdAt: new Date(),
+                  },
+                },
+              }
+            );
+          } else {
+            // Update existing entry
+            await Client.findOneAndUpdate(
+              { clientId },
+              {
+                $set: {
+                  [`metricsHistory.${existingIndex}.metrics`]: metricsData,
+                  [`metricsHistory.${existingIndex}.createdAt`]: new Date(),
+                },
+              }
+            );
+          }
+
+          syncResults.push({
+            agentId: agent.agentId,
+            agentName: agent.agentName,
+            status: "success",
+            metrics: elevenLabsMetrics,
+          });
+        } catch (agentError) {
+          syncResults.push({
+            agentId: agent.agentId,
+            agentName: agent.agentName,
+            status: "error",
+            error: agentError.message,
+          });
+        }
+      }
+
+      reply.send({
+        success: true,
+        clientId,
+        period: `${targetYear}-${targetMonth.toString().padStart(2, "0")}`,
+        totalAgents: agentsResult.agents.length,
+        syncResults,
+      });
+    } catch (error) {
+      fastify.log.error("Error syncing ElevenLabs metrics:", error);
+      reply.code(500).send({
+        error: "Failed to sync ElevenLabs metrics",
+        details: error.message,
+      });
+    }
+  });
+
+  // Sync GHL appointment metrics for a client
+  fastify.post("/reports/sync-ghl-appointments", async (request, reply) => {
+    try {
+      const { clientId, year, month } = request.body;
+
+      if (!clientId) {
+        return reply.code(400).send({
+          error: "clientId is required",
+        });
+      }
+
+      const targetYear = year || new Date().getFullYear();
+      const targetMonth = month || new Date().getMonth() + 1;
+
+      // Import GHL functions
+      const { getMonthlyGhlAppointments, aggregateAppointmentsByAgent } =
+        await import("../utils/ghl.js");
+      const { getAllAgentsForClient } = await import(
+        "../utils/agentManager.js"
+      );
+
+      // Get all agents for the client
+      const agentsResult = await getAllAgentsForClient(clientId);
+      if (!agentsResult.success) {
+        return reply.code(404).send({
+          error: agentsResult.error,
+        });
+      }
+
+      // Get GHL appointments
+      const ghlData = await getMonthlyGhlAppointments(
+        clientId,
+        targetYear,
+        targetMonth
+      );
+
+      // Aggregate by agent
+      const agentMetrics = aggregateAppointmentsByAgent(
+        ghlData.appointments,
+        agentsResult.agents
+      );
+
+      // Store metrics for each agent
+      const period = `${targetYear}-${targetMonth.toString().padStart(2, "0")}`;
+      const syncResults = [];
+
+      for (const [agentId, metrics] of Object.entries(agentMetrics)) {
+        try {
+          const client = await Client.findOne({ clientId });
+          const existingIndex = client.metricsHistory.findIndex(
+            (m) =>
+              m.agentId === agentId && m.period === period && m.source === "ghl"
+          );
+
+          const metricsData = {
+            agentId,
+            year: targetYear,
+            month: targetMonth,
+            successfulBookings: metrics.successfulAppointments,
+            totalAppointments: metrics.totalAppointments,
+            cancelledAppointments: metrics.cancelledAppointments,
+            noShowAppointments: metrics.noShowAppointments,
+            completedAppointments: metrics.completedAppointments,
+            lastUpdated: new Date(),
+          };
+
+          if (existingIndex === -1) {
+            // Create new entry
+            await Client.findOneAndUpdate(
+              { clientId },
+              {
+                $push: {
+                  metricsHistory: {
+                    agentId,
+                    period,
+                    metrics: metricsData,
+                    source: "ghl",
+                    createdAt: new Date(),
+                  },
+                },
+              }
+            );
+          } else {
+            // Update existing entry
+            await Client.findOneAndUpdate(
+              { clientId },
+              {
+                $set: {
+                  [`metricsHistory.${existingIndex}.metrics`]: metricsData,
+                  [`metricsHistory.${existingIndex}.createdAt`]: new Date(),
+                },
+              }
+            );
+          }
+
+          syncResults.push({
+            agentId,
+            agentName: metrics.agentName,
+            status: "success",
+            metrics: metricsData,
+          });
+        } catch (agentError) {
+          syncResults.push({
+            agentId,
+            agentName: metrics.agentName,
+            status: "error",
+            error: agentError.message,
+          });
+        }
+      }
+
+      reply.send({
+        success: true,
+        clientId,
+        period,
+        totalAgents: agentsResult.agents.length,
+        totalAppointments: ghlData.totalAppointments,
+        syncResults,
+      });
+    } catch (error) {
+      fastify.log.error("Error syncing GHL appointment metrics:", error);
+      reply.code(500).send({
+        error: "Failed to sync GHL appointment metrics",
+        details: error.message,
+      });
+    }
+  });
+
+  // Get combined metrics report (internal + external sources)
+  fastify.get("/reports/combined-metrics", async (request, reply) => {
+    try {
+      const { clientId, agentId, period, year, month } = request.query;
+
+      if (!clientId) {
+        return reply.code(400).send({
+          error: "clientId is required",
+        });
+      }
+
+      const targetPeriod =
+        period ||
+        (year && month ? `${year}-${month.toString().padStart(2, "0")}` : null);
+
+      // Import metrics functions
+      const { getAllAgentMetrics } = await import("../utils/agentManager.js");
+
+      const result = await getAllAgentMetrics(clientId, targetPeriod);
+      if (!result.success) {
+        return reply.code(404).send({
+          error: result.error,
+        });
+      }
+
+      // Combine metrics from different sources
+      const combinedMetrics = {};
+
+      Object.keys(result.metricsByAgent).forEach((agentId) => {
+        const agentMetrics = result.metricsByAgent[agentId];
+
+        combinedMetrics[agentId] = {
+          agentId,
+          period: targetPeriod,
+          sources: {
+            internal: null,
+            elevenlabs: null,
+            ghl: null,
+            combined: null,
+          },
+        };
+
+        // Group by source
+        agentMetrics.forEach((metric) => {
+          combinedMetrics[agentId].sources[metric.source] = metric;
+        });
+
+        // Create combined metrics
+        const internal =
+          combinedMetrics[agentId].sources.internal?.metrics || {};
+        const elevenlabs =
+          combinedMetrics[agentId].sources.elevenlabs?.metrics || {};
+        const ghl = combinedMetrics[agentId].sources.ghl?.metrics || {};
+
+        combinedMetrics[agentId].sources.combined = {
+          agentId,
+          year: internal.year || elevenlabs.year || ghl.year,
+          month: internal.month || elevenlabs.month || ghl.month,
+          inboundCalls:
+            (internal.inboundCalls || 0) + (elevenlabs.inboundCalls || 0),
+          outboundCalls:
+            (internal.outboundCalls || 0) + (elevenlabs.outboundCalls || 0),
+          totalCalls: (internal.totalCalls || 0) + (elevenlabs.totalCalls || 0),
+          successfulBookings:
+            (internal.successfulBookings || 0) +
+            (ghl.successfulAppointments || 0),
+          totalDuration:
+            (internal.totalDuration || 0) + (elevenlabs.totalDuration || 0),
+          averageDuration: 0,
+          lastUpdated: new Date(),
+        };
+
+        // Calculate combined average duration
+        const totalCalls = combinedMetrics[agentId].sources.combined.totalCalls;
+        if (totalCalls > 0) {
+          combinedMetrics[agentId].sources.combined.averageDuration =
+            combinedMetrics[agentId].sources.combined.totalDuration /
+            totalCalls;
+        }
+      });
+
+      reply.send({
+        success: true,
+        clientId,
+        period: targetPeriod,
+        combinedMetrics,
+      });
+    } catch (error) {
+      fastify.log.error("Error getting combined metrics report:", error);
+      reply.code(500).send({
+        error: "Failed to get combined metrics report",
+        details: error.message,
+      });
+    }
+  });
 }

@@ -693,6 +693,26 @@ export default async function toolRoutes(fastify, options) {
 
       const appointmentResult = await response.json();
 
+      // Increment booking metrics for the agent
+      try {
+        const { incrementAgentBookingMetrics } = await import(
+          "../utils/agentManager.js"
+        );
+        await incrementAgentBookingMetrics(
+          client.clientId,
+          matchedAgent.agentId
+        );
+        console.log(
+          `[${requestId}] Incremented booking metrics for agent ${matchedAgent.agentId}`
+        );
+      } catch (metricsError) {
+        console.error(
+          `[${requestId}] Failed to increment booking metrics:`,
+          metricsError
+        );
+        // Don't fail the booking if metrics update fails
+      }
+
       return reply.send({
         requestId,
         clientId: client.clientId,
