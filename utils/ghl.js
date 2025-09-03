@@ -28,6 +28,11 @@ async function checkAndRefreshToken(clientId) {
     throw new Error(`Client not found: ${clientId}`);
   }
 
+  console.log(`[GHL] Checking token for client ${clientId}`);
+  console.log(`[GHL] Has refresh token: ${!!client.refreshToken}`);
+  console.log(`[GHL] Has access token: ${!!client.accessToken}`);
+  console.log(`[GHL] Token expires at: ${client.tokenExpiresAt}`);
+
   if (!client.refreshToken) {
     throw new Error(`No refresh token available for client: ${clientId}`);
   }
@@ -50,6 +55,12 @@ async function checkAndRefreshToken(clientId) {
     }
   }
 
+  console.log(
+    `[GHL] Using access token for client ${clientId}: ${client.accessToken.substring(
+      0,
+      20
+    )}...`
+  );
   return {
     accessToken: client.accessToken,
     locationId: clientId, // In your system, the clientId is the GHL location ID
@@ -92,10 +103,13 @@ async function refreshGhlToken(clientId) {
     const data = await response.json();
     if (!response.ok) {
       console.error(`Token refresh failed for client ${clientId}:`, data);
+      console.error(`Response status: ${response.status} ${response.statusText}`);
       throw new Error(`Token refresh failed: ${JSON.stringify(data)}`);
     }
 
+    console.log(`Token refresh successful for client ${clientId}`);
     const { access_token, refresh_token, expires_in } = data;
+    console.log(`New token expires in: ${expires_in} seconds`);
     const expiresAt = new Date(Date.now() + expires_in * 1000);
 
     // Update the client document
@@ -368,6 +382,11 @@ async function findClientForTool(params) {
  */
 async function fetchGhlAppointments(clientId, startDate, endDate) {
   try {
+    console.log(`[GHL] Fetching appointments for client ${clientId}`);
+    console.log(
+      `[GHL] Date range: ${startDate.toISOString()} to ${endDate.toISOString()}`
+    );
+
     const { accessToken, locationId } = await checkAndRefreshToken(clientId);
 
     const params = new URLSearchParams({
@@ -376,25 +395,57 @@ async function fetchGhlAppointments(clientId, startDate, endDate) {
       includeAll: "true",
     });
 
-    const response = await fetch(
-      `https://services.leadconnectorhq.com/calendars/events?${params.toString()}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          Version: "2021-07-28",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const url = `https://services.leadconnectorhq.com/calendars/events?${params.toString()}`;
+    console.log(`[GHL] Making API call to: ${url}`);
+    console.log(`[GHL] Using location ID: ${locationId}`);
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Version: "2021-07-28",
+        "Content-Type": "application/json",
+      },
+    });
+
+    console.log(`[GHL] API Response status: ${response.status} ${response.statusText}`);
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`[GHL] API Error response:`, errorText);
+
+      // Try alternative endpoint format
+      if (response.status === 403) {
+        console.log(`[GHL] Trying alternative endpoint with location ID...`);
+        const altUrl = `https://services.leadconnectorhq.com/calendars/events?locationId=${locationId}&${params.toString()}`;
+
+        const altResponse = await fetch(altUrl, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            Version: "2021-07-28",
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (altResponse.ok) {
+          console.log(`[GHL] Alternative endpoint worked!`);
+          const altData = await altResponse.json();
+          return altData.events || [];
+        } else {
+          console.error(`[GHL] Alternative endpoint also failed: ${altResponse.status}`);
+        }
+      }
+
       throw new Error(
         `GHL API error: ${response.status} ${response.statusText}`
       );
     }
 
     const data = await response.json();
+    console.log(
+      `[GHL] Successfully fetched ${data.events?.length || 0} appointments`
+    );
     return data.events || [];
   } catch (error) {
     console.error("Error fetching GHL appointments:", error);
