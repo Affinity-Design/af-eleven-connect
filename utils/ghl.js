@@ -409,7 +409,7 @@ async function fetchGhlAppointments(clientId, startDate, endDate) {
  * @param {number} month - Month (1-12)
  * @returns {Promise<Object>} - Appointment metrics
  */
-export async function getMonthlyGhlAppointments(clientId, year, month) {
+async function getMonthlyGhlAppointments(clientId, year, month) {
   try {
     const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 1); // First day of next month
@@ -465,7 +465,7 @@ export async function getMonthlyGhlAppointments(clientId, year, month) {
  * @param {Array} agents - Array of agent objects with agentId and other details
  * @returns {Object} - Metrics aggregated by agent
  */
-export function aggregateAppointmentsByAgent(appointments, agents) {
+function aggregateAppointmentsByAgent(appointments, agents) {
   const agentMetrics = {};
 
   // Initialize metrics for all agents
