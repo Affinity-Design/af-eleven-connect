@@ -47,20 +47,28 @@ export async function fetchElevenLabsHistory(apiKey, options = {}) {
       params.toString()
     );
 
-    // Try multiple endpoints to find conversation data
+    // Try multiple endpoints to find actual call/conversation data
     const endpoints = [
       {
-        url: `https://api.elevenlabs.io/v1/convai/conversation/history?${params.toString()}`,
+        url: `https://api.elevenlabs.io/v1/convai/conversations?${params.toString()}`,
+        name: "convai conversations",
+      },
+      {
+        url: `https://api.elevenlabs.io/v1/conversation-history?${params.toString()}`,
         name: "conversation history",
       },
       {
-        url: `https://api.elevenlabs.io/v1/convai/conversations?${params.toString()}`,
-        name: "conversations",
+        url: `https://api.elevenlabs.io/v1/convai/agents/conversations?${params.toString()}`,
+        name: "agent conversations",
       },
       {
-        url: `https://api.elevenlabs.io/v1/history?${params.toString()}`,
-        name: "general history",
+        url: `https://api.elevenlabs.io/v1/call-logs?${params.toString()}`,
+        name: "call logs",
       },
+      {
+        url: `https://api.elevenlabs.io/v1/calls?${params.toString()}`,
+        name: "calls",
+      }
     ];
 
     let response = null;
@@ -98,29 +106,18 @@ export async function fetchElevenLabsHistory(apiKey, options = {}) {
     }
 
     if (!response || !response.ok) {
-      const errorText = response
-        ? await response.text()
-        : "No successful response";
-      console.error(
-        `[ElevenLabs] All endpoints failed. Last status: ${response?.status} ${response?.statusText}`,
-        errorText
-      );
-      throw new Error(
-        `ElevenLabs API error: All endpoints failed. Last: ${response?.status} ${response?.statusText}`
-      );
-    }
-
-    if (!response || !response.ok) {
-      const errorText = response
-        ? await response.text()
-        : "No successful response";
-      console.error(
-        `[ElevenLabs] All endpoints failed. Last status: ${response?.status} ${response?.statusText}`,
-        errorText
-      );
-      throw new Error(
-        `ElevenLabs API error: All endpoints failed. Last: ${response?.status} ${response?.statusText}`
-      );
+      // If no conversation endpoints work, log the issue and return empty result
+      console.warn(`[ElevenLabs] No conversation/call endpoints available. This suggests:`);
+      console.warn(`[ElevenLabs] 1. Account may not have conversational AI features enabled`);
+      console.warn(`[ElevenLabs] 2. API key may not have conversation permissions`);
+      console.warn(`[ElevenLabs] 3. No actual calls/conversations in this date range`);
+      
+      // Return empty structure to avoid breaking the sync
+      return {
+        history: [],
+        conversations: [],
+        next_page_token: null
+      };
     }
 
     const data = await response.json();

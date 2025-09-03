@@ -437,37 +437,73 @@ async function fetchGhlAppointments(clientId, startDate, endDate) {
     const tokenData = await checkAndRefreshToken(clientId);
     const { accessToken, locationId, clientData } = tokenData;
 
-    // Format dates for GHL API (YYYY-MM-DD)
-    const startDateStr = startDate.toISOString().split("T")[0];
-    const endDateStr = endDate.toISOString().split("T")[0];
+    // First, try to get calendars for this location to understand the structure
+    try {
+      const calendarsResponse = await fetch(
+        `https://services.leadconnectorhq.com/calendars/?locationId=${locationId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            Version: "2021-07-28",
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    // Try multiple endpoint variations
+      if (calendarsResponse.ok) {
+        const calendarsData = await calendarsResponse.json();
+        console.log(`[GHL] Found ${calendarsData.calendars?.length || 0} calendars for location`);
+        
+        if (calendarsData.calendars?.length > 0) {
+          console.log(`[GHL] Sample calendar ID: ${calendarsData.calendars[0].id}`);
+        }
+      } else {
+        console.log(`[GHL] Could not fetch calendars: ${calendarsResponse.status}`);
+      }
+    } catch (calendarError) {
+      console.log(`[GHL] Calendar fetch error:`, calendarError.message);
+    }
+
+    // Format dates for GHL API (ISO format required)
+    const startTimeStr = startDate.toISOString();
+    const endTimeStr = endDate.toISOString();
+
+    // Try multiple endpoint variations with correct parameters
     const endpoints = [
       {
         url: `https://services.leadconnectorhq.com/calendars/events`,
         params: {
-          startDate: startDateStr,
-          endDate: endDateStr,
+          startTime: startTimeStr,
+          endTime: endTimeStr,
           locationId: locationId,
         },
-        name: "events with locationId param",
+        name: "events with startTime/endTime and locationId",
+      },
+      {
+        url: `https://services.leadconnectorhq.com/locations/${locationId}/appointments`,
+        params: {
+          startDate: startDate.toISOString().split("T")[0],
+          endDate: endDate.toISOString().split("T")[0],
+        },
+        name: "location appointments endpoint",
+      },
+      {
+        url: `https://services.leadconnectorhq.com/calendars/appointments`,
+        params: {
+          locationId: locationId,
+          startTime: startTimeStr,
+          endTime: endTimeStr,
+        },
+        name: "calendar appointments",
       },
       {
         url: `https://services.leadconnectorhq.com/calendars/events`,
         params: {
-          startDate: startDateStr,
-          endDate: endDateStr,
+          startTime: startTimeStr,
+          endTime: endTimeStr,
         },
-        name: "events without locationId",
-      },
-      {
-        url: `https://services.leadconnectorhq.com/calendars/events/search`,
-        params: {
-          startDate: startDateStr,
-          endDate: endDateStr,
-          locationId: locationId,
-        },
-        name: "events search",
+        name: "events with startTime/endTime only",
       },
     ];
 
