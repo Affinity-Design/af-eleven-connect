@@ -463,3 +463,235 @@ export async function getMonthlyAgentMetrics(apiKey, agentId, year, month) {
   );
   return aggregateElevenLabsMetrics(historyData, agentId);
 }
+
+/**
+ * NEW METRICS FUNCTIONS FOR AGENT REPORTING
+ */
+
+/**
+ * Iterate through all conversations for an agent with pagination
+ * @param {string} agentId - The ElevenLabs agent ID
+ * @param {string} apiKey - The ElevenLabs API key
+ * @returns {AsyncGenerator} - Async generator yielding conversations
+ */
+export async function* iterateConversations(agentId, apiKey) {
+  let cursor;
+  
+  do {
+    try {
+      const url = new URL("https://api.elevenlabs.io/v1/convai/conversations");
+      url.searchParams.set("agent_id", agentId);
+      if (cursor) url.searchParams.set("cursor", cursor);
+      
+      const response = await fetch(url, {
+        headers: { "xi-api-key": apiKey }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      
+      // Yield each conversation
+      for (const conversation of (data.conversations || [])) {
+        yield conversation;
+      }
+      
+      cursor = data.next_cursor || null;
+    } catch (error) {
+      console.error('Error fetching conversations from ElevenLabs:', error);
+      throw error;
+    }
+  } while (cursor);
+}
+
+/**
+ * Convert Unix timestamp to month key
+ * @param {number} unixSecs - Unix timestamp in seconds
+ * @returns {string} - Month key in "YYYY-MM" format
+ */
+export function monthKey(unixSecs) {
+  const date = new Date(unixSecs * 1000);
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}`;
+}
+
+/**
+ * Fetch and calculate monthly metrics from ElevenLabs for a specific agent
+ * @param {string} agentId - The ElevenLabs agent ID
+ * @param {string} apiKey - The ElevenLabs API key
+ * @param {string} targetPeriod - Target period in "YYYY-MM" format (optional)
+ * @returns {Promise<Object>} - Monthly metrics grouped by period
+ */
+export async function getMonthlyMetricsFromElevenLabs(agentId, apiKey, targetPeriod = null) {
+  try {
+    const byMonth = {};
+    
+    for await (const conversation of iterateConversations(agentId, apiKey)) {
+      const period = monthKey(conversation.start_time_unix_secs);
+      
+      // If target period is specified, only process that period
+      if (targetPeriod && period !== targetPeriod) {
+        continue;
+      }
+      
+      // Initialize month data if not exists
+      if (!byMonth[period]) {
+        byMonth[period] = {
+          period,
+          agentId,
+          totalCalls: 0,
+          totalMinutes: 0,
+          averageDuration: 0,
+          successfulCalls: 0,
+          failedCalls: 0,
+          unknownStatusCalls: 0,
+          successRate: 0,
+          conversations: []
+        };
+      }
+      
+      const monthData = byMonth[period];
+      monthData.totalCalls += 1;
+      monthData.totalMinutes += (conversation.call_duration_secs || 0) / 60;
+      
+      // Track call success status
+      const callStatus = (conversation.call_successful || "unknown").toLowerCase();
+      switch (callStatus) {
+        case "success":
+          monthData.successfulCalls += 1;
+          break;
+        case "failure":
+          monthData.failedCalls += 1;
+          break;
+        default:
+          monthData.unknownStatusCalls += 1;
+          break;
+      }
+      
+      // Store conversation for potential correlation
+      monthData.conversations.push({
+        id: conversation.conversation_id,
+        startTime: conversation.start_time_unix_secs,
+        duration: conversation.call_duration_secs || 0,
+        status: callStatus,
+        phone: conversation.phone_number || null
+      });
+    }
+    
+    // Calculate derived metrics for each month
+    Object.keys(byMonth).forEach(period => {
+      const month = byMonth[period];
+      
+      // Calculate average duration
+      if (month.totalCalls > 0) {
+        month.averageDuration = Math.round((month.totalMinutes * 60) / month.totalCalls);
+      }
+      
+      // Calculate success rate
+      if (month.totalCalls > 0) {
+        month.successRate = Math.round((month.successfulCalls / month.totalCalls) * 100);
+      }
+    });
+    
+    return byMonth;
+  } catch (error) {
+    console.error('Error getting monthly metrics from ElevenLabs:', error);
+    throw error;
+  }
+}
+
+/**
+ * Sync ElevenLabs metrics to database for a specific agent and period
+ * @param {string} clientId - The client ID
+ * @param {string} agentId - The agent ID
+ * @param {number} year - The year
+ * @param {number} month - The month (1-12)
+ * @param {string} apiKey - The ElevenLabs API key
+ * @returns {Promise<Object>} - Sync result
+ */
+export async function syncElevenLabsMetrics(clientId, agentId, year, month, apiKey) {
+  try {
+    const { findClientById } = await import('../crud.js');
+    const Client = (await import('../client.js')).default;
+    
+    const client = await findClientById(clientId);
+    if (!client) {
+      throw new Error(`Client not found: ${clientId}`);
+    }
+    
+    const targetPeriod = `${year}-${String(month).padStart(2, '0')}`;
+    const elevenLabsData = await getMonthlyMetricsFromElevenLabs(agentId, apiKey, targetPeriod);
+    
+    if (!elevenLabsData[targetPeriod]) {
+      return {
+        success: true,
+        message: `No ElevenLabs data found for agent ${agentId} in period ${targetPeriod}`,
+        period: targetPeriod,
+        agentId,
+        metrics: null
+      };
+    }
+    
+    const elevenLabsMetrics = elevenLabsData[targetPeriod];
+    
+    // Get existing metrics or create new ones
+    let existingMetrics = client.getAgentMetrics(agentId, year, month);
+    
+    // Prepare updates with ElevenLabs data
+    const updates = {
+      callsFromElevenlabs: elevenLabsMetrics.totalCalls,
+      elevenlabsSuccessRate: elevenLabsMetrics.successRate,
+      lastUpdated: new Date()
+    };
+    
+    // If no existing internal metrics, use ElevenLabs data as base
+    if (!existingMetrics) {
+      updates.agentId = agentId;
+      updates.year = year;
+      updates.month = month;
+      updates.totalCalls = elevenLabsMetrics.totalCalls;
+      updates.totalDuration = Math.round(elevenLabsMetrics.totalMinutes * 60);
+      updates.averageDuration = elevenLabsMetrics.averageDuration;
+      // Don't set inbound/outbound counts from ElevenLabs since we can't determine direction
+      updates.inboundCalls = 0;
+      updates.outboundCalls = 0;
+      updates.successfulBookings = 0; // This needs to be determined from appointments
+    }
+    
+    // Update client metrics
+    client.updateAgentMetrics(agentId, year, month, updates);
+    
+    // Mark the metrics entry as ElevenLabs sourced
+    const metricsEntry = client.getAgentMetrics(agentId, year, month);
+    if (metricsEntry) {
+      metricsEntry.source = existingMetrics ? "combined" : "elevenlabs";
+    }
+    
+    await client.save();
+    
+    return {
+      success: true,
+      message: `ElevenLabs metrics synced for agent ${agentId} in period ${targetPeriod}`,
+      period: targetPeriod,
+      agentId,
+      metrics: client.getAgentMetrics(agentId, year, month)?.metrics,
+      elevenLabsData: {
+        totalCalls: elevenLabsMetrics.totalCalls,
+        totalMinutes: elevenLabsMetrics.totalMinutes,
+        averageDuration: elevenLabsMetrics.averageDuration,
+        successRate: elevenLabsMetrics.successRate,
+        conversationCount: elevenLabsMetrics.conversations.length
+      }
+    };
+    
+  } catch (error) {
+    console.error('Error syncing ElevenLabs metrics:', error);
+    return {
+      success: false,
+      error: error.message,
+      period: `${year}-${String(month).padStart(2, '0')}`,
+      agentId
+    };
+  }
+}

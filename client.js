@@ -27,12 +27,14 @@ const agentMetricsSchema = new mongoose.Schema(
     successfulBookings: { type: Number, default: 0 },
     totalDuration: { type: Number, default: 0 }, // in seconds
     averageDuration: { type: Number, default: 0 }, // in seconds
+    callsFromElevenlabs: { type: Number, default: 0 }, // For tracking ElevenLabs data integration
+    elevenlabsSuccessRate: { type: Number, default: 0 }, // Success rate from ElevenLabs (0-100)
     lastUpdated: { type: Date, default: Date.now },
   },
   { _id: false }
 );
 
-// Agent Metrics History Schema
+// Agent Metrics History Schema for storing monthly historical data
 const agentMetricsHistorySchema = new mongoose.Schema(
   {
     agentId: { type: String, required: true },
@@ -70,6 +72,14 @@ const callDataSchema = new mongoose.Schema(
       ],
     },
     recordingUrl: { type: String },
+    // New fields for metrics tracking
+    direction: {
+      type: String,
+      enum: ["inbound", "outbound"],
+      required: true
+    },
+    isBookingSuccessful: { type: Boolean, default: false },
+    elevenLabsConversationId: { type: String }, // For correlation with ElevenLabs data
   },
   { _id: false }
 );
@@ -165,6 +175,13 @@ clientSchema.index({ "additionalAgents.twilioPhoneNumber": 1 }); // Index for ad
 clientSchema.index({ "additionalAgents.agentId": 1 }); // Index for additional agent lookups
 clientSchema.index({ accessToken: 1 }); // Index for accessToken lookups
 
+// New indexes for metrics queries
+clientSchema.index({ "metricsHistory.agentId": 1 }); // Index for agent metrics lookups
+clientSchema.index({ "metricsHistory.period": 1 }); // Index for period-based queries
+clientSchema.index({ "metricsHistory.agentId": 1, "metricsHistory.period": 1 }); // Compound index for agent + period queries
+clientSchema.index({ "callHistory.callData.direction": 1 }); // Index for call direction queries
+clientSchema.index({ "callHistory.callData.isBookingSuccessful": 1 }); // Index for booking success queries
+
 // Helper methods for multi-agent support
 clientSchema.methods.getAllAgents = function () {
   const agents = [
@@ -259,6 +276,91 @@ clientSchema.methods.findAgentById = function (agentId) {
   }
 
   return null;
+};
+
+// Helper methods for metrics management
+clientSchema.methods.getAgentMetrics = function (agentId, year, month) {
+  if (!this.metricsHistory) return null;
+  
+  const period = `${year}-${String(month).padStart(2, '0')}`;
+  return this.metricsHistory.find(m => m.agentId === agentId && m.period === period);
+};
+
+clientSchema.methods.updateAgentMetrics = function (agentId, year, month, updates) {
+  if (!this.metricsHistory) this.metricsHistory = [];
+  
+  const period = `${year}-${String(month).padStart(2, '0')}`;
+  let existingMetrics = this.metricsHistory.find(m => m.agentId === agentId && m.period === period);
+  
+  if (existingMetrics) {
+    // Update existing metrics
+    Object.assign(existingMetrics.metrics, updates);
+    existingMetrics.metrics.lastUpdated = new Date();
+  } else {
+    // Create new metrics entry
+    this.metricsHistory.push({
+      agentId,
+      period,
+      metrics: {
+        agentId,
+        year,
+        month,
+        inboundCalls: 0,
+        outboundCalls: 0,
+        totalCalls: 0,
+        successfulBookings: 0,
+        totalDuration: 0,
+        averageDuration: 0,
+        callsFromElevenlabs: 0,
+        elevenlabsSuccessRate: 0,
+        ...updates,
+        lastUpdated: new Date()
+      },
+      source: "internal"
+    });
+  }
+  
+  return this;
+};
+
+clientSchema.methods.incrementCallMetrics = function (agentId, direction, duration = 0, isBookingSuccessful = false) {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  
+  const updates = {
+    totalCalls: 1,
+    totalDuration: duration
+  };
+  
+  if (direction === "inbound") {
+    updates.inboundCalls = 1;
+  } else if (direction === "outbound") {
+    updates.outboundCalls = 1;
+  }
+  
+  if (isBookingSuccessful) {
+    updates.successfulBookings = 1;
+  }
+  
+  // Get existing metrics to calculate incremental updates
+  const existing = this.getAgentMetrics(agentId, year, month);
+  if (existing) {
+    updates.inboundCalls = (existing.metrics.inboundCalls || 0) + (updates.inboundCalls || 0);
+    updates.outboundCalls = (existing.metrics.outboundCalls || 0) + (updates.outboundCalls || 0);
+    updates.totalCalls = (existing.metrics.totalCalls || 0) + updates.totalCalls;
+    updates.successfulBookings = (existing.metrics.successfulBookings || 0) + (updates.successfulBookings || 0);
+    updates.totalDuration = (existing.metrics.totalDuration || 0) + updates.totalDuration;
+    
+    // Recalculate average duration
+    if (updates.totalCalls > 0) {
+      updates.averageDuration = Math.round(updates.totalDuration / updates.totalCalls);
+    }
+  } else {
+    updates.averageDuration = duration;
+  }
+  
+  return this.updateAgentMetrics(agentId, year, month, updates);
 };
 
 // Compiling the schema into a model
