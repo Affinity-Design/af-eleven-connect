@@ -1150,9 +1150,9 @@ export default async function adminRoutes(fastify, options) {
   });
 
   // Sync ElevenLabs metrics for a client
-  fastify.post("/reports/sync-elevenlabs", async (request, reply) => {
+  fastify.get("/reports/sync-elevenlabs", async (request, reply) => {
     try {
-      const { clientId, year, month } = request.body;
+      const { clientId, year, month } = request.query;
 
       if (!clientId) {
         return reply.code(400).send({
@@ -1280,9 +1280,9 @@ export default async function adminRoutes(fastify, options) {
   });
 
   // Sync GHL appointment metrics for a client
-  fastify.post("/reports/sync-ghl-appointments", async (request, reply) => {
+  fastify.get("/reports/sync-ghl-appointments", async (request, reply) => {
     try {
-      const { clientId, year, month } = request.body;
+      const { clientId, year, month } = request.query;
 
       if (!clientId) {
         return reply.code(400).send({
