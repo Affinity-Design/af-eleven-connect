@@ -102,6 +102,30 @@ export default async function toolRoutes(fastify, options) {
         matchedAgent = client.findAgentById(agentId);
       }
 
+      // Track call discovery as potential call start (inbound call tracking)
+      try {
+        // Only track if we have a matched agent and this looks like a call discovery
+        if (matchedAgent && (twilioPhone || agentId)) {
+          const { updateCallMetrics } = await import('../utils/metrics.js');
+          
+          console.log(`[${requestId}] Tracking inbound call discovery for agent: ${matchedAgent.agentId}`);
+          
+          // Track as inbound call with no duration yet and no booking yet
+          await updateCallMetrics(
+            client.clientId,
+            matchedAgent.agentId,
+            "inbound",
+            0, // Duration not available at discovery time
+            false // No booking yet
+          );
+          
+          console.log(`[${requestId}] Inbound call metrics updated successfully`);
+        }
+      } catch (metricsError) {
+        console.error(`[${requestId}] Failed to update call discovery metrics:`, metricsError);
+        // Don't fail the discovery if metrics update fails
+      }
+
       return reply.send({
         requestId,
         clientId: client.clientId,
@@ -693,23 +717,25 @@ export default async function toolRoutes(fastify, options) {
 
       const appointmentResult = await response.json();
 
-      // Increment booking metrics for the agent
+      // Update metrics for successful booking
       try {
-        const { incrementAgentBookingMetrics } = await import(
-          "../utils/agentManager.js"
-        );
-        await incrementAgentBookingMetrics(
+        const { updateCallMetrics } = await import('../utils/metrics.js');
+        const actualAgentId = matchedAgent ? matchedAgent.agentId : client.agentId;
+        
+        console.log(`[${requestId}] Updating metrics for successful booking - Agent: ${actualAgentId}`);
+        
+        // Track this as a successful booking (we'll assume it's inbound since it's coming through tools)
+        await updateCallMetrics(
           client.clientId,
-          matchedAgent.agentId
+          actualAgentId,
+          "inbound", // Assuming tools endpoint calls are typically inbound
+          0, // Duration not available at booking time
+          true // This is a successful booking
         );
-        console.log(
-          `[${requestId}] Incremented booking metrics for agent ${matchedAgent.agentId}`
-        );
+        
+        console.log(`[${requestId}] Metrics updated successfully for booking`);
       } catch (metricsError) {
-        console.error(
-          `[${requestId}] Failed to increment booking metrics:`,
-          metricsError
-        );
+        console.error(`[${requestId}] Failed to update metrics for booking:`, metricsError);
         // Don't fail the booking if metrics update fails
       }
 
