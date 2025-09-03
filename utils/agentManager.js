@@ -328,15 +328,33 @@ export async function findClientByAnyAgent(searchParams) {
  * @param {string} callData.direction - 'inbound' or 'outbound'
  * @param {number} callData.duration - Call duration in seconds
  * @param {boolean} callData.wasSuccessful - Whether the call was successful
+ * @param {Date|string} callData.callDate - Date of the call (optional, defaults to now)
  * @returns {Promise<Object>} - Update result
  */
 export async function incrementAgentCallMetrics(clientId, agentId, callData) {
   try {
-    const { direction, duration = 0, wasSuccessful = false } = callData;
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth() + 1; // JavaScript months are 0-indexed
+    const {
+      direction,
+      duration = 0,
+      wasSuccessful = false,
+      callDate,
+    } = callData;
+
+    // Use provided call date or default to current time
+    const dateToUse = callDate ? new Date(callDate) : new Date();
+    const year = dateToUse.getFullYear();
+    const month = dateToUse.getMonth() + 1; // JavaScript months are 0-indexed
     const period = `${year}-${month.toString().padStart(2, "0")}`;
+
+    console.log(
+      `[AgentManager] Incrementing metrics for agent ${agentId} in period ${period}`
+    );
+    console.log(`[AgentManager] Call details:`, {
+      direction,
+      duration,
+      wasSuccessful,
+      callDate: dateToUse.toISOString(),
+    });
 
     // Find the client
     const client = await Client.findOne({ clientId, status: "Active" });
@@ -347,7 +365,11 @@ export async function incrementAgentCallMetrics(clientId, agentId, callData) {
     // Check if agent exists for this client
     const agent = client.getAllAgents().find((a) => a.agentId === agentId);
     if (!agent) {
-      throw new Error("Agent not found for this client");
+      console.warn(
+        `[AgentManager] Agent ${agentId} not found for client ${clientId}, using primary agent`
+      );
+      // If agent not found, use the primary agent instead of failing
+      agentId = client.agentId;
     }
 
     // Find existing metrics for this period and agent
@@ -371,12 +393,15 @@ export async function incrementAgentCallMetrics(clientId, agentId, callData) {
           successfulBookings: 0,
           totalDuration: duration,
           averageDuration: duration,
-          lastUpdated: now,
+          lastUpdated: new Date(),
         },
         source: "internal",
-        createdAt: now,
+        createdAt: new Date(),
       };
 
+      console.log(
+        `[AgentManager] Creating new metrics entry for ${agentId} in ${period}`
+      );
       await Client.findOneAndUpdate(
         { clientId },
         { $push: { metricsHistory: newMetrics } }
@@ -391,7 +416,7 @@ export async function incrementAgentCallMetrics(clientId, agentId, callData) {
           [`${updatePath}.totalDuration`]: duration,
         },
         $set: {
-          [`${updatePath}.lastUpdated`]: now,
+          [`${updatePath}.lastUpdated`]: new Date(),
         },
       };
 
@@ -401,25 +426,32 @@ export async function incrementAgentCallMetrics(clientId, agentId, callData) {
         updateObj.$inc[`${updatePath}.outboundCalls`] = 1;
       }
 
+      console.log(
+        `[AgentManager] Updating existing metrics for ${agentId} in ${period}`
+      );
       await Client.findOneAndUpdate({ clientId }, updateObj);
 
       // Recalculate average duration
       const updatedClient = await Client.findOne({ clientId });
-      const metrics =
-        updatedClient.metricsHistory[existingMetricsIndex].metrics;
-      if (metrics.totalCalls > 0) {
-        metrics.averageDuration = metrics.totalDuration / metrics.totalCalls;
-        await Client.findOneAndUpdate(
-          { clientId },
-          {
-            $set: {
-              [`${updatePath}.averageDuration`]: metrics.averageDuration,
-            },
-          }
-        );
-      }
+      const metricsEntry = updatedClient.metricsHistory[existingMetricsIndex];
+      const avgDuration =
+        metricsEntry.metrics.totalCalls > 0
+          ? metricsEntry.metrics.totalDuration / metricsEntry.metrics.totalCalls
+          : 0;
+
+      await Client.findOneAndUpdate(
+        { clientId },
+        {
+          $set: {
+            [`${updatePath}.averageDuration`]: avgDuration,
+          },
+        }
+      );
     }
 
+    console.log(
+      `[AgentManager] Successfully incremented call metrics for agent ${agentId}`
+    );
     return {
       success: true,
       message: "Call metrics updated successfully",
@@ -441,14 +473,24 @@ export async function incrementAgentCallMetrics(clientId, agentId, callData) {
  * Increment booking metrics for an agent
  * @param {string} clientId - Client ID
  * @param {string} agentId - Agent ID
+ * @param {Date|string} bookingDate - Date of the booking (optional, defaults to now)
  * @returns {Promise<Object>} - Update result
  */
-export async function incrementAgentBookingMetrics(clientId, agentId) {
+export async function incrementAgentBookingMetrics(
+  clientId,
+  agentId,
+  bookingDate = null
+) {
   try {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth() + 1;
+    // Use provided booking date or default to current time
+    const dateToUse = bookingDate ? new Date(bookingDate) : new Date();
+    const year = dateToUse.getFullYear();
+    const month = dateToUse.getMonth() + 1;
     const period = `${year}-${month.toString().padStart(2, "0")}`;
+
+    console.log(
+      `[AgentManager] Incrementing booking metrics for agent ${agentId} in period ${period}`
+    );
 
     // Find the client
     const client = await Client.findOne({ clientId, status: "Active" });
@@ -459,7 +501,11 @@ export async function incrementAgentBookingMetrics(clientId, agentId) {
     // Check if agent exists for this client
     const agent = client.getAllAgents().find((a) => a.agentId === agentId);
     if (!agent) {
-      throw new Error("Agent not found for this client");
+      console.warn(
+        `[AgentManager] Agent ${agentId} not found for client ${clientId}, using primary agent`
+      );
+      // If agent not found, use the primary agent instead of failing
+      agentId = client.agentId;
     }
 
     // Find existing metrics for this period and agent
@@ -483,12 +529,15 @@ export async function incrementAgentBookingMetrics(clientId, agentId) {
           successfulBookings: 1,
           totalDuration: 0,
           averageDuration: 0,
-          lastUpdated: now,
+          lastUpdated: new Date(),
         },
         source: "internal",
-        createdAt: now,
+        createdAt: new Date(),
       };
 
+      console.log(
+        `[AgentManager] Creating new booking metrics entry for ${agentId} in ${period}`
+      );
       await Client.findOneAndUpdate(
         { clientId },
         { $push: { metricsHistory: newMetrics } }
@@ -497,15 +546,21 @@ export async function incrementAgentBookingMetrics(clientId, agentId) {
       // Update existing metrics
       const updatePath = `metricsHistory.${existingMetricsIndex}.metrics`;
 
+      console.log(
+        `[AgentManager] Updating existing booking metrics for ${agentId} in ${period}`
+      );
       await Client.findOneAndUpdate(
         { clientId },
         {
           $inc: { [`${updatePath}.successfulBookings`]: 1 },
-          $set: { [`${updatePath}.lastUpdated`]: now },
+          $set: { [`${updatePath}.lastUpdated`]: new Date() },
         }
       );
     }
 
+    console.log(
+      `[AgentManager] Successfully incremented booking metrics for agent ${agentId}`
+    );
     return {
       success: true,
       message: "Booking metrics updated successfully",

@@ -81,14 +81,18 @@ export async function addCallToHistory(clientId, callData) {
         callData.callData.status === "completed" ||
         callData.callData.status === "booked_appointment";
 
+      // Use the call's start time if available, otherwise use current time
+      const callDate = callData.callData.startTime || new Date();
+
       await incrementAgentCallMetrics(clientId, agentId, {
         direction,
         duration,
         wasSuccessful,
+        callDate,
       });
 
       console.log(
-        `Incremented call metrics for agent ${agentId}: ${direction} call, ${duration}s, success: ${wasSuccessful}`
+        `Incremented call metrics for agent ${agentId}: ${direction} call, ${duration}s, success: ${wasSuccessful}, date: ${callDate}`
       );
     } catch (metricsError) {
       console.error("Failed to increment call metrics:", metricsError);
