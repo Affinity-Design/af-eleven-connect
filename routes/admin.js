@@ -1442,4 +1442,420 @@ export default async function adminRoutes(fastify, options) {
       });
     }
   });
+
+  // ================================
+  // HISTORICAL DATA BOOTSTRAP ENDPOINTS (Phase 5)
+  // ================================
+
+  /**
+   * GET /admin/bootstrap/appointments/counts
+   * Get appointment counts for a specific month from GoHighLevel
+   */
+  fastify.get('/bootstrap/appointments/counts', {
+    preHandler: fastify.authenticate,
+    schema: {
+      querystring: {
+        type: 'object',
+        required: ['clientId', 'year', 'month'],
+        properties: {
+          clientId: { type: 'string' },
+          year: { type: 'integer', minimum: 2020, maximum: 2030 },
+          month: { type: 'integer', minimum: 1, maximum: 12 }
+        }
+      }
+    }
+  }, async (request, reply) => {
+    const requestId = Math.random().toString(36).substring(7);
+    console.log(`[Admin-Bootstrap] GET /bootstrap/appointments/counts - Request ID: ${requestId}`);
+
+    try {
+      const { clientId, year, month } = request.query;
+      
+      const { getMonthlyBookingCounts } = await import('../utils/ghl-appointments.js');
+      const result = await getMonthlyBookingCounts(clientId, year, month);
+      
+      console.log(`[Admin-Bootstrap] Appointment counts retrieved for ${clientId}, ${year}-${month} - Request ID: ${requestId}`);
+      
+      return reply.code(200).send({
+        success: true,
+        message: 'Appointment counts retrieved successfully',
+        data: result,
+        requestId
+      });
+    } catch (error) {
+      console.error(`[Admin-Bootstrap] Error getting appointment counts - Request ID: ${requestId}:`, error);
+      return reply.code(500).send({
+        success: false,
+        error: 'Failed to get appointment counts',
+        details: error.message,
+        requestId
+      });
+    }
+  });
+
+  /**
+   * POST /admin/bootstrap/appointments/sync
+   * Sync appointment data to agent metrics for a specific period
+   */
+  fastify.post('/bootstrap/appointments/sync', {
+    preHandler: fastify.authenticate,
+    schema: {
+      body: {
+        type: 'object',
+        required: ['clientId', 'year', 'month'],
+        properties: {
+          clientId: { type: 'string' },
+          year: { type: 'integer', minimum: 2020, maximum: 2030 },
+          month: { type: 'integer', minimum: 1, maximum: 12 }
+        }
+      }
+    }
+  }, async (request, reply) => {
+    const requestId = Math.random().toString(36).substring(7);
+    console.log(`[Admin-Bootstrap] POST /bootstrap/appointments/sync - Request ID: ${requestId}`);
+
+    try {
+      const { clientId, year, month } = request.body;
+      
+      const { syncAppointmentMetrics } = await import('../utils/ghl-appointments.js');
+      const result = await syncAppointmentMetrics(clientId, year, month);
+      
+      if (result.success) {
+        console.log(`[Admin-Bootstrap] Appointment metrics synced for ${clientId}, ${year}-${month} - Request ID: ${requestId}`);
+        return reply.code(200).send({
+          success: true,
+          message: result.message,
+          data: result,
+          requestId
+        });
+      } else {
+        console.warn(`[Admin-Bootstrap] Appointment sync failed for ${clientId}, ${year}-${month} - Request ID: ${requestId}:`, result.error);
+        return reply.code(400).send({
+          success: false,
+          error: result.error,
+          data: result,
+          requestId
+        });
+      }
+    } catch (error) {
+      console.error(`[Admin-Bootstrap] Error syncing appointment metrics - Request ID: ${requestId}:`, error);
+      return reply.code(500).send({
+        success: false,
+        error: 'Failed to sync appointment metrics',
+        details: error.message,
+        requestId
+      });
+    }
+  });
+
+  /**
+   * GET /admin/bootstrap/appointments/historical
+   * Get historical appointment data for a date range
+   */
+  fastify.get('/bootstrap/appointments/historical', {
+    preHandler: fastify.authenticate,
+    schema: {
+      querystring: {
+        type: 'object',
+        required: ['clientId', 'startDate', 'endDate'],
+        properties: {
+          clientId: { type: 'string' },
+          startDate: { type: 'string', format: 'date' },
+          endDate: { type: 'string', format: 'date' }
+        }
+      }
+    }
+  }, async (request, reply) => {
+    const requestId = Math.random().toString(36).substring(7);
+    console.log(`[Admin-Bootstrap] GET /bootstrap/appointments/historical - Request ID: ${requestId}`);
+
+    try {
+      const { clientId, startDate, endDate } = request.query;
+      
+      const { getHistoricalAppointmentData } = await import('../utils/ghl-appointments.js');
+      const result = await getHistoricalAppointmentData(
+        clientId, 
+        new Date(startDate), 
+        new Date(endDate)
+      );
+      
+      console.log(`[Admin-Bootstrap] Historical appointment data retrieved for ${clientId} - Request ID: ${requestId}`);
+      
+      return reply.code(200).send({
+        success: true,
+        message: 'Historical appointment data retrieved successfully',
+        data: result,
+        requestId
+      });
+    } catch (error) {
+      console.error(`[Admin-Bootstrap] Error getting historical appointment data - Request ID: ${requestId}:`, error);
+      return reply.code(500).send({
+        success: false,
+        error: 'Failed to get historical appointment data',
+        details: error.message,
+        requestId
+      });
+    }
+  });
+
+  /**
+   * POST /admin/bootstrap/bulk-sync
+   * Perform bulk historical data sync for a client
+   */
+  fastify.post('/bootstrap/bulk-sync', {
+    preHandler: fastify.authenticate,
+    schema: {
+      body: {
+        type: 'object',
+        required: ['clientId', 'startDate', 'endDate'],
+        properties: {
+          clientId: { type: 'string' },
+          startDate: { type: 'string', format: 'date' },
+          endDate: { type: 'string', format: 'date' },
+          syncElevenLabs: { type: 'boolean', default: true },
+          syncAppointments: { type: 'boolean', default: true }
+        }
+      }
+    }
+  }, async (request, reply) => {
+    const requestId = Math.random().toString(36).substring(7);
+    console.log(`[Admin-Bootstrap] POST /bootstrap/bulk-sync - Request ID: ${requestId}`);
+
+    try {
+      const { 
+        clientId, 
+        startDate, 
+        endDate, 
+        syncElevenLabs = true, 
+        syncAppointments = true 
+      } = request.body;
+      
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const results = {
+        clientId,
+        dateRange: { startDate, endDate },
+        elevenLabsSync: { enabled: syncElevenLabs, results: [] },
+        appointmentsSync: { enabled: syncAppointments, results: [] },
+        summary: { totalMonths: 0, successfulSyncs: 0, errors: 0 }
+      };
+      
+      console.log(`[Admin-Bootstrap] Starting bulk sync for ${clientId} from ${startDate} to ${endDate}`);
+      
+      // Generate list of months to sync
+      const months = [];
+      const current = new Date(start.getFullYear(), start.getMonth(), 1);
+      const endMonth = new Date(end.getFullYear(), end.getMonth(), 1);
+      
+      while (current <= endMonth) {
+        months.push({
+          year: current.getFullYear(),
+          month: current.getMonth() + 1
+        });
+        current.setMonth(current.getMonth() + 1);
+      }
+      
+      results.summary.totalMonths = months.length;
+      console.log(`[Admin-Bootstrap] Will sync ${months.length} months of data`);
+      
+      // Sync ElevenLabs data for each month
+      if (syncElevenLabs) {
+        console.log(`[Admin-Bootstrap] Syncing ElevenLabs data...`);
+        const { syncElevenLabsMetrics } = await import('../utils/elevenlabs.js');
+        
+        for (const { year, month } of months) {
+          try {
+            const result = await syncElevenLabsMetrics(clientId, year, month);
+            results.elevenLabsSync.results.push({
+              period: `${year}-${month.toString().padStart(2, '0')}`,
+              success: result.success,
+              data: result
+            });
+            if (result.success) results.summary.successfulSyncs++;
+            else results.summary.errors++;
+          } catch (error) {
+            console.error(`[Admin-Bootstrap] ElevenLabs sync error for ${year}-${month}:`, error);
+            results.elevenLabsSync.results.push({
+              period: `${year}-${month.toString().padStart(2, '0')}`,
+              success: false,
+              error: error.message
+            });
+            results.summary.errors++;
+          }
+        }
+      }
+      
+      // Sync appointments data for each month
+      if (syncAppointments) {
+        console.log(`[Admin-Bootstrap] Syncing appointments data...`);
+        const { syncAppointmentMetrics } = await import('../utils/ghl-appointments.js');
+        
+        for (const { year, month } of months) {
+          try {
+            const result = await syncAppointmentMetrics(clientId, year, month);
+            results.appointmentsSync.results.push({
+              period: `${year}-${month.toString().padStart(2, '0')}`,
+              success: result.success,
+              data: result
+            });
+            if (result.success) results.summary.successfulSyncs++;
+            else results.summary.errors++;
+          } catch (error) {
+            console.error(`[Admin-Bootstrap] Appointments sync error for ${year}-${month}:`, error);
+            results.appointmentsSync.results.push({
+              period: `${year}-${month.toString().padStart(2, '0')}`,
+              success: false,
+              error: error.message
+            });
+            results.summary.errors++;
+          }
+        }
+      }
+      
+      console.log(`[Admin-Bootstrap] Bulk sync completed for ${clientId}. Success: ${results.summary.successfulSyncs}, Errors: ${results.summary.errors} - Request ID: ${requestId}`);
+      
+      return reply.code(200).send({
+        success: true,
+        message: `Bulk sync completed. ${results.summary.successfulSyncs} successful syncs, ${results.summary.errors} errors.`,
+        data: results,
+        requestId
+      });
+    } catch (error) {
+      console.error(`[Admin-Bootstrap] Error during bulk sync - Request ID: ${requestId}:`, error);
+      return reply.code(500).send({
+        success: false,
+        error: 'Failed to perform bulk sync',
+        details: error.message,
+        requestId
+      });
+    }
+  });
+
+  /**
+   * POST /admin/bootstrap/import-historical
+   * Comprehensive historical data import with advanced options
+   */
+  fastify.post('/bootstrap/import-historical', {
+    preHandler: fastify.authenticate,
+    schema: {
+      body: {
+        type: 'object',
+        required: ['clientId', 'startDate', 'endDate'],
+        properties: {
+          clientId: { type: 'string' },
+          startDate: { type: 'string', format: 'date' },
+          endDate: { type: 'string', format: 'date' },
+          includeElevenLabs: { type: 'boolean', default: true },
+          includeAppointments: { type: 'boolean', default: true },
+          skipExisting: { type: 'boolean', default: false },
+          batchSize: { type: 'integer', minimum: 1, maximum: 12, default: 3 }
+        }
+      }
+    }
+  }, async (request, reply) => {
+    const requestId = Math.random().toString(36).substring(7);
+    console.log(`[Admin-Bootstrap] POST /bootstrap/import-historical - Request ID: ${requestId}`);
+
+    try {
+      const { 
+        clientId, 
+        startDate, 
+        endDate,
+        includeElevenLabs = true,
+        includeAppointments = true,
+        skipExisting = false,
+        batchSize = 3
+      } = request.body;
+      
+      const { importHistoricalData } = await import('../utils/historical-import.js');
+      
+      const result = await importHistoricalData(
+        clientId,
+        new Date(startDate),
+        new Date(endDate),
+        {
+          includeElevenLabs,
+          includeAppointments,
+          skipExisting,
+          batchSize
+        }
+      );
+      
+      if (result.success) {
+        console.log(`[Admin-Bootstrap] Historical import completed for ${clientId} - Request ID: ${requestId}`);
+        return reply.code(200).send({
+          success: true,
+          message: result.message,
+          data: result.data,
+          requestId
+        });
+      } else {
+        console.warn(`[Admin-Bootstrap] Historical import failed for ${clientId} - Request ID: ${requestId}:`, result.error);
+        return reply.code(400).send({
+          success: false,
+          error: result.error,
+          data: result.data,
+          requestId
+        });
+      }
+    } catch (error) {
+      console.error(`[Admin-Bootstrap] Error during historical import - Request ID: ${requestId}:`, error);
+      return reply.code(500).send({
+        success: false,
+        error: 'Failed to import historical data',
+        details: error.message,
+        requestId
+      });
+    }
+  });
+
+  /**
+   * GET /admin/bootstrap/validate
+   * Validate historical data integrity
+   */
+  fastify.get('/bootstrap/validate', {
+    preHandler: fastify.authenticate,
+    schema: {
+      querystring: {
+        type: 'object',
+        required: ['clientId', 'startDate', 'endDate'],
+        properties: {
+          clientId: { type: 'string' },
+          startDate: { type: 'string', format: 'date' },
+          endDate: { type: 'string', format: 'date' }
+        }
+      }
+    }
+  }, async (request, reply) => {
+    const requestId = Math.random().toString(36).substring(7);
+    console.log(`[Admin-Bootstrap] GET /bootstrap/validate - Request ID: ${requestId}`);
+
+    try {
+      const { clientId, startDate, endDate } = request.query;
+      
+      const { validateHistoricalData } = await import('../utils/historical-import.js');
+      const result = await validateHistoricalData(
+        clientId,
+        new Date(startDate),
+        new Date(endDate)
+      );
+      
+      console.log(`[Admin-Bootstrap] Data validation completed for ${clientId} - Request ID: ${requestId}`);
+      
+      return reply.code(200).send({
+        success: true,
+        message: result.message,
+        data: result.data,
+        requestId
+      });
+    } catch (error) {
+      console.error(`[Admin-Bootstrap] Error during data validation - Request ID: ${requestId}:`, error);
+      return reply.code(500).send({
+        success: false,
+        error: 'Failed to validate historical data',
+        details: error.message,
+        requestId
+      });
+    }
+  });
 }
