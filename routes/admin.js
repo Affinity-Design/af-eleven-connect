@@ -1858,4 +1858,104 @@ export default async function adminRoutes(fastify, options) {
       });
     }
   });
+
+  // ================================
+  // DATA MIGRATION ENDPOINTS
+  // ================================
+
+  /**
+   * POST /admin/migration/cleanup-metrics
+   * Clean up corrupted metricsHistory entries
+   */
+  fastify.post('/migration/cleanup-metrics', {
+    preHandler: fastify.authenticate,
+    schema: {
+      body: {
+        type: 'object',
+        properties: {
+          clientId: { type: 'string' } // Optional - if not provided, cleans all clients
+        }
+      }
+    }
+  }, async (request, reply) => {
+    const requestId = Math.random().toString(36).substring(7);
+    console.log(`[Admin-Migration] POST /migration/cleanup-metrics - Request ID: ${requestId}`);
+
+    try {
+      const { clientId } = request.body || {};
+      
+      const { cleanupMetricsHistory } = await import('../utils/data-migration.js');
+      const result = await cleanupMetricsHistory(clientId);
+      
+      if (result.success) {
+        console.log(`[Admin-Migration] Metrics cleanup completed - Request ID: ${requestId}`);
+        return reply.code(200).send({
+          success: true,
+          message: result.message,
+          data: result.data,
+          requestId
+        });
+      } else {
+        console.warn(`[Admin-Migration] Metrics cleanup failed - Request ID: ${requestId}:`, result.error);
+        return reply.code(400).send({
+          success: false,
+          error: result.error,
+          data: result.data,
+          requestId
+        });
+      }
+    } catch (error) {
+      console.error(`[Admin-Migration] Error during metrics cleanup - Request ID: ${requestId}:`, error);
+      return reply.code(500).send({
+        success: false,
+        error: 'Failed to cleanup metrics data',
+        details: error.message,
+        requestId
+      });
+    }
+  });
+
+  /**
+   * GET /admin/migration/validate-metrics
+   * Validate client metrics data integrity
+   */
+  fastify.get('/migration/validate-metrics', {
+    preHandler: fastify.authenticate,
+    schema: {
+      querystring: {
+        type: 'object',
+        required: ['clientId'],
+        properties: {
+          clientId: { type: 'string' }
+        }
+      }
+    }
+  }, async (request, reply) => {
+    const requestId = Math.random().toString(36).substring(7);
+    console.log(`[Admin-Migration] GET /migration/validate-metrics - Request ID: ${requestId}`);
+
+    try {
+      const { clientId } = request.query;
+      
+      const { validateClientMetrics } = await import('../utils/data-migration.js');
+      const result = await validateClientMetrics(clientId);
+      
+      console.log(`[Admin-Migration] Metrics validation completed for ${clientId} - Request ID: ${requestId}`);
+      
+      return reply.code(200).send({
+        success: true,
+        message: result.message,
+        data: result.data,
+        requestId
+      });
+    } catch (error) {
+      console.error(`[Admin-Migration] Error during metrics validation - Request ID: ${requestId}:`, error);
+      return reply.code(500).send({
+        success: false,
+        error: 'Failed to validate metrics data',
+        details: error.message,
+        requestId
+      });
+    }
+  });
 }
