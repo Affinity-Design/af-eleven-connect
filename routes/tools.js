@@ -106,10 +106,12 @@ export default async function toolRoutes(fastify, options) {
       try {
         // Only track if we have a matched agent and this looks like a call discovery
         if (matchedAgent && (twilioPhone || agentId)) {
-          const { updateCallMetrics } = await import('../utils/metrics.js');
-          
-          console.log(`[${requestId}] Tracking inbound call discovery for agent: ${matchedAgent.agentId}`);
-          
+          const { updateCallMetrics } = await import("../utils/metrics.js");
+
+          console.log(
+            `[${requestId}] Tracking inbound call discovery for agent: ${matchedAgent.agentId}`
+          );
+
           // Track as inbound call with no duration yet and no booking yet
           await updateCallMetrics(
             client.clientId,
@@ -118,11 +120,16 @@ export default async function toolRoutes(fastify, options) {
             0, // Duration not available at discovery time
             false // No booking yet
           );
-          
-          console.log(`[${requestId}] Inbound call metrics updated successfully`);
+
+          console.log(
+            `[${requestId}] Inbound call metrics updated successfully`
+          );
         }
       } catch (metricsError) {
-        console.error(`[${requestId}] Failed to update call discovery metrics:`, metricsError);
+        console.error(
+          `[${requestId}] Failed to update call discovery metrics:`,
+          metricsError
+        );
         // Don't fail the discovery if metrics update fails
       }
 
@@ -657,9 +664,20 @@ export default async function toolRoutes(fastify, options) {
         `[${requestId}] Meeting location logic: API="${meetingLocation}", Agent="${matchedAgent?.meetingLocation}", Client="${client.meetingLocation}", Final="${finalMeetingLocation}"`
       );
 
-      const title = `${appointmentFirstName} x ${
-        client.clientMeta.businessName || "Business"
-      } - ${finalMeetingTitle}`;
+      // Determine business name to use in appointment title
+      // Use matchedAgent.agentName if it's an additional agent, otherwise use client business name
+      let businessNameForTitle;
+      if (matchedAgent && matchedAgent.agentName) {
+        businessNameForTitle = matchedAgent.agentName;
+      } else {
+        businessNameForTitle = client.clientMeta.businessName || "Business";
+      }
+
+      console.log(
+        `[${requestId}] Business name logic: Agent="${matchedAgent?.agentName}", Client="${client.clientMeta.businessName}", Final="${businessNameForTitle}"`
+      );
+
+      const title = `${appointmentFirstName} x ${businessNameForTitle} - ${finalMeetingTitle}`;
 
       // Book the appointment
       const appointmentData = {
@@ -719,11 +737,15 @@ export default async function toolRoutes(fastify, options) {
 
       // Update metrics for successful booking
       try {
-        const { updateCallMetrics } = await import('../utils/metrics.js');
-        const actualAgentId = matchedAgent ? matchedAgent.agentId : client.agentId;
-        
-        console.log(`[${requestId}] Updating metrics for successful booking - Agent: ${actualAgentId}`);
-        
+        const { updateCallMetrics } = await import("../utils/metrics.js");
+        const actualAgentId = matchedAgent
+          ? matchedAgent.agentId
+          : client.agentId;
+
+        console.log(
+          `[${requestId}] Updating metrics for successful booking - Agent: ${actualAgentId}`
+        );
+
         // Track this as a successful booking (we'll assume it's inbound since it's coming through tools)
         await updateCallMetrics(
           client.clientId,
@@ -732,10 +754,13 @@ export default async function toolRoutes(fastify, options) {
           0, // Duration not available at booking time
           true // This is a successful booking
         );
-        
+
         console.log(`[${requestId}] Metrics updated successfully for booking`);
       } catch (metricsError) {
-        console.error(`[${requestId}] Failed to update metrics for booking:`, metricsError);
+        console.error(
+          `[${requestId}] Failed to update metrics for booking:`,
+          metricsError
+        );
         // Don't fail the booking if metrics update fails
       }
 

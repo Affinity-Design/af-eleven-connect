@@ -1,9 +1,11 @@
 # Agent Metrics and Reporting System Implementation Proposal
 
 ## Overview
+
 This proposal outlines the implementation of a comprehensive agent metrics tracking and reporting system for the AF Eleven Connect platform. The system will track inbound/outbound calls, successful bookings, and provide historical reporting capabilities through ElevenLabs API integration and GoHighLevel appointment data.
 
 ## Objectives
+
 - Track agent call metrics (inbound/outbound direction)
 - Monitor successful appointment bookings per agent
 - Store monthly historical data for reporting
@@ -14,23 +16,27 @@ This proposal outlines the implementation of a comprehensive agent metrics track
 ## Implementation Phases
 
 ### Phase 1: Database Schema Extensions ✅
+
 **Estimated Time**: 2-3 hours
 **Status**: Completed
 
 #### 1.1 Agent Metrics Schema Integration
+
 - [x] Add `agentMetricsSchema` to client.js
-- [x] Add `agentMetricsHistorySchema` to client.js  
+- [x] Add `agentMetricsHistorySchema` to client.js
 - [x] Update main `clientSchema` to include `metricsHistory` array
 - [x] Add database indexes for metrics queries
 - [x] Test schema changes with sample data
 
 #### 1.2 Call History Schema Extensions
+
 - [x] Add `direction` field ("inbound" | "outbound")
 - [x] Add `isBookingSuccessful` boolean field
 - [x] Add `elevenLabsConversationId` for correlation
 - [x] Update existing call tracking to use new fields
 
 **Deliverables**:
+
 - ✅ Updated `client.js` with metrics schemas
 - ✅ Database migration compatibility
 - ✅ Enhanced call history tracking
@@ -38,10 +44,12 @@ This proposal outlines the implementation of a comprehensive agent metrics track
 ---
 
 ### Phase 2: Utility Functions ✅
+
 **Estimated Time**: 4-5 hours
 **Status**: Completed
 
 #### 2.1 ElevenLabs Integration (`utils/elevenlabs.js`)
+
 - [x] Create conversation fetching functions
 - [x] Implement pagination handling
 - [x] Add monthly metrics calculation
@@ -49,6 +57,7 @@ This proposal outlines the implementation of a comprehensive agent metrics track
 - [x] Add error handling and retry logic
 
 #### 2.2 Metrics Management (`utils/metrics.js`)
+
 - [x] Implement call count incrementing
 - [x] Create booking success tracking
 - [x] Add monthly summary calculations
@@ -56,12 +65,14 @@ This proposal outlines the implementation of a comprehensive agent metrics track
 - [x] Create period comparison utilities
 
 #### 2.3 GHL Appointments Integration (`utils/ghl-appointments.js`)
+
 - [ ] Implement historical appointment fetching
 - [ ] Add agent correlation logic
 - [ ] Create booking count calculations
 - [ ] Add date range filtering
 
 **Deliverables**:
+
 - ✅ Two utility modules with comprehensive functions (elevenlabs.js, metrics.js)
 - [ ] Unit tests for key functions
 - [ ] Documentation for utility APIs
@@ -69,21 +80,25 @@ This proposal outlines the implementation of a comprehensive agent metrics track
 ---
 
 ### Phase 3: Admin API Endpoints ✅
+
 **Estimated Time**: 3-4 hours
 **Status**: Completed
 
 #### 3.1 Metrics Collection Endpoints
+
 - [x] `POST /admin/metrics/sync-elevenlabs` - Sync ElevenLabs data
 - [x] `POST /admin/metrics/recalculate` - Recalculate metrics from history
 - [ ] `POST /admin/metrics/sync-appointments` - Sync GHL appointment data
 
 #### 3.2 Reporting Endpoints
+
 - [x] `GET /admin/reports/agent-metrics/:agentId` - Single agent metrics
 - [x] `GET /admin/reports/combined-metrics` - All agents metrics
 - [x] `GET /admin/reports/period-comparison` - Period comparisons
 - [x] `GET /admin/reports/dashboard-summary` - Dashboard data
 
 **Deliverables**:
+
 - ✅ Admin routes with full CRUD operations
 - ✅ Comprehensive error handling
 - ✅ API documentation
@@ -92,21 +107,25 @@ This proposal outlines the implementation of a comprehensive agent metrics track
 ---
 
 ### Phase 4: Real-time Tracking Integration ✅
+
 **Estimated Time**: 2-3 hours
 **Status**: Completed
 
 #### 4.1 Call Flow Modifications
+
 - [x] Update `/get-info` endpoint for inbound call tracking
 - [x] Modify `/make-outbound-call` endpoint for outbound tracking
 - [x] Enhance `/book-appointment` endpoint for booking success tracking (both main and tools endpoints)
 - [x] Add metrics updating to call completion flows
 
 #### 4.2 Metrics Middleware
+
 - [x] Create automatic metrics updating in existing endpoints
 - [x] Add call start tracking hooks
 - [x] Implement error recovery for metrics updates (non-blocking)
 
 **Deliverables**:
+
 - ✅ Real-time metrics updating
 - ✅ Call completion tracking
 - ✅ Automated metrics maintenance
@@ -114,22 +133,26 @@ This proposal outlines the implementation of a comprehensive agent metrics track
 ---
 
 ### Phase 5: Historical Data Bootstrap ⏳
+
 **Estimated Time**: 2-3 hours
 **Status**: Pending
 
 #### 5.1 ElevenLabs Historical Import
+
 - [ ] Create bulk import tools for ElevenLabs conversations
 - [ ] Add progress tracking for large imports
 - [ ] Implement data validation and cleanup
 - [ ] Create import scheduling capabilities
 
 #### 5.2 GHL Historical Import
+
 - [ ] Build appointment history import tools
 - [ ] Add agent association logic
 - [ ] Create data correlation utilities
 - [ ] Implement duplicate detection
 
 **Deliverables**:
+
 - Historical data import tools
 - Data validation utilities
 - Import progress tracking
@@ -141,24 +164,29 @@ This proposal outlines the implementation of a comprehensive agent metrics track
 ### Database Schema Changes
 
 #### Agent Metrics Schema
+
 ```javascript
-const agentMetricsSchema = new mongoose.Schema({
-  agentId: { type: String, required: true },
-  year: { type: Number, required: true },
-  month: { type: Number, required: true, min: 1, max: 12 },
-  inboundCalls: { type: Number, default: 0 },
-  outboundCalls: { type: Number, default: 0 },
-  totalCalls: { type: Number, default: 0 },
-  successfulBookings: { type: Number, default: 0 },
-  totalDuration: { type: Number, default: 0 }, // in seconds
-  averageDuration: { type: Number, default: 0 }, // in seconds
-  callsFromElevenlabs: { type: Number, default: 0 },
-  elevenlabsSuccessRate: { type: Number, default: 0 },
-  lastUpdated: { type: Date, default: Date.now },
-}, { _id: false });
+const agentMetricsSchema = new mongoose.Schema(
+  {
+    agentId: { type: String, required: true },
+    year: { type: Number, required: true },
+    month: { type: Number, required: true, min: 1, max: 12 },
+    inboundCalls: { type: Number, default: 0 },
+    outboundCalls: { type: Number, default: 0 },
+    totalCalls: { type: Number, default: 0 },
+    successfulBookings: { type: Number, default: 0 },
+    totalDuration: { type: Number, default: 0 }, // in seconds
+    averageDuration: { type: Number, default: 0 }, // in seconds
+    callsFromElevenlabs: { type: Number, default: 0 },
+    elevenlabsSuccessRate: { type: Number, default: 0 },
+    lastUpdated: { type: Date, default: Date.now },
+  },
+  { _id: false }
+);
 ```
 
 #### Call History Extensions
+
 ```javascript
 // Additional fields to callDataSchema:
 direction: {
@@ -173,17 +201,20 @@ elevenLabsConversationId: { type: String }
 ### API Endpoints
 
 #### Reporting Endpoints
+
 - `GET /admin/reports/agent-metrics/:agentId?year=2025&month=3`
 - `GET /admin/reports/combined-metrics?clientId=xxx&year=2025&month=3`
 - `GET /admin/reports/period-comparison?agentId=xxx&startPeriod=2025-02&endPeriod=2025-03`
 
 #### Data Sync Endpoints
+
 - `POST /admin/metrics/sync-elevenlabs` - Body: `{agentId, year, month}`
 - `POST /admin/metrics/sync-appointments` - Body: `{clientId, year, month}`
 
 ### ElevenLabs API Integration
 
 #### Conversation Fetching
+
 ```javascript
 // Endpoint: https://api.elevenlabs.io/v1/convai/conversations
 // Parameters: agent_id, cursor (for pagination)
@@ -191,6 +222,7 @@ elevenLabsConversationId: { type: String }
 ```
 
 #### Data Processing
+
 - Group conversations by month using `start_time_unix_secs`
 - Calculate success rates using `call_successful` field
 - Track duration using `call_duration_secs`
@@ -198,6 +230,7 @@ elevenLabsConversationId: { type: String }
 ### GoHighLevel Integration
 
 #### Appointment Queries
+
 - Use existing GHL integration for calendar access
 - Query appointments by date range and calendar ID
 - Correlate appointments with agent data through client records
@@ -205,30 +238,35 @@ elevenLabsConversationId: { type: String }
 ## Success Criteria
 
 ### Phase 1 Success Criteria ✅
+
 - [x] Database schema successfully updated
 - [x] No breaking changes to existing functionality
 - [x] Sample metrics data can be stored and retrieved
 - [x] All existing tests pass
 
 ### Phase 2 Success Criteria ✅
+
 - [x] ElevenLabs API successfully returns conversation data
 - [x] Metrics calculations produce accurate monthly summaries
 - [ ] GHL appointment data can be retrieved and processed (pending GHL integration)
 - [x] Utility functions handle errors gracefully
 
 ### Phase 3 Success Criteria ✅
+
 - [x] All admin endpoints return proper responses
 - [x] Metrics data can be queried by agent and period
 - [x] Combined metrics show data from multiple sources
 - [x] API documentation is complete and accurate
 
 ### Phase 4 Success Criteria ✅
+
 - [x] Real-time call tracking increments metrics automatically
 - [x] Booking success is tracked when appointments are created
 - [x] No performance degradation in call handling (non-blocking metrics updates)
 - [x] Metrics are consistently updated
 
 ### Phase 5 Success Criteria
+
 - [ ] Historical data can be imported without errors
 - [ ] Data correlation works correctly
 - [ ] Import tools handle large datasets efficiently
@@ -237,12 +275,14 @@ elevenLabsConversationId: { type: String }
 ## Testing Strategy
 
 ### Local Testing
+
 - Use local development environment
 - Test with sample agent and call data
 - Verify database operations
 - Test utility functions independently
 
 ### Production Testing
+
 - Deploy to https://api.v1.affinitydesign.ca
 - Test with real agent data
 - Verify ElevenLabs API integration
@@ -250,6 +290,7 @@ elevenLabsConversationId: { type: String }
 - Validate metrics calculations
 
 ### Test Data Requirements
+
 - Sample agent IDs for testing
 - Test conversation data from ElevenLabs
 - Sample appointment data from GHL
@@ -258,18 +299,20 @@ elevenLabsConversationId: { type: String }
 ## Risk Assessment
 
 ### Technical Risks
+
 - **Database Migration**: Schema changes could affect existing data
-  - *Mitigation*: Careful testing, backwards compatibility
+  - _Mitigation_: Careful testing, backwards compatibility
 - **ElevenLabs API Limits**: Rate limiting could slow imports
-  - *Mitigation*: Implement retry logic, batch processing
+  - _Mitigation_: Implement retry logic, batch processing
 - **Data Correlation**: Matching ElevenLabs data to agents could be complex
-  - *Mitigation*: Clear mapping strategy, validation tools
+  - _Mitigation_: Clear mapping strategy, validation tools
 
 ### Performance Risks
+
 - **Large Data Sets**: Historical imports could be slow
-  - *Mitigation*: Pagination, background processing
+  - _Mitigation_: Pagination, background processing
 - **Real-time Updates**: Metrics updates could slow call processing
-  - *Mitigation*: Async processing, database optimization
+  - _Mitigation_: Async processing, database optimization
 
 ## Timeline
 
@@ -291,4 +334,4 @@ elevenLabsConversationId: { type: String }
 
 ---
 
-*This proposal will be updated as implementation progresses, with checkmarks indicating completed tasks.*
+_This proposal will be updated as implementation progresses, with checkmarks indicating completed tasks._

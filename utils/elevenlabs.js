@@ -68,7 +68,7 @@ export async function fetchElevenLabsHistory(apiKey, options = {}) {
       {
         url: `https://api.elevenlabs.io/v1/calls?${params.toString()}`,
         name: "calls",
-      }
+      },
     ];
 
     let response = null;
@@ -107,16 +107,24 @@ export async function fetchElevenLabsHistory(apiKey, options = {}) {
 
     if (!response || !response.ok) {
       // If no conversation endpoints work, log the issue and return empty result
-      console.warn(`[ElevenLabs] No conversation/call endpoints available. This suggests:`);
-      console.warn(`[ElevenLabs] 1. Account may not have conversational AI features enabled`);
-      console.warn(`[ElevenLabs] 2. API key may not have conversation permissions`);
-      console.warn(`[ElevenLabs] 3. No actual calls/conversations in this date range`);
-      
+      console.warn(
+        `[ElevenLabs] No conversation/call endpoints available. This suggests:`
+      );
+      console.warn(
+        `[ElevenLabs] 1. Account may not have conversational AI features enabled`
+      );
+      console.warn(
+        `[ElevenLabs] 2. API key may not have conversation permissions`
+      );
+      console.warn(
+        `[ElevenLabs] 3. No actual calls/conversations in this date range`
+      );
+
       // Return empty structure to avoid breaking the sync
       return {
         history: [],
         conversations: [],
-        next_page_token: null
+        next_page_token: null,
       };
     }
 
@@ -476,31 +484,31 @@ export async function getMonthlyAgentMetrics(apiKey, agentId, year, month) {
  */
 export async function* iterateConversations(agentId, apiKey) {
   let cursor;
-  
+
   do {
     try {
       const url = new URL("https://api.elevenlabs.io/v1/convai/conversations");
       url.searchParams.set("agent_id", agentId);
       if (cursor) url.searchParams.set("cursor", cursor);
-      
+
       const response = await fetch(url, {
-        headers: { "xi-api-key": apiKey }
+        headers: { "xi-api-key": apiKey },
       });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
-      
+
       const data = await response.json();
-      
+
       // Yield each conversation
-      for (const conversation of (data.conversations || [])) {
+      for (const conversation of data.conversations || []) {
         yield conversation;
       }
-      
+
       cursor = data.next_cursor || null;
     } catch (error) {
-      console.error('Error fetching conversations from ElevenLabs:', error);
+      console.error("Error fetching conversations from ElevenLabs:", error);
       throw error;
     }
   } while (cursor);
@@ -513,7 +521,10 @@ export async function* iterateConversations(agentId, apiKey) {
  */
 export function monthKey(unixSecs) {
   const date = new Date(unixSecs * 1000);
-  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}`;
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(
+    2,
+    "0"
+  )}`;
 }
 
 /**
@@ -523,18 +534,22 @@ export function monthKey(unixSecs) {
  * @param {string} targetPeriod - Target period in "YYYY-MM" format (optional)
  * @returns {Promise<Object>} - Monthly metrics grouped by period
  */
-export async function getMonthlyMetricsFromElevenLabs(agentId, apiKey, targetPeriod = null) {
+export async function getMonthlyMetricsFromElevenLabs(
+  agentId,
+  apiKey,
+  targetPeriod = null
+) {
   try {
     const byMonth = {};
-    
+
     for await (const conversation of iterateConversations(agentId, apiKey)) {
       const period = monthKey(conversation.start_time_unix_secs);
-      
+
       // If target period is specified, only process that period
       if (targetPeriod && period !== targetPeriod) {
         continue;
       }
-      
+
       // Initialize month data if not exists
       if (!byMonth[period]) {
         byMonth[period] = {
@@ -547,16 +562,18 @@ export async function getMonthlyMetricsFromElevenLabs(agentId, apiKey, targetPer
           failedCalls: 0,
           unknownStatusCalls: 0,
           successRate: 0,
-          conversations: []
+          conversations: [],
         };
       }
-      
+
       const monthData = byMonth[period];
       monthData.totalCalls += 1;
       monthData.totalMinutes += (conversation.call_duration_secs || 0) / 60;
-      
+
       // Track call success status
-      const callStatus = (conversation.call_successful || "unknown").toLowerCase();
+      const callStatus = (
+        conversation.call_successful || "unknown"
+      ).toLowerCase();
       switch (callStatus) {
         case "success":
           monthData.successfulCalls += 1;
@@ -568,35 +585,39 @@ export async function getMonthlyMetricsFromElevenLabs(agentId, apiKey, targetPer
           monthData.unknownStatusCalls += 1;
           break;
       }
-      
+
       // Store conversation for potential correlation
       monthData.conversations.push({
         id: conversation.conversation_id,
         startTime: conversation.start_time_unix_secs,
         duration: conversation.call_duration_secs || 0,
         status: callStatus,
-        phone: conversation.phone_number || null
+        phone: conversation.phone_number || null,
       });
     }
-    
+
     // Calculate derived metrics for each month
-    Object.keys(byMonth).forEach(period => {
+    Object.keys(byMonth).forEach((period) => {
       const month = byMonth[period];
-      
+
       // Calculate average duration
       if (month.totalCalls > 0) {
-        month.averageDuration = Math.round((month.totalMinutes * 60) / month.totalCalls);
+        month.averageDuration = Math.round(
+          (month.totalMinutes * 60) / month.totalCalls
+        );
       }
-      
+
       // Calculate success rate
       if (month.totalCalls > 0) {
-        month.successRate = Math.round((month.successfulCalls / month.totalCalls) * 100);
+        month.successRate = Math.round(
+          (month.successfulCalls / month.totalCalls) * 100
+        );
       }
     });
-    
+
     return byMonth;
   } catch (error) {
-    console.error('Error getting monthly metrics from ElevenLabs:', error);
+    console.error("Error getting monthly metrics from ElevenLabs:", error);
     throw error;
   }
 }
@@ -610,41 +631,51 @@ export async function getMonthlyMetricsFromElevenLabs(agentId, apiKey, targetPer
  * @param {string} apiKey - The ElevenLabs API key
  * @returns {Promise<Object>} - Sync result
  */
-export async function syncElevenLabsMetrics(clientId, agentId, year, month, apiKey) {
+export async function syncElevenLabsMetrics(
+  clientId,
+  agentId,
+  year,
+  month,
+  apiKey
+) {
   try {
-    const { findClientById } = await import('../crud.js');
-    const Client = (await import('../client.js')).default;
-    
+    const { findClientById } = await import("../crud.js");
+    const Client = (await import("../client.js")).default;
+
     const client = await findClientById(clientId);
     if (!client) {
       throw new Error(`Client not found: ${clientId}`);
     }
-    
-    const targetPeriod = `${year}-${String(month).padStart(2, '0')}`;
-    const elevenLabsData = await getMonthlyMetricsFromElevenLabs(agentId, apiKey, targetPeriod);
-    
+
+    const targetPeriod = `${year}-${String(month).padStart(2, "0")}`;
+    const elevenLabsData = await getMonthlyMetricsFromElevenLabs(
+      agentId,
+      apiKey,
+      targetPeriod
+    );
+
     if (!elevenLabsData[targetPeriod]) {
       return {
         success: true,
         message: `No ElevenLabs data found for agent ${agentId} in period ${targetPeriod}`,
         period: targetPeriod,
         agentId,
-        metrics: null
+        metrics: null,
       };
     }
-    
+
     const elevenLabsMetrics = elevenLabsData[targetPeriod];
-    
+
     // Get existing metrics or create new ones
     let existingMetrics = client.getAgentMetrics(agentId, year, month);
-    
+
     // Prepare updates with ElevenLabs data
     const updates = {
       callsFromElevenlabs: elevenLabsMetrics.totalCalls,
       elevenlabsSuccessRate: elevenLabsMetrics.successRate,
-      lastUpdated: new Date()
+      lastUpdated: new Date(),
     };
-    
+
     // If no existing internal metrics, use ElevenLabs data as base
     if (!existingMetrics) {
       updates.agentId = agentId;
@@ -658,18 +689,18 @@ export async function syncElevenLabsMetrics(clientId, agentId, year, month, apiK
       updates.outboundCalls = 0;
       updates.successfulBookings = 0; // This needs to be determined from appointments
     }
-    
+
     // Update client metrics
     client.updateAgentMetrics(agentId, year, month, updates);
-    
+
     // Mark the metrics entry as ElevenLabs sourced
     const metricsEntry = client.getAgentMetrics(agentId, year, month);
     if (metricsEntry) {
       metricsEntry.source = existingMetrics ? "combined" : "elevenlabs";
     }
-    
+
     await client.save();
-    
+
     return {
       success: true,
       message: `ElevenLabs metrics synced for agent ${agentId} in period ${targetPeriod}`,
@@ -681,17 +712,16 @@ export async function syncElevenLabsMetrics(clientId, agentId, year, month, apiK
         totalMinutes: elevenLabsMetrics.totalMinutes,
         averageDuration: elevenLabsMetrics.averageDuration,
         successRate: elevenLabsMetrics.successRate,
-        conversationCount: elevenLabsMetrics.conversations.length
-      }
+        conversationCount: elevenLabsMetrics.conversations.length,
+      },
     };
-    
   } catch (error) {
-    console.error('Error syncing ElevenLabs metrics:', error);
+    console.error("Error syncing ElevenLabs metrics:", error);
     return {
       success: false,
       error: error.message,
-      period: `${year}-${String(month).padStart(2, '0')}`,
-      agentId
+      period: `${year}-${String(month).padStart(2, "0")}`,
+      agentId,
     };
   }
 }
@@ -706,8 +736,8 @@ export async function syncElevenLabsMetrics(clientId, agentId, year, month, apiK
  */
 export async function syncElevenLabsMetricsForClient(clientId, year, month) {
   try {
-    const { findClientById } = await import('../crud.js');
-    
+    const { findClientById } = await import("../crud.js");
+
     const client = await findClientById(clientId);
     if (!client) {
       throw new Error(`Client not found: ${clientId}`);
@@ -715,14 +745,14 @@ export async function syncElevenLabsMetricsForClient(clientId, year, month) {
 
     // Get the primary agent's ElevenLabs agent ID
     const agents = client.getAllAgents();
-    const primaryAgent = agents.find(agent => agent.isPrimary);
-    
+    const primaryAgent = agents.find((agent) => agent.isPrimary);
+
     if (!primaryAgent || !primaryAgent.elevenLabsAgentId) {
       return {
         success: false,
-        error: 'No primary agent with ElevenLabs agent ID found',
-        period: `${year}-${String(month).padStart(2, '0')}`,
-        clientId
+        error: "No primary agent with ElevenLabs agent ID found",
+        period: `${year}-${String(month).padStart(2, "0")}`,
+        clientId,
       };
     }
 
@@ -731,23 +761,31 @@ export async function syncElevenLabsMetricsForClient(clientId, year, month) {
     if (!apiKey) {
       return {
         success: false,
-        error: 'ElevenLabs API key not configured',
-        period: `${year}-${String(month).padStart(2, '0')}`,
-        clientId
+        error: "ElevenLabs API key not configured",
+        period: `${year}-${String(month).padStart(2, "0")}`,
+        clientId,
       };
     }
 
-    console.log(`[ElevenLabs-Client-Sync] Syncing metrics for client ${clientId}, agent ${primaryAgent.elevenLabsAgentId}, period ${year}-${month}`);
-    
+    console.log(
+      `[ElevenLabs-Client-Sync] Syncing metrics for client ${clientId}, agent ${primaryAgent.elevenLabsAgentId}, period ${year}-${month}`
+    );
+
     // Call the existing agent-specific function
-    return await syncElevenLabsMetrics(clientId, primaryAgent.elevenLabsAgentId, year, month, apiKey);
+    return await syncElevenLabsMetrics(
+      clientId,
+      primaryAgent.elevenLabsAgentId,
+      year,
+      month,
+      apiKey
+    );
   } catch (error) {
-    console.error('[ElevenLabs-Client-Sync] Error syncing metrics:', error);
+    console.error("[ElevenLabs-Client-Sync] Error syncing metrics:", error);
     return {
       success: false,
       error: error.message,
-      period: `${year}-${String(month).padStart(2, '0')}`,
-      clientId
+      period: `${year}-${String(month).padStart(2, "0")}`,
+      clientId,
     };
   }
 }

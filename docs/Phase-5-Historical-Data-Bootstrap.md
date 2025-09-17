@@ -7,18 +7,21 @@ Phase 5 implements comprehensive historical data import capabilities, allowing y
 ## Key Features
 
 ### 1. GoHighLevel Appointments Integration
+
 - **Appointment Fetching**: Retrieve historical appointments from GHL calendars
 - **Booking Correlation**: Automatically correlate successful bookings with agent metrics
 - **Monthly Aggregation**: Group appointment data by month for consistent reporting
 - **Status Filtering**: Only count confirmed/showed appointments as successful bookings
 
 ### 2. Comprehensive Import System
+
 - **Batch Processing**: Process multiple months efficiently with configurable batch sizes
 - **Parallel Operations**: Import ElevenLabs and GHL data simultaneously when possible
 - **Error Recovery**: Continue processing even if individual months fail
 - **Progress Tracking**: Detailed logging and progress reporting throughout import
 
 ### 3. Data Validation
+
 - **Integrity Checks**: Validate imported data for consistency and realistic ratios
 - **Gap Detection**: Identify months with missing data
 - **Quality Assurance**: Flag unrealistic booking rates or data anomalies
@@ -28,12 +31,14 @@ Phase 5 implements comprehensive historical data import capabilities, allowing y
 ### Bootstrap Endpoints
 
 #### 1. Get Appointment Counts
+
 ```http
 GET /admin/bootstrap/appointments/counts?clientId=CLIENT_ID&year=2024&month=11
 Authorization: Bearer YOUR_ADMIN_TOKEN
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -61,6 +66,7 @@ Authorization: Bearer YOUR_ADMIN_TOKEN
 ```
 
 #### 2. Sync Appointment Metrics
+
 ```http
 POST /admin/bootstrap/appointments/sync
 Authorization: Bearer YOUR_ADMIN_TOKEN
@@ -74,6 +80,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -97,12 +104,14 @@ Content-Type: application/json
 ```
 
 #### 3. Get Historical Appointments
+
 ```http
 GET /admin/bootstrap/appointments/historical?clientId=CLIENT_ID&startDate=2024-01-01&endDate=2024-12-31
 Authorization: Bearer YOUR_ADMIN_TOKEN
 ```
 
 #### 4. Bulk Sync
+
 ```http
 POST /admin/bootstrap/bulk-sync
 Authorization: Bearer YOUR_ADMIN_TOKEN
@@ -118,6 +127,7 @@ Content-Type: application/json
 ```
 
 #### 5. Comprehensive Historical Import
+
 ```http
 POST /admin/bootstrap/import-historical
 Authorization: Bearer YOUR_ADMIN_TOKEN
@@ -135,18 +145,21 @@ Content-Type: application/json
 ```
 
 **Parameters:**
+
 - `includeElevenLabs`: Whether to import ElevenLabs conversation data
 - `includeAppointments`: Whether to import GoHighLevel appointment data
 - `skipExisting`: Skip months that already have data (useful for incremental imports)
 - `batchSize`: Number of months to process in parallel (1-12, default 3)
 
 #### 6. Validate Historical Data
+
 ```http
 GET /admin/bootstrap/validate?clientId=CLIENT_ID&startDate=2024-01-01&endDate=2024-12-31
 Authorization: Bearer YOUR_ADMIN_TOKEN
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -170,6 +183,7 @@ Authorization: Bearer YOUR_ADMIN_TOKEN
 ## Implementation Steps
 
 ### Step 1: Test Appointment Access
+
 Before importing historical data, verify that the client has proper GHL integration:
 
 ```powershell
@@ -181,6 +195,7 @@ Invoke-RestMethod -Uri "https://api.v1.affinitydesign.ca/admin/bootstrap/appoint
 ```
 
 ### Step 2: Validate Data Range
+
 Check what data is available before running a full import:
 
 ```powershell
@@ -192,6 +207,7 @@ Invoke-RestMethod -Uri "https://api.v1.affinitydesign.ca/admin/bootstrap/validat
 ```
 
 ### Step 3: Run Historical Import
+
 Execute the comprehensive import for your desired date range:
 
 ```powershell
@@ -209,6 +225,7 @@ Invoke-RestMethod -Uri "https://api.v1.affinitydesign.ca/admin/bootstrap/import-
 ```
 
 ### Step 4: Verify Import Results
+
 Check the dashboard to confirm imported data:
 
 ```powershell
@@ -222,6 +239,7 @@ Invoke-RestMethod -Uri "https://api.v1.affinitydesign.ca/admin/reports/combined-
 ## Best Practices
 
 ### 1. Incremental Imports
+
 For large date ranges, consider importing in smaller chunks:
 
 ```powershell
@@ -243,7 +261,7 @@ foreach ($quarter in $quarters) {
         skipExisting = $true
         batchSize = 3
     } | ConvertTo-Json
-    
+
     Write-Host "Importing quarter: $($quarter.start) to $($quarter.end)"
     $result = Invoke-RestMethod -Uri "https://api.v1.affinitydesign.ca/admin/bootstrap/import-historical" -Method POST -Body $importBody -ContentType "application/json" -Headers @{"Authorization"="Bearer $token"}
     Write-Host "Result: $($result.message)"
@@ -251,6 +269,7 @@ foreach ($quarter in $quarters) {
 ```
 
 ### 2. Error Handling
+
 Always check import results and handle partial failures:
 
 ```powershell
@@ -259,7 +278,7 @@ $result = Invoke-RestMethod -Uri "https://api.v1.affinitydesign.ca/admin/bootstr
 if ($result.success) {
     $data = $result.data
     Write-Host "Import completed: $($data.successfulMonths)/$($data.totalMonths) months successful"
-    
+
     if ($data.errorMonths -gt 0) {
         Write-Host "Errors occurred in $($data.errorMonths) months. Check logs for details."
     }
@@ -269,6 +288,7 @@ if ($result.success) {
 ```
 
 ### 3. Data Validation
+
 Always validate after importing:
 
 ```powershell
@@ -285,17 +305,21 @@ if ($validation.data.consistency.failedChecks -gt 0) {
 ## Integration Points
 
 ### 1. GoHighLevel Requirements
+
 - Client must have valid `refreshToken` in database
 - Client must have `calId` (calendar ID) configured
 - GHL API access must be working (test with `/admin/ghl/test-integration`)
 
 ### 2. ElevenLabs Requirements
+
 - Client must have `elevenLabsAgentId` configured
 - ElevenLabs API key must be valid
 - Conversation history must be accessible via ElevenLabs API
 
 ### 3. Database Schema
+
 The import process uses the existing agent metrics schema:
+
 - `agentMetrics`: Current month aggregates
 - `agentMetricsHistory`: Historical monthly data
 - `callHistory`: Individual call records (if available)
@@ -305,16 +329,19 @@ The import process uses the existing agent metrics schema:
 ### Common Issues
 
 1. **GHL Integration Not Working**
+
    - Verify client has `refreshToken` and `calId`
    - Test GHL integration endpoint first
    - Check GHL API quotas and rate limits
 
 2. **ElevenLabs API Errors**
+
    - Verify `elevenLabsAgentId` is correct
    - Check ElevenLabs API key validity
    - Monitor rate limits (6000 requests per minute)
 
 3. **Partial Import Success**
+
    - Review error logs for specific month failures
    - Use `skipExisting: true` to retry only failed months
    - Reduce `batchSize` if hitting rate limits
@@ -325,7 +352,9 @@ The import process uses the existing agent metrics schema:
    - Verify agent ID mappings are correct
 
 ### Logging
+
 All import operations are logged with detailed information:
+
 - Progress updates for each batch
 - Individual month results
 - Error details for failed operations
@@ -341,6 +370,6 @@ With Phase 5 implemented, your metrics tracking system now includes:
 ✅ **Phase 2**: Utility Functions  
 ✅ **Phase 3**: Admin API Endpoints  
 ✅ **Phase 4**: Real-time Tracking Integration  
-✅ **Phase 5**: Historical Data Bootstrap  
+✅ **Phase 5**: Historical Data Bootstrap
 
 The system is now complete and can provide comprehensive metrics reporting from both historical data and ongoing real-time tracking.

@@ -1105,16 +1105,17 @@ export default async function adminRoutes(fastify, options) {
    * POST /admin/metrics/sync-elevenlabs
    */
   fastify.post("/metrics/sync-elevenlabs", async (request, reply) => {
-    const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-    
+    const requestId =
+      Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
     try {
       const { clientId, agentId, year, month } = request.body;
-      
+
       if (!clientId || !agentId || !year || !month) {
         return reply.code(400).send({
           error: "Missing required fields",
           required: ["clientId", "agentId", "year", "month"],
-          requestId
+          requestId,
         });
       }
 
@@ -1122,25 +1123,33 @@ export default async function adminRoutes(fastify, options) {
       if (!apiKey) {
         return reply.code(500).send({
           error: "ElevenLabs API key not configured",
-          requestId
+          requestId,
         });
       }
 
-      console.log(`[${requestId}] Syncing ElevenLabs metrics for agent ${agentId}, period ${year}-${month}`);
+      console.log(
+        `[${requestId}] Syncing ElevenLabs metrics for agent ${agentId}, period ${year}-${month}`
+      );
 
-      const { syncElevenLabsMetrics } = await import('../utils/elevenlabs.js');
-      const result = await syncElevenLabsMetrics(clientId, agentId, year, month, apiKey);
-      
+      const { syncElevenLabsMetrics } = await import("../utils/elevenlabs.js");
+      const result = await syncElevenLabsMetrics(
+        clientId,
+        agentId,
+        year,
+        month,
+        apiKey
+      );
+
       return reply.send({
         requestId,
-        ...result
+        ...result,
       });
     } catch (error) {
       console.error(`[${requestId}] Error syncing ElevenLabs metrics:`, error);
       return reply.code(500).send({
         error: "Failed to sync ElevenLabs metrics",
         details: error.message,
-        requestId
+        requestId,
       });
     }
   });
@@ -1150,49 +1159,57 @@ export default async function adminRoutes(fastify, options) {
    * GET /admin/reports/agent-metrics/:agentId?clientId=xxx&year=2025&month=3
    */
   fastify.get("/reports/agent-metrics/:agentId", async (request, reply) => {
-    const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-    
+    const requestId =
+      Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
     try {
       const { agentId } = request.params;
       const { clientId, year, month } = request.query;
-      
+
       if (!clientId || !year || !month) {
         return reply.code(400).send({
           error: "Missing required query parameters",
           required: ["clientId", "year", "month"],
-          requestId
+          requestId,
         });
       }
 
-      console.log(`[${requestId}] Getting metrics for agent ${agentId}, period ${year}-${month}`);
+      console.log(
+        `[${requestId}] Getting metrics for agent ${agentId}, period ${year}-${month}`
+      );
 
-      const { getAgentMetrics } = await import('../utils/metrics.js');
-      const metrics = await getAgentMetrics(clientId, agentId, parseInt(year), parseInt(month));
-      
+      const { getAgentMetrics } = await import("../utils/metrics.js");
+      const metrics = await getAgentMetrics(
+        clientId,
+        agentId,
+        parseInt(year),
+        parseInt(month)
+      );
+
       if (!metrics) {
         return reply.send({
           requestId,
           agentId,
-          period: `${year}-${String(month).padStart(2, '0')}`,
+          period: `${year}-${String(month).padStart(2, "0")}`,
           metrics: null,
-          message: "No metrics found for this agent and period"
+          message: "No metrics found for this agent and period",
         });
       }
 
       return reply.send({
         requestId,
         agentId,
-        period: `${year}-${String(month).padStart(2, '0')}`,
+        period: `${year}-${String(month).padStart(2, "0")}`,
         metrics: metrics.metrics,
         source: metrics.source,
-        lastUpdated: metrics.createdAt
+        lastUpdated: metrics.createdAt,
       });
     } catch (error) {
       console.error(`[${requestId}] Error getting agent metrics:`, error);
       return reply.code(500).send({
         error: "Failed to get agent metrics",
         details: error.message,
-        requestId
+        requestId,
       });
     }
   });
@@ -1202,64 +1219,86 @@ export default async function adminRoutes(fastify, options) {
    * GET /admin/reports/combined-metrics?clientId=xxx&year=2025&month=3
    */
   fastify.get("/reports/combined-metrics", async (request, reply) => {
-    const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-    
+    const requestId =
+      Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
     try {
       const { clientId, year, month } = request.query;
-      
+
       if (!clientId || !year || !month) {
         return reply.code(400).send({
           error: "Missing required query parameters",
           required: ["clientId", "year", "month"],
-          requestId
+          requestId,
         });
       }
 
-      console.log(`[${requestId}] Getting combined metrics for client ${clientId}, period ${year}-${month}`);
+      console.log(
+        `[${requestId}] Getting combined metrics for client ${clientId}, period ${year}-${month}`
+      );
 
-      const { getAllAgentMetrics } = await import('../utils/metrics.js');
-      const allMetrics = await getAllAgentMetrics(clientId, parseInt(year), parseInt(month));
-      
+      const { getAllAgentMetrics } = await import("../utils/metrics.js");
+      const allMetrics = await getAllAgentMetrics(
+        clientId,
+        parseInt(year),
+        parseInt(month)
+      );
+
       // Calculate totals
-      const totals = allMetrics.reduce((acc, agent) => {
-        const metrics = agent.metrics;
-        return {
-          totalInboundCalls: acc.totalInboundCalls + (metrics.inboundCalls || 0),
-          totalOutboundCalls: acc.totalOutboundCalls + (metrics.outboundCalls || 0),
-          totalCalls: acc.totalCalls + (metrics.totalCalls || 0),
-          totalSuccessfulBookings: acc.totalSuccessfulBookings + (metrics.successfulBookings || 0),
-          totalDuration: acc.totalDuration + (metrics.totalDuration || 0),
-          totalCallsFromElevenlabs: acc.totalCallsFromElevenlabs + (metrics.callsFromElevenlabs || 0)
-        };
-      }, {
-        totalInboundCalls: 0,
-        totalOutboundCalls: 0,
-        totalCalls: 0,
-        totalSuccessfulBookings: 0,
-        totalDuration: 0,
-        totalCallsFromElevenlabs: 0
-      });
+      const totals = allMetrics.reduce(
+        (acc, agent) => {
+          const metrics = agent.metrics;
+          return {
+            totalInboundCalls:
+              acc.totalInboundCalls + (metrics.inboundCalls || 0),
+            totalOutboundCalls:
+              acc.totalOutboundCalls + (metrics.outboundCalls || 0),
+            totalCalls: acc.totalCalls + (metrics.totalCalls || 0),
+            totalSuccessfulBookings:
+              acc.totalSuccessfulBookings + (metrics.successfulBookings || 0),
+            totalDuration: acc.totalDuration + (metrics.totalDuration || 0),
+            totalCallsFromElevenlabs:
+              acc.totalCallsFromElevenlabs + (metrics.callsFromElevenlabs || 0),
+          };
+        },
+        {
+          totalInboundCalls: 0,
+          totalOutboundCalls: 0,
+          totalCalls: 0,
+          totalSuccessfulBookings: 0,
+          totalDuration: 0,
+          totalCallsFromElevenlabs: 0,
+        }
+      );
 
       // Calculate overall average duration
-      totals.averageDuration = totals.totalCalls > 0 ? Math.round(totals.totalDuration / totals.totalCalls) : 0;
-      
+      totals.averageDuration =
+        totals.totalCalls > 0
+          ? Math.round(totals.totalDuration / totals.totalCalls)
+          : 0;
+
       // Calculate overall success rate
-      totals.overallSuccessRate = totals.totalCalls > 0 ? Math.round((totals.totalSuccessfulBookings / totals.totalCalls) * 100) : 0;
+      totals.overallSuccessRate =
+        totals.totalCalls > 0
+          ? Math.round(
+              (totals.totalSuccessfulBookings / totals.totalCalls) * 100
+            )
+          : 0;
 
       return reply.send({
         requestId,
         clientId,
-        period: `${year}-${String(month).padStart(2, '0')}`,
+        period: `${year}-${String(month).padStart(2, "0")}`,
         agentCount: allMetrics.length,
         agents: allMetrics,
-        totals
+        totals,
       });
     } catch (error) {
       console.error(`[${requestId}] Error getting combined metrics:`, error);
       return reply.code(500).send({
         error: "Failed to get combined metrics",
         details: error.message,
-        requestId
+        requestId,
       });
     }
   });
@@ -1269,42 +1308,50 @@ export default async function adminRoutes(fastify, options) {
    * GET /admin/reports/period-comparison?clientId=xxx&agentId=xxx&startPeriod=2025-02&endPeriod=2025-03
    */
   fastify.get("/reports/period-comparison", async (request, reply) => {
-    const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-    
+    const requestId =
+      Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
     try {
       const { clientId, agentId, startPeriod, endPeriod } = request.query;
-      
+
       if (!clientId || !agentId || !startPeriod || !endPeriod) {
         return reply.code(400).send({
           error: "Missing required query parameters",
           required: ["clientId", "agentId", "startPeriod", "endPeriod"],
-          requestId
+          requestId,
         });
       }
 
-      console.log(`[${requestId}] Getting period comparison for agent ${agentId}, periods ${startPeriod} vs ${endPeriod}`);
+      console.log(
+        `[${requestId}] Getting period comparison for agent ${agentId}, periods ${startPeriod} vs ${endPeriod}`
+      );
 
-      const { getMetricsComparison } = await import('../utils/metrics.js');
-      const comparison = await getMetricsComparison(clientId, agentId, startPeriod, endPeriod);
-      
+      const { getMetricsComparison } = await import("../utils/metrics.js");
+      const comparison = await getMetricsComparison(
+        clientId,
+        agentId,
+        startPeriod,
+        endPeriod
+      );
+
       if (!comparison) {
         return reply.code(404).send({
           error: "Unable to generate comparison",
           message: "Agent or client not found",
-          requestId
+          requestId,
         });
       }
 
       return reply.send({
         requestId,
-        ...comparison
+        ...comparison,
       });
     } catch (error) {
       console.error(`[${requestId}] Error getting period comparison:`, error);
       return reply.code(500).send({
         error: "Failed to get period comparison",
         details: error.message,
-        requestId
+        requestId,
       });
     }
   });
@@ -1314,45 +1361,55 @@ export default async function adminRoutes(fastify, options) {
    * POST /admin/metrics/recalculate
    */
   fastify.post("/metrics/recalculate", async (request, reply) => {
-    const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-    
+    const requestId =
+      Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
     try {
       const { clientId, agentId, year, month } = request.body;
-      
+
       if (!clientId || !agentId || !year || !month) {
         return reply.code(400).send({
           error: "Missing required fields",
           required: ["clientId", "agentId", "year", "month"],
-          requestId
+          requestId,
         });
       }
 
-      console.log(`[${requestId}] Recalculating metrics for agent ${agentId}, period ${year}-${month}`);
+      console.log(
+        `[${requestId}] Recalculating metrics for agent ${agentId}, period ${year}-${month}`
+      );
 
-      const { recalculateMetricsFromHistory } = await import('../utils/metrics.js');
-      const metrics = await recalculateMetricsFromHistory(clientId, agentId, parseInt(year), parseInt(month));
-      
+      const { recalculateMetricsFromHistory } = await import(
+        "../utils/metrics.js"
+      );
+      const metrics = await recalculateMetricsFromHistory(
+        clientId,
+        agentId,
+        parseInt(year),
+        parseInt(month)
+      );
+
       if (!metrics) {
         return reply.code(404).send({
           error: "Unable to recalculate metrics",
           message: "Client or agent not found",
-          requestId
+          requestId,
         });
       }
 
       return reply.send({
         requestId,
         agentId,
-        period: `${year}-${String(month).padStart(2, '0')}`,
+        period: `${year}-${String(month).padStart(2, "0")}`,
         metrics,
-        message: "Metrics recalculated successfully"
+        message: "Metrics recalculated successfully",
       });
     } catch (error) {
       console.error(`[${requestId}] Error recalculating metrics:`, error);
       return reply.code(500).send({
         error: "Failed to recalculate metrics",
         details: error.message,
-        requestId
+        requestId,
       });
     }
   });
@@ -1362,15 +1419,16 @@ export default async function adminRoutes(fastify, options) {
    * GET /admin/reports/dashboard-summary?clientId=xxx
    */
   fastify.get("/reports/dashboard-summary", async (request, reply) => {
-    const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-    
+    const requestId =
+      Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
     try {
       const { clientId } = request.query;
-      
+
       if (!clientId) {
         return reply.code(400).send({
           error: "Missing required query parameter: clientId",
-          requestId
+          requestId,
         });
       }
 
@@ -1380,25 +1438,45 @@ export default async function adminRoutes(fastify, options) {
       const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
       const lastMonthYear = currentMonth === 1 ? currentYear - 1 : currentYear;
 
-      console.log(`[${requestId}] Getting dashboard summary for client ${clientId}`);
+      console.log(
+        `[${requestId}] Getting dashboard summary for client ${clientId}`
+      );
 
-      const { getAllAgentMetrics } = await import('../utils/metrics.js');
-      
+      const { getAllAgentMetrics } = await import("../utils/metrics.js");
+
       // Get current month and last month metrics
-      const currentMetrics = await getAllAgentMetrics(clientId, currentYear, currentMonth);
-      const lastMonthMetrics = await getAllAgentMetrics(clientId, lastMonthYear, lastMonth);
+      const currentMetrics = await getAllAgentMetrics(
+        clientId,
+        currentYear,
+        currentMonth
+      );
+      const lastMonthMetrics = await getAllAgentMetrics(
+        clientId,
+        lastMonthYear,
+        lastMonth
+      );
 
       const calculateTotals = (metrics) => {
-        return metrics.reduce((acc, agent) => {
-          const m = agent.metrics;
-          return {
-            inboundCalls: acc.inboundCalls + (m.inboundCalls || 0),
-            outboundCalls: acc.outboundCalls + (m.outboundCalls || 0),
-            totalCalls: acc.totalCalls + (m.totalCalls || 0),
-            successfulBookings: acc.successfulBookings + (m.successfulBookings || 0),
-            totalDuration: acc.totalDuration + (m.totalDuration || 0)
-          };
-        }, { inboundCalls: 0, outboundCalls: 0, totalCalls: 0, successfulBookings: 0, totalDuration: 0 });
+        return metrics.reduce(
+          (acc, agent) => {
+            const m = agent.metrics;
+            return {
+              inboundCalls: acc.inboundCalls + (m.inboundCalls || 0),
+              outboundCalls: acc.outboundCalls + (m.outboundCalls || 0),
+              totalCalls: acc.totalCalls + (m.totalCalls || 0),
+              successfulBookings:
+                acc.successfulBookings + (m.successfulBookings || 0),
+              totalDuration: acc.totalDuration + (m.totalDuration || 0),
+            };
+          },
+          {
+            inboundCalls: 0,
+            outboundCalls: 0,
+            totalCalls: 0,
+            successfulBookings: 0,
+            totalDuration: 0,
+          }
+        );
       };
 
       const currentTotals = calculateTotals(currentMetrics);
@@ -1412,33 +1490,72 @@ export default async function adminRoutes(fastify, options) {
       return reply.send({
         requestId,
         clientId,
-        currentPeriod: `${currentYear}-${String(currentMonth).padStart(2, '0')}`,
-        lastPeriod: `${lastMonthYear}-${String(lastMonth).padStart(2, '0')}`,
+        currentPeriod: `${currentYear}-${String(currentMonth).padStart(
+          2,
+          "0"
+        )}`,
+        lastPeriod: `${lastMonthYear}-${String(lastMonth).padStart(2, "0")}`,
         agentCount: currentMetrics.length,
         currentMonth: {
           ...currentTotals,
-          averageDuration: currentTotals.totalCalls > 0 ? Math.round(currentTotals.totalDuration / currentTotals.totalCalls) : 0,
-          successRate: currentTotals.totalCalls > 0 ? Math.round((currentTotals.successfulBookings / currentTotals.totalCalls) * 100) : 0
+          averageDuration:
+            currentTotals.totalCalls > 0
+              ? Math.round(
+                  currentTotals.totalDuration / currentTotals.totalCalls
+                )
+              : 0,
+          successRate:
+            currentTotals.totalCalls > 0
+              ? Math.round(
+                  (currentTotals.successfulBookings /
+                    currentTotals.totalCalls) *
+                    100
+                )
+              : 0,
         },
         lastMonth: {
           ...lastMonthTotals,
-          averageDuration: lastMonthTotals.totalCalls > 0 ? Math.round(lastMonthTotals.totalDuration / lastMonthTotals.totalCalls) : 0,
-          successRate: lastMonthTotals.totalCalls > 0 ? Math.round((lastMonthTotals.successfulBookings / lastMonthTotals.totalCalls) * 100) : 0
+          averageDuration:
+            lastMonthTotals.totalCalls > 0
+              ? Math.round(
+                  lastMonthTotals.totalDuration / lastMonthTotals.totalCalls
+                )
+              : 0,
+          successRate:
+            lastMonthTotals.totalCalls > 0
+              ? Math.round(
+                  (lastMonthTotals.successfulBookings /
+                    lastMonthTotals.totalCalls) *
+                    100
+                )
+              : 0,
         },
         changes: {
-          inboundCalls: calculateChange(currentTotals.inboundCalls, lastMonthTotals.inboundCalls),
-          outboundCalls: calculateChange(currentTotals.outboundCalls, lastMonthTotals.outboundCalls),
-          totalCalls: calculateChange(currentTotals.totalCalls, lastMonthTotals.totalCalls),
-          successfulBookings: calculateChange(currentTotals.successfulBookings, lastMonthTotals.successfulBookings)
+          inboundCalls: calculateChange(
+            currentTotals.inboundCalls,
+            lastMonthTotals.inboundCalls
+          ),
+          outboundCalls: calculateChange(
+            currentTotals.outboundCalls,
+            lastMonthTotals.outboundCalls
+          ),
+          totalCalls: calculateChange(
+            currentTotals.totalCalls,
+            lastMonthTotals.totalCalls
+          ),
+          successfulBookings: calculateChange(
+            currentTotals.successfulBookings,
+            lastMonthTotals.successfulBookings
+          ),
         },
-        agents: currentMetrics
+        agents: currentMetrics,
       });
     } catch (error) {
       console.error(`[${requestId}] Error getting dashboard summary:`, error);
       return reply.code(500).send({
         error: "Failed to get dashboard summary",
         details: error.message,
-        requestId
+        requestId,
       });
     }
   });
@@ -1451,413 +1568,517 @@ export default async function adminRoutes(fastify, options) {
    * GET /admin/bootstrap/appointments/counts
    * Get appointment counts for a specific month from GoHighLevel
    */
-  fastify.get('/bootstrap/appointments/counts', {
-    preHandler: fastify.authenticate,
-    schema: {
-      querystring: {
-        type: 'object',
-        required: ['clientId', 'year', 'month'],
-        properties: {
-          clientId: { type: 'string' },
-          year: { type: 'integer', minimum: 2020, maximum: 2030 },
-          month: { type: 'integer', minimum: 1, maximum: 12 }
-        }
+  fastify.get(
+    "/bootstrap/appointments/counts",
+    {
+      preHandler: fastify.authenticate,
+      schema: {
+        querystring: {
+          type: "object",
+          required: ["clientId", "year", "month"],
+          properties: {
+            clientId: { type: "string" },
+            year: { type: "integer", minimum: 2020, maximum: 2030 },
+            month: { type: "integer", minimum: 1, maximum: 12 },
+          },
+        },
+      },
+    },
+    async (request, reply) => {
+      const requestId = Math.random().toString(36).substring(7);
+      console.log(
+        `[Admin-Bootstrap] GET /bootstrap/appointments/counts - Request ID: ${requestId}`
+      );
+
+      try {
+        const { clientId, year, month } = request.query;
+
+        const { getMonthlyBookingCounts } = await import(
+          "../utils/ghl-appointments.js"
+        );
+        const result = await getMonthlyBookingCounts(clientId, year, month);
+
+        console.log(
+          `[Admin-Bootstrap] Appointment counts retrieved for ${clientId}, ${year}-${month} - Request ID: ${requestId}`
+        );
+
+        return reply.code(200).send({
+          success: true,
+          message: "Appointment counts retrieved successfully",
+          data: result,
+          requestId,
+        });
+      } catch (error) {
+        console.error(
+          `[Admin-Bootstrap] Error getting appointment counts - Request ID: ${requestId}:`,
+          error
+        );
+        return reply.code(500).send({
+          success: false,
+          error: "Failed to get appointment counts",
+          details: error.message,
+          requestId,
+        });
       }
     }
-  }, async (request, reply) => {
-    const requestId = Math.random().toString(36).substring(7);
-    console.log(`[Admin-Bootstrap] GET /bootstrap/appointments/counts - Request ID: ${requestId}`);
-
-    try {
-      const { clientId, year, month } = request.query;
-      
-      const { getMonthlyBookingCounts } = await import('../utils/ghl-appointments.js');
-      const result = await getMonthlyBookingCounts(clientId, year, month);
-      
-      console.log(`[Admin-Bootstrap] Appointment counts retrieved for ${clientId}, ${year}-${month} - Request ID: ${requestId}`);
-      
-      return reply.code(200).send({
-        success: true,
-        message: 'Appointment counts retrieved successfully',
-        data: result,
-        requestId
-      });
-    } catch (error) {
-      console.error(`[Admin-Bootstrap] Error getting appointment counts - Request ID: ${requestId}:`, error);
-      return reply.code(500).send({
-        success: false,
-        error: 'Failed to get appointment counts',
-        details: error.message,
-        requestId
-      });
-    }
-  });
+  );
 
   /**
    * POST /admin/bootstrap/appointments/sync
    * Sync appointment data to agent metrics for a specific period
    */
-  fastify.post('/bootstrap/appointments/sync', {
-    preHandler: fastify.authenticate,
-    schema: {
-      body: {
-        type: 'object',
-        required: ['clientId', 'year', 'month'],
-        properties: {
-          clientId: { type: 'string' },
-          year: { type: 'integer', minimum: 2020, maximum: 2030 },
-          month: { type: 'integer', minimum: 1, maximum: 12 }
-        }
-      }
-    }
-  }, async (request, reply) => {
-    const requestId = Math.random().toString(36).substring(7);
-    console.log(`[Admin-Bootstrap] POST /bootstrap/appointments/sync - Request ID: ${requestId}`);
+  fastify.post(
+    "/bootstrap/appointments/sync",
+    {
+      preHandler: fastify.authenticate,
+      schema: {
+        body: {
+          type: "object",
+          required: ["clientId", "year", "month"],
+          properties: {
+            clientId: { type: "string" },
+            year: { type: "integer", minimum: 2020, maximum: 2030 },
+            month: { type: "integer", minimum: 1, maximum: 12 },
+          },
+        },
+      },
+    },
+    async (request, reply) => {
+      const requestId = Math.random().toString(36).substring(7);
+      console.log(
+        `[Admin-Bootstrap] POST /bootstrap/appointments/sync - Request ID: ${requestId}`
+      );
 
-    try {
-      const { clientId, year, month } = request.body;
-      
-      const { syncAppointmentMetrics } = await import('../utils/ghl-appointments.js');
-      const result = await syncAppointmentMetrics(clientId, year, month);
-      
-      if (result.success) {
-        console.log(`[Admin-Bootstrap] Appointment metrics synced for ${clientId}, ${year}-${month} - Request ID: ${requestId}`);
-        return reply.code(200).send({
-          success: true,
-          message: result.message,
-          data: result,
-          requestId
-        });
-      } else {
-        console.warn(`[Admin-Bootstrap] Appointment sync failed for ${clientId}, ${year}-${month} - Request ID: ${requestId}:`, result.error);
-        return reply.code(400).send({
+      try {
+        const { clientId, year, month } = request.body;
+
+        const { syncAppointmentMetrics } = await import(
+          "../utils/ghl-appointments.js"
+        );
+        const result = await syncAppointmentMetrics(clientId, year, month);
+
+        if (result.success) {
+          console.log(
+            `[Admin-Bootstrap] Appointment metrics synced for ${clientId}, ${year}-${month} - Request ID: ${requestId}`
+          );
+          return reply.code(200).send({
+            success: true,
+            message: result.message,
+            data: result,
+            requestId,
+          });
+        } else {
+          console.warn(
+            `[Admin-Bootstrap] Appointment sync failed for ${clientId}, ${year}-${month} - Request ID: ${requestId}:`,
+            result.error
+          );
+          return reply.code(400).send({
+            success: false,
+            error: result.error,
+            data: result,
+            requestId,
+          });
+        }
+      } catch (error) {
+        console.error(
+          `[Admin-Bootstrap] Error syncing appointment metrics - Request ID: ${requestId}:`,
+          error
+        );
+        return reply.code(500).send({
           success: false,
-          error: result.error,
-          data: result,
-          requestId
+          error: "Failed to sync appointment metrics",
+          details: error.message,
+          requestId,
         });
       }
-    } catch (error) {
-      console.error(`[Admin-Bootstrap] Error syncing appointment metrics - Request ID: ${requestId}:`, error);
-      return reply.code(500).send({
-        success: false,
-        error: 'Failed to sync appointment metrics',
-        details: error.message,
-        requestId
-      });
     }
-  });
+  );
 
   /**
    * GET /admin/bootstrap/appointments/historical
    * Get historical appointment data for a date range
    */
-  fastify.get('/bootstrap/appointments/historical', {
-    preHandler: fastify.authenticate,
-    schema: {
-      querystring: {
-        type: 'object',
-        required: ['clientId', 'startDate', 'endDate'],
-        properties: {
-          clientId: { type: 'string' },
-          startDate: { type: 'string', format: 'date' },
-          endDate: { type: 'string', format: 'date' }
-        }
+  fastify.get(
+    "/bootstrap/appointments/historical",
+    {
+      preHandler: fastify.authenticate,
+      schema: {
+        querystring: {
+          type: "object",
+          required: ["clientId", "startDate", "endDate"],
+          properties: {
+            clientId: { type: "string" },
+            startDate: { type: "string", format: "date" },
+            endDate: { type: "string", format: "date" },
+          },
+        },
+      },
+    },
+    async (request, reply) => {
+      const requestId = Math.random().toString(36).substring(7);
+      console.log(
+        `[Admin-Bootstrap] GET /bootstrap/appointments/historical - Request ID: ${requestId}`
+      );
+
+      try {
+        const { clientId, startDate, endDate } = request.query;
+
+        const { getHistoricalAppointmentData } = await import(
+          "../utils/ghl-appointments.js"
+        );
+        const result = await getHistoricalAppointmentData(
+          clientId,
+          new Date(startDate),
+          new Date(endDate)
+        );
+
+        console.log(
+          `[Admin-Bootstrap] Historical appointment data retrieved for ${clientId} - Request ID: ${requestId}`
+        );
+
+        return reply.code(200).send({
+          success: true,
+          message: "Historical appointment data retrieved successfully",
+          data: result,
+          requestId,
+        });
+      } catch (error) {
+        console.error(
+          `[Admin-Bootstrap] Error getting historical appointment data - Request ID: ${requestId}:`,
+          error
+        );
+        return reply.code(500).send({
+          success: false,
+          error: "Failed to get historical appointment data",
+          details: error.message,
+          requestId,
+        });
       }
     }
-  }, async (request, reply) => {
-    const requestId = Math.random().toString(36).substring(7);
-    console.log(`[Admin-Bootstrap] GET /bootstrap/appointments/historical - Request ID: ${requestId}`);
-
-    try {
-      const { clientId, startDate, endDate } = request.query;
-      
-      const { getHistoricalAppointmentData } = await import('../utils/ghl-appointments.js');
-      const result = await getHistoricalAppointmentData(
-        clientId, 
-        new Date(startDate), 
-        new Date(endDate)
-      );
-      
-      console.log(`[Admin-Bootstrap] Historical appointment data retrieved for ${clientId} - Request ID: ${requestId}`);
-      
-      return reply.code(200).send({
-        success: true,
-        message: 'Historical appointment data retrieved successfully',
-        data: result,
-        requestId
-      });
-    } catch (error) {
-      console.error(`[Admin-Bootstrap] Error getting historical appointment data - Request ID: ${requestId}:`, error);
-      return reply.code(500).send({
-        success: false,
-        error: 'Failed to get historical appointment data',
-        details: error.message,
-        requestId
-      });
-    }
-  });
+  );
 
   /**
    * POST /admin/bootstrap/bulk-sync
    * Perform bulk historical data sync for a client
    */
-  fastify.post('/bootstrap/bulk-sync', {
-    preHandler: fastify.authenticate,
-    schema: {
-      body: {
-        type: 'object',
-        required: ['clientId', 'startDate', 'endDate'],
-        properties: {
-          clientId: { type: 'string' },
-          startDate: { type: 'string', format: 'date' },
-          endDate: { type: 'string', format: 'date' },
-          syncElevenLabs: { type: 'boolean', default: true },
-          syncAppointments: { type: 'boolean', default: true }
-        }
-      }
-    }
-  }, async (request, reply) => {
-    const requestId = Math.random().toString(36).substring(7);
-    console.log(`[Admin-Bootstrap] POST /bootstrap/bulk-sync - Request ID: ${requestId}`);
+  fastify.post(
+    "/bootstrap/bulk-sync",
+    {
+      preHandler: fastify.authenticate,
+      schema: {
+        body: {
+          type: "object",
+          required: ["clientId", "startDate", "endDate"],
+          properties: {
+            clientId: { type: "string" },
+            startDate: { type: "string", format: "date" },
+            endDate: { type: "string", format: "date" },
+            syncElevenLabs: { type: "boolean", default: true },
+            syncAppointments: { type: "boolean", default: true },
+          },
+        },
+      },
+    },
+    async (request, reply) => {
+      const requestId = Math.random().toString(36).substring(7);
+      console.log(
+        `[Admin-Bootstrap] POST /bootstrap/bulk-sync - Request ID: ${requestId}`
+      );
 
-    try {
-      const { 
-        clientId, 
-        startDate, 
-        endDate, 
-        syncElevenLabs = true, 
-        syncAppointments = true 
-      } = request.body;
-      
-      const start = new Date(startDate);
-      const end = new Date(endDate);
-      const results = {
-        clientId,
-        dateRange: { startDate, endDate },
-        elevenLabsSync: { enabled: syncElevenLabs, results: [] },
-        appointmentsSync: { enabled: syncAppointments, results: [] },
-        summary: { totalMonths: 0, successfulSyncs: 0, errors: 0 }
-      };
-      
-      console.log(`[Admin-Bootstrap] Starting bulk sync for ${clientId} from ${startDate} to ${endDate}`);
-      
-      // Generate list of months to sync
-      const months = [];
-      const current = new Date(start.getFullYear(), start.getMonth(), 1);
-      const endMonth = new Date(end.getFullYear(), end.getMonth(), 1);
-      
-      while (current <= endMonth) {
-        months.push({
-          year: current.getFullYear(),
-          month: current.getMonth() + 1
+      try {
+        const {
+          clientId,
+          startDate,
+          endDate,
+          syncElevenLabs = true,
+          syncAppointments = true,
+        } = request.body;
+
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const results = {
+          clientId,
+          dateRange: { startDate, endDate },
+          elevenLabsSync: { enabled: syncElevenLabs, results: [] },
+          appointmentsSync: { enabled: syncAppointments, results: [] },
+          summary: { totalMonths: 0, successfulSyncs: 0, errors: 0 },
+        };
+
+        console.log(
+          `[Admin-Bootstrap] Starting bulk sync for ${clientId} from ${startDate} to ${endDate}`
+        );
+
+        // Generate list of months to sync
+        const months = [];
+        const current = new Date(start.getFullYear(), start.getMonth(), 1);
+        const endMonth = new Date(end.getFullYear(), end.getMonth(), 1);
+
+        while (current <= endMonth) {
+          months.push({
+            year: current.getFullYear(),
+            month: current.getMonth() + 1,
+          });
+          current.setMonth(current.getMonth() + 1);
+        }
+
+        results.summary.totalMonths = months.length;
+        console.log(
+          `[Admin-Bootstrap] Will sync ${months.length} months of data`
+        );
+
+        // Sync ElevenLabs data for each month
+        if (syncElevenLabs) {
+          console.log(`[Admin-Bootstrap] Syncing ElevenLabs data...`);
+          const { syncElevenLabsMetricsForClient } = await import(
+            "../utils/elevenlabs.js"
+          );
+
+          for (const { year, month } of months) {
+            try {
+              const result = await syncElevenLabsMetricsForClient(
+                clientId,
+                year,
+                month
+              );
+              results.elevenLabsSync.results.push({
+                period: `${year}-${month.toString().padStart(2, "0")}`,
+                success: result.success,
+                data: result,
+              });
+              if (result.success) results.summary.successfulSyncs++;
+              else results.summary.errors++;
+            } catch (error) {
+              console.error(
+                `[Admin-Bootstrap] ElevenLabs sync error for ${year}-${month}:`,
+                error
+              );
+              results.elevenLabsSync.results.push({
+                period: `${year}-${month.toString().padStart(2, "0")}`,
+                success: false,
+                error: error.message,
+              });
+              results.summary.errors++;
+            }
+          }
+        }
+
+        // Sync appointments data for each month
+        if (syncAppointments) {
+          console.log(`[Admin-Bootstrap] Syncing appointments data...`);
+          const { syncAppointmentMetrics } = await import(
+            "../utils/ghl-appointments.js"
+          );
+
+          for (const { year, month } of months) {
+            try {
+              const result = await syncAppointmentMetrics(
+                clientId,
+                year,
+                month
+              );
+              results.appointmentsSync.results.push({
+                period: `${year}-${month.toString().padStart(2, "0")}`,
+                success: result.success,
+                data: result,
+              });
+              if (result.success) results.summary.successfulSyncs++;
+              else results.summary.errors++;
+            } catch (error) {
+              console.error(
+                `[Admin-Bootstrap] Appointments sync error for ${year}-${month}:`,
+                error
+              );
+              results.appointmentsSync.results.push({
+                period: `${year}-${month.toString().padStart(2, "0")}`,
+                success: false,
+                error: error.message,
+              });
+              results.summary.errors++;
+            }
+          }
+        }
+
+        console.log(
+          `[Admin-Bootstrap] Bulk sync completed for ${clientId}. Success: ${results.summary.successfulSyncs}, Errors: ${results.summary.errors} - Request ID: ${requestId}`
+        );
+
+        return reply.code(200).send({
+          success: true,
+          message: `Bulk sync completed. ${results.summary.successfulSyncs} successful syncs, ${results.summary.errors} errors.`,
+          data: results,
+          requestId,
         });
-        current.setMonth(current.getMonth() + 1);
+      } catch (error) {
+        console.error(
+          `[Admin-Bootstrap] Error during bulk sync - Request ID: ${requestId}:`,
+          error
+        );
+        return reply.code(500).send({
+          success: false,
+          error: "Failed to perform bulk sync",
+          details: error.message,
+          requestId,
+        });
       }
-      
-      results.summary.totalMonths = months.length;
-      console.log(`[Admin-Bootstrap] Will sync ${months.length} months of data`);
-      
-      // Sync ElevenLabs data for each month
-      if (syncElevenLabs) {
-        console.log(`[Admin-Bootstrap] Syncing ElevenLabs data...`);
-        const { syncElevenLabsMetricsForClient } = await import('../utils/elevenlabs.js');
-        
-        for (const { year, month } of months) {
-          try {
-            const result = await syncElevenLabsMetricsForClient(clientId, year, month);
-            results.elevenLabsSync.results.push({
-              period: `${year}-${month.toString().padStart(2, '0')}`,
-              success: result.success,
-              data: result
-            });
-            if (result.success) results.summary.successfulSyncs++;
-            else results.summary.errors++;
-          } catch (error) {
-            console.error(`[Admin-Bootstrap] ElevenLabs sync error for ${year}-${month}:`, error);
-            results.elevenLabsSync.results.push({
-              period: `${year}-${month.toString().padStart(2, '0')}`,
-              success: false,
-              error: error.message
-            });
-            results.summary.errors++;
-          }
-        }
-      }
-      
-      // Sync appointments data for each month
-      if (syncAppointments) {
-        console.log(`[Admin-Bootstrap] Syncing appointments data...`);
-        const { syncAppointmentMetrics } = await import('../utils/ghl-appointments.js');
-        
-        for (const { year, month } of months) {
-          try {
-            const result = await syncAppointmentMetrics(clientId, year, month);
-            results.appointmentsSync.results.push({
-              period: `${year}-${month.toString().padStart(2, '0')}`,
-              success: result.success,
-              data: result
-            });
-            if (result.success) results.summary.successfulSyncs++;
-            else results.summary.errors++;
-          } catch (error) {
-            console.error(`[Admin-Bootstrap] Appointments sync error for ${year}-${month}:`, error);
-            results.appointmentsSync.results.push({
-              period: `${year}-${month.toString().padStart(2, '0')}`,
-              success: false,
-              error: error.message
-            });
-            results.summary.errors++;
-          }
-        }
-      }
-      
-      console.log(`[Admin-Bootstrap] Bulk sync completed for ${clientId}. Success: ${results.summary.successfulSyncs}, Errors: ${results.summary.errors} - Request ID: ${requestId}`);
-      
-      return reply.code(200).send({
-        success: true,
-        message: `Bulk sync completed. ${results.summary.successfulSyncs} successful syncs, ${results.summary.errors} errors.`,
-        data: results,
-        requestId
-      });
-    } catch (error) {
-      console.error(`[Admin-Bootstrap] Error during bulk sync - Request ID: ${requestId}:`, error);
-      return reply.code(500).send({
-        success: false,
-        error: 'Failed to perform bulk sync',
-        details: error.message,
-        requestId
-      });
     }
-  });
+  );
 
   /**
    * POST /admin/bootstrap/import-historical
    * Comprehensive historical data import with advanced options
    */
-  fastify.post('/bootstrap/import-historical', {
-    preHandler: fastify.authenticate,
-    schema: {
-      body: {
-        type: 'object',
-        required: ['clientId', 'startDate', 'endDate'],
-        properties: {
-          clientId: { type: 'string' },
-          startDate: { type: 'string', format: 'date' },
-          endDate: { type: 'string', format: 'date' },
-          includeElevenLabs: { type: 'boolean', default: true },
-          includeAppointments: { type: 'boolean', default: true },
-          skipExisting: { type: 'boolean', default: false },
-          batchSize: { type: 'integer', minimum: 1, maximum: 12, default: 3 }
-        }
-      }
-    }
-  }, async (request, reply) => {
-    const requestId = Math.random().toString(36).substring(7);
-    console.log(`[Admin-Bootstrap] POST /bootstrap/import-historical - Request ID: ${requestId}`);
-
-    try {
-      const { 
-        clientId, 
-        startDate, 
-        endDate,
-        includeElevenLabs = true,
-        includeAppointments = true,
-        skipExisting = false,
-        batchSize = 3
-      } = request.body;
-      
-      const { importHistoricalData } = await import('../utils/historical-import.js');
-      
-      const result = await importHistoricalData(
-        clientId,
-        new Date(startDate),
-        new Date(endDate),
-        {
-          includeElevenLabs,
-          includeAppointments,
-          skipExisting,
-          batchSize
-        }
+  fastify.post(
+    "/bootstrap/import-historical",
+    {
+      preHandler: fastify.authenticate,
+      schema: {
+        body: {
+          type: "object",
+          required: ["clientId", "startDate", "endDate"],
+          properties: {
+            clientId: { type: "string" },
+            startDate: { type: "string", format: "date" },
+            endDate: { type: "string", format: "date" },
+            includeElevenLabs: { type: "boolean", default: true },
+            includeAppointments: { type: "boolean", default: true },
+            skipExisting: { type: "boolean", default: false },
+            batchSize: { type: "integer", minimum: 1, maximum: 12, default: 3 },
+          },
+        },
+      },
+    },
+    async (request, reply) => {
+      const requestId = Math.random().toString(36).substring(7);
+      console.log(
+        `[Admin-Bootstrap] POST /bootstrap/import-historical - Request ID: ${requestId}`
       );
-      
-      if (result.success) {
-        console.log(`[Admin-Bootstrap] Historical import completed for ${clientId} - Request ID: ${requestId}`);
-        return reply.code(200).send({
-          success: true,
-          message: result.message,
-          data: result.data,
-          requestId
-        });
-      } else {
-        console.warn(`[Admin-Bootstrap] Historical import failed for ${clientId} - Request ID: ${requestId}:`, result.error);
-        return reply.code(400).send({
+
+      try {
+        const {
+          clientId,
+          startDate,
+          endDate,
+          includeElevenLabs = true,
+          includeAppointments = true,
+          skipExisting = false,
+          batchSize = 3,
+        } = request.body;
+
+        const { importHistoricalData } = await import(
+          "../utils/historical-import.js"
+        );
+
+        const result = await importHistoricalData(
+          clientId,
+          new Date(startDate),
+          new Date(endDate),
+          {
+            includeElevenLabs,
+            includeAppointments,
+            skipExisting,
+            batchSize,
+          }
+        );
+
+        if (result.success) {
+          console.log(
+            `[Admin-Bootstrap] Historical import completed for ${clientId} - Request ID: ${requestId}`
+          );
+          return reply.code(200).send({
+            success: true,
+            message: result.message,
+            data: result.data,
+            requestId,
+          });
+        } else {
+          console.warn(
+            `[Admin-Bootstrap] Historical import failed for ${clientId} - Request ID: ${requestId}:`,
+            result.error
+          );
+          return reply.code(400).send({
+            success: false,
+            error: result.error,
+            data: result.data,
+            requestId,
+          });
+        }
+      } catch (error) {
+        console.error(
+          `[Admin-Bootstrap] Error during historical import - Request ID: ${requestId}:`,
+          error
+        );
+        return reply.code(500).send({
           success: false,
-          error: result.error,
-          data: result.data,
-          requestId
+          error: "Failed to import historical data",
+          details: error.message,
+          requestId,
         });
       }
-    } catch (error) {
-      console.error(`[Admin-Bootstrap] Error during historical import - Request ID: ${requestId}:`, error);
-      return reply.code(500).send({
-        success: false,
-        error: 'Failed to import historical data',
-        details: error.message,
-        requestId
-      });
     }
-  });
+  );
 
   /**
    * GET /admin/bootstrap/validate
    * Validate historical data integrity
    */
-  fastify.get('/bootstrap/validate', {
-    preHandler: fastify.authenticate,
-    schema: {
-      querystring: {
-        type: 'object',
-        required: ['clientId', 'startDate', 'endDate'],
-        properties: {
-          clientId: { type: 'string' },
-          startDate: { type: 'string', format: 'date' },
-          endDate: { type: 'string', format: 'date' }
-        }
+  fastify.get(
+    "/bootstrap/validate",
+    {
+      preHandler: fastify.authenticate,
+      schema: {
+        querystring: {
+          type: "object",
+          required: ["clientId", "startDate", "endDate"],
+          properties: {
+            clientId: { type: "string" },
+            startDate: { type: "string", format: "date" },
+            endDate: { type: "string", format: "date" },
+          },
+        },
+      },
+    },
+    async (request, reply) => {
+      const requestId = Math.random().toString(36).substring(7);
+      console.log(
+        `[Admin-Bootstrap] GET /bootstrap/validate - Request ID: ${requestId}`
+      );
+
+      try {
+        const { clientId, startDate, endDate } = request.query;
+
+        const { validateHistoricalData } = await import(
+          "../utils/historical-import.js"
+        );
+        const result = await validateHistoricalData(
+          clientId,
+          new Date(startDate),
+          new Date(endDate)
+        );
+
+        console.log(
+          `[Admin-Bootstrap] Data validation completed for ${clientId} - Request ID: ${requestId}`
+        );
+
+        return reply.code(200).send({
+          success: true,
+          message: result.message,
+          data: result.data,
+          requestId,
+        });
+      } catch (error) {
+        console.error(
+          `[Admin-Bootstrap] Error during data validation - Request ID: ${requestId}:`,
+          error
+        );
+        return reply.code(500).send({
+          success: false,
+          error: "Failed to validate historical data",
+          details: error.message,
+          requestId,
+        });
       }
     }
-  }, async (request, reply) => {
-    const requestId = Math.random().toString(36).substring(7);
-    console.log(`[Admin-Bootstrap] GET /bootstrap/validate - Request ID: ${requestId}`);
-
-    try {
-      const { clientId, startDate, endDate } = request.query;
-      
-      const { validateHistoricalData } = await import('../utils/historical-import.js');
-      const result = await validateHistoricalData(
-        clientId,
-        new Date(startDate),
-        new Date(endDate)
-      );
-      
-      console.log(`[Admin-Bootstrap] Data validation completed for ${clientId} - Request ID: ${requestId}`);
-      
-      return reply.code(200).send({
-        success: true,
-        message: result.message,
-        data: result.data,
-        requestId
-      });
-    } catch (error) {
-      console.error(`[Admin-Bootstrap] Error during data validation - Request ID: ${requestId}:`, error);
-      return reply.code(500).send({
-        success: false,
-        error: 'Failed to validate historical data',
-        details: error.message,
-        requestId
-      });
-    }
-  });
+  );
 
   // ================================
   // DATA MIGRATION ENDPOINTS
@@ -1867,95 +2088,124 @@ export default async function adminRoutes(fastify, options) {
    * POST /admin/migration/cleanup-metrics
    * Clean up corrupted metricsHistory entries
    */
-  fastify.post('/migration/cleanup-metrics', {
-    preHandler: fastify.authenticate,
-    schema: {
-      body: {
-        type: 'object',
-        properties: {
-          clientId: { type: 'string' } // Optional - if not provided, cleans all clients
-        }
-      }
-    }
-  }, async (request, reply) => {
-    const requestId = Math.random().toString(36).substring(7);
-    console.log(`[Admin-Migration] POST /migration/cleanup-metrics - Request ID: ${requestId}`);
+  fastify.post(
+    "/migration/cleanup-metrics",
+    {
+      preHandler: fastify.authenticate,
+      schema: {
+        body: {
+          type: "object",
+          properties: {
+            clientId: { type: "string" }, // Optional - if not provided, cleans all clients
+          },
+        },
+      },
+    },
+    async (request, reply) => {
+      const requestId = Math.random().toString(36).substring(7);
+      console.log(
+        `[Admin-Migration] POST /migration/cleanup-metrics - Request ID: ${requestId}`
+      );
 
-    try {
-      const { clientId } = request.body || {};
-      
-      const { cleanupMetricsHistory } = await import('../utils/data-migration.js');
-      const result = await cleanupMetricsHistory(clientId);
-      
-      if (result.success) {
-        console.log(`[Admin-Migration] Metrics cleanup completed - Request ID: ${requestId}`);
-        return reply.code(200).send({
-          success: true,
-          message: result.message,
-          data: result.data,
-          requestId
-        });
-      } else {
-        console.warn(`[Admin-Migration] Metrics cleanup failed - Request ID: ${requestId}:`, result.error);
-        return reply.code(400).send({
+      try {
+        const { clientId } = request.body || {};
+
+        const { cleanupMetricsHistory } = await import(
+          "../utils/data-migration.js"
+        );
+        const result = await cleanupMetricsHistory(clientId);
+
+        if (result.success) {
+          console.log(
+            `[Admin-Migration] Metrics cleanup completed - Request ID: ${requestId}`
+          );
+          return reply.code(200).send({
+            success: true,
+            message: result.message,
+            data: result.data,
+            requestId,
+          });
+        } else {
+          console.warn(
+            `[Admin-Migration] Metrics cleanup failed - Request ID: ${requestId}:`,
+            result.error
+          );
+          return reply.code(400).send({
+            success: false,
+            error: result.error,
+            data: result.data,
+            requestId,
+          });
+        }
+      } catch (error) {
+        console.error(
+          `[Admin-Migration] Error during metrics cleanup - Request ID: ${requestId}:`,
+          error
+        );
+        return reply.code(500).send({
           success: false,
-          error: result.error,
-          data: result.data,
-          requestId
+          error: "Failed to cleanup metrics data",
+          details: error.message,
+          requestId,
         });
       }
-    } catch (error) {
-      console.error(`[Admin-Migration] Error during metrics cleanup - Request ID: ${requestId}:`, error);
-      return reply.code(500).send({
-        success: false,
-        error: 'Failed to cleanup metrics data',
-        details: error.message,
-        requestId
-      });
     }
-  });
+  );
 
   /**
    * GET /admin/migration/validate-metrics
    * Validate client metrics data integrity
    */
-  fastify.get('/migration/validate-metrics', {
-    preHandler: fastify.authenticate,
-    schema: {
-      querystring: {
-        type: 'object',
-        required: ['clientId'],
-        properties: {
-          clientId: { type: 'string' }
-        }
+  fastify.get(
+    "/migration/validate-metrics",
+    {
+      preHandler: fastify.authenticate,
+      schema: {
+        querystring: {
+          type: "object",
+          required: ["clientId"],
+          properties: {
+            clientId: { type: "string" },
+          },
+        },
+      },
+    },
+    async (request, reply) => {
+      const requestId = Math.random().toString(36).substring(7);
+      console.log(
+        `[Admin-Migration] GET /migration/validate-metrics - Request ID: ${requestId}`
+      );
+
+      try {
+        const { clientId } = request.query;
+
+        const { validateClientMetrics } = await import(
+          "../utils/data-migration.js"
+        );
+        const result = await validateClientMetrics(clientId);
+
+        console.log(
+          `[Admin-Migration] Metrics validation completed for ${clientId} - Request ID: ${requestId}`
+        );
+
+        return reply.code(200).send({
+          success: true,
+          message: result.message,
+          data: result.data,
+          requestId,
+        });
+      } catch (error) {
+        console.error(
+          `[Admin-Migration] Error during metrics validation - Request ID: ${requestId}:`,
+          error
+        );
+        return reply.code(500).send({
+          success: false,
+          error: "Failed to validate metrics data",
+          details: error.message,
+          requestId,
+        });
       }
     }
-  }, async (request, reply) => {
-    const requestId = Math.random().toString(36).substring(7);
-    console.log(`[Admin-Migration] GET /migration/validate-metrics - Request ID: ${requestId}`);
-
-    try {
-      const { clientId } = request.query;
-      
-      const { validateClientMetrics } = await import('../utils/data-migration.js');
-      const result = await validateClientMetrics(clientId);
-      
-      console.log(`[Admin-Migration] Metrics validation completed for ${clientId} - Request ID: ${requestId}`);
-      
-      return reply.code(200).send({
-        success: true,
-        message: result.message,
-        data: result.data,
-        requestId
-      });
-    } catch (error) {
-      console.error(`[Admin-Migration] Error during metrics validation - Request ID: ${requestId}:`, error);
-      return reply.code(500).send({
-        success: false,
-        error: 'Failed to validate metrics data',
-        details: error.message,
-        requestId
-      });
-    }
-  });
+  );
 }

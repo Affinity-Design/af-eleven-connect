@@ -76,7 +76,7 @@ const callDataSchema = new mongoose.Schema(
     direction: {
       type: String,
       enum: ["inbound", "outbound"],
-      required: true
+      required: true,
     },
     isBookingSuccessful: { type: Boolean, default: false },
     elevenLabsConversationId: { type: String }, // For correlation with ElevenLabs data
@@ -281,17 +281,27 @@ clientSchema.methods.findAgentById = function (agentId) {
 // Helper methods for metrics management
 clientSchema.methods.getAgentMetrics = function (agentId, year, month) {
   if (!this.metricsHistory) return null;
-  
-  const period = `${year}-${String(month).padStart(2, '0')}`;
-  return this.metricsHistory.find(m => m.agentId === agentId && m.period === period);
+
+  const period = `${year}-${String(month).padStart(2, "0")}`;
+  return this.metricsHistory.find(
+    (m) => m.agentId === agentId && m.period === period
+  );
 };
 
-clientSchema.methods.updateAgentMetrics = function (agentId, year, month, updates, source = "internal") {
+clientSchema.methods.updateAgentMetrics = function (
+  agentId,
+  year,
+  month,
+  updates,
+  source = "internal"
+) {
   if (!this.metricsHistory) this.metricsHistory = [];
-  
-  const period = `${year}-${String(month).padStart(2, '0')}`;
-  let existingMetrics = this.metricsHistory.find(m => m.agentId === agentId && m.period === period);
-  
+
+  const period = `${year}-${String(month).padStart(2, "0")}`;
+  let existingMetrics = this.metricsHistory.find(
+    (m) => m.agentId === agentId && m.period === period
+  );
+
   if (existingMetrics) {
     // Update existing metrics
     Object.assign(existingMetrics.metrics, updates);
@@ -318,52 +328,65 @@ clientSchema.methods.updateAgentMetrics = function (agentId, year, month, update
         callsFromElevenlabs: 0,
         elevenlabsSuccessRate: 0,
         ...updates,
-        lastUpdated: new Date()
+        lastUpdated: new Date(),
       },
-      source: source
+      source: source,
     });
   }
-  
+
   return this;
 };
 
-clientSchema.methods.incrementCallMetrics = function (agentId, direction, duration = 0, isBookingSuccessful = false) {
+clientSchema.methods.incrementCallMetrics = function (
+  agentId,
+  direction,
+  duration = 0,
+  isBookingSuccessful = false
+) {
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth() + 1;
-  
+
   const updates = {
     totalCalls: 1,
-    totalDuration: duration
+    totalDuration: duration,
   };
-  
+
   if (direction === "inbound") {
     updates.inboundCalls = 1;
   } else if (direction === "outbound") {
     updates.outboundCalls = 1;
   }
-  
+
   if (isBookingSuccessful) {
     updates.successfulBookings = 1;
   }
-  
+
   // Get existing metrics to calculate incremental updates
   const existing = this.getAgentMetrics(agentId, year, month);
   if (existing) {
-    updates.inboundCalls = (existing.metrics.inboundCalls || 0) + (updates.inboundCalls || 0);
-    updates.outboundCalls = (existing.metrics.outboundCalls || 0) + (updates.outboundCalls || 0);
-    updates.totalCalls = (existing.metrics.totalCalls || 0) + updates.totalCalls;
-    updates.successfulBookings = (existing.metrics.successfulBookings || 0) + (updates.successfulBookings || 0);
-    updates.totalDuration = (existing.metrics.totalDuration || 0) + updates.totalDuration;
-    
+    updates.inboundCalls =
+      (existing.metrics.inboundCalls || 0) + (updates.inboundCalls || 0);
+    updates.outboundCalls =
+      (existing.metrics.outboundCalls || 0) + (updates.outboundCalls || 0);
+    updates.totalCalls =
+      (existing.metrics.totalCalls || 0) + updates.totalCalls;
+    updates.successfulBookings =
+      (existing.metrics.successfulBookings || 0) +
+      (updates.successfulBookings || 0);
+    updates.totalDuration =
+      (existing.metrics.totalDuration || 0) + updates.totalDuration;
+
     // Recalculate average duration
     if (updates.totalCalls > 0) {
-      updates.averageDuration = Math.round(updates.totalDuration / updates.totalCalls);
+      updates.averageDuration = Math.round(
+        updates.totalDuration / updates.totalCalls
+      );
     }
   } else {
     updates.averageDuration = duration;
   }
-  
+
   return this.updateAgentMetrics(agentId, year, month, updates);
 };
 

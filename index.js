@@ -881,11 +881,13 @@ fastify.post(
 
       // Track inbound call metrics
       try {
-        const { updateCallMetrics } = await import('./utils/metrics.js');
+        const { updateCallMetrics } = await import("./utils/metrics.js");
         const actualAgentId = agent_id || agencyClient.agentId;
-        
-        console.log(`[${requestId}] Tracking inbound call for agent: ${actualAgentId}`);
-        
+
+        console.log(
+          `[${requestId}] Tracking inbound call for agent: ${actualAgentId}`
+        );
+
         // Track this as an inbound call (no duration or booking status yet)
         await updateCallMetrics(
           agencyClient.clientId,
@@ -894,10 +896,13 @@ fastify.post(
           0, // Duration not available at call start
           false // No booking yet
         );
-        
+
         console.log(`[${requestId}] Inbound call metrics updated successfully`);
       } catch (metricsError) {
-        console.error(`[${requestId}] Failed to update inbound call metrics:`, metricsError);
+        console.error(
+          `[${requestId}] Failed to update inbound call metrics:`,
+          metricsError
+        );
         // Don't fail the call if metrics update fails
       }
 
@@ -1400,10 +1405,12 @@ fastify.post(
 
         // Update metrics for successful booking
         try {
-          const { updateCallMetrics } = await import('./utils/metrics.js');
-          
-          console.log(`[${requestId}] Tracking successful booking for agent: ${client.agentId}`);
-          
+          const { updateCallMetrics } = await import("./utils/metrics.js");
+
+          console.log(
+            `[${requestId}] Tracking successful booking for agent: ${client.agentId}`
+          );
+
           // Track this as a successful booking (assuming inbound since it's through secure endpoint)
           await updateCallMetrics(
             client.clientId,
@@ -1412,10 +1419,13 @@ fastify.post(
             0, // Duration not available at booking time
             true // This is a successful booking
           );
-          
+
           console.log(`[${requestId}] Booking metrics updated successfully`);
         } catch (metricsError) {
-          console.error(`[${requestId}] Failed to update booking metrics:`, metricsError);
+          console.error(
+            `[${requestId}] Failed to update booking metrics:`,
+            metricsError
+          );
           // Don't fail the booking if metrics update fails
         }
 
@@ -1646,10 +1656,12 @@ fastify.post(
 
       // Track outbound call metrics
       try {
-        const { updateCallMetrics } = await import('./utils/metrics.js');
-        
-        console.log(`[${requestId}] Tracking outbound call for agent: ${client.agentId}`);
-        
+        const { updateCallMetrics } = await import("./utils/metrics.js");
+
+        console.log(
+          `[${requestId}] Tracking outbound call for agent: ${client.agentId}`
+        );
+
         // Track this as an outbound call (no duration or booking status yet)
         await updateCallMetrics(
           client.clientId,
@@ -1658,10 +1670,15 @@ fastify.post(
           0, // Duration not available at call start
           false // No booking yet
         );
-        
-        console.log(`[${requestId}] Outbound call metrics updated successfully`);
+
+        console.log(
+          `[${requestId}] Outbound call metrics updated successfully`
+        );
       } catch (metricsError) {
-        console.error(`[${requestId}] Failed to update outbound call metrics:`, metricsError);
+        console.error(
+          `[${requestId}] Failed to update outbound call metrics:`,
+          metricsError
+        );
         // Don't fail the call if metrics update fails
       }
 
