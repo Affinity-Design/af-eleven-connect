@@ -12,9 +12,67 @@ AF Eleven Connect now supports SMS messaging through Twilio integration. This fe
 
 ## API Endpoints
 
+### Send SMS (Admin - Recommended)
+
+Send SMS on behalf of any client using admin authentication.
+
+**Endpoint**: `POST /admin/clients/:clientId/send-sms`
+
+**Authentication**: Admin JWT token required
+
+**Path Parameters**:
+- `clientId` (required): The client ID to send SMS for
+
+**Request Headers**:
+```
+Authorization: Bearer <admin_jwt_token>
+Content-Type: application/json
+```
+
+**Request Body**:
+```json
+{
+  "to": "+19058363456",
+  "body": "Your custom message text here"
+}
+```
+
+**Parameters**:
+- `to` (required): Recipient phone number in E.164 format (e.g., +1234567890)
+- `body` (required): Message text (max 1600 characters)
+
+**Success Response** (200):
+```json
+{
+  "success": true,
+  "message": "SMS sent successfully",
+  "requestId": "abc123xyz",
+  "messageSid": "SM1234567890abcdef",
+  "status": "queued",
+  "to": "+19058363456",
+  "from": "+16473706559",
+  "dateCreated": "2025-11-21T10:30:00.000Z",
+  "clientId": "5C3JSOVVFiVmBoh8mv3I",
+  "clientName": "Paul Giovanatto"
+}
+```
+
+**cURL Example**:
+```bash
+curl -X POST https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3I/send-sms \
+  -H "Authorization: Bearer YOUR_ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "+19058363456",
+    "body": "Your message here"
+  }'
+```
+
+---
+
 ### Send SMS (Client-Authenticated)
 
-Send a custom SMS message using your Twilio number.
+Send a custom SMS message using your Twilio number (requires client login).
 
 **Endpoint**: `POST /secure/send-sms`
 
@@ -214,6 +272,22 @@ await sendAppointmentConfirmationSMS("5C3JSOVVFiVmBoh8mv3I", "+19058363456", {
 ## Testing
 
 ### Manual Testing with cURL
+
+**Admin Endpoint (Recommended)**:
+
+1. Use your admin token:
+```bash
+# Send SMS for any client
+curl -X POST https://api.v1.affinitydesign.ca/admin/clients/YOUR_CLIENT_ID/send-sms \
+  -H "Authorization: Bearer YOUR_ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "+19058363456",
+    "body": "Test message from AF Eleven Connect"
+  }'
+```
+
+**Client Endpoint** (requires client login):
 
 1. Get client authentication token:
 

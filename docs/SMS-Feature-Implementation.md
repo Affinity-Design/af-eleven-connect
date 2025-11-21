@@ -97,7 +97,33 @@ The system needed:
 }
 ```
 
-#### 3. Automatic Booking Confirmations (`routes/tools.js`)
+#### 3. Admin SMS Endpoint (`routes/admin.js`)
+
+**Endpoint**: `POST /admin/clients/:clientId/send-sms`
+
+**Authentication**: Admin JWT token required
+
+**Purpose**: Allow admin to send SMS on behalf of any client (matches `/make-call` pattern)
+
+**Flow**:
+1. Validate JWT token → extract `adminId`
+2. Extract `clientId` from path parameter
+3. Validate request body (`to` and `body` required)
+4. Fetch client from database
+5. Verify client status is "Active"
+6. Get client's `twilioPhoneNumber`
+7. Send SMS via Twilio
+8. Return success/error response with client details
+
+**cURL Example**:
+```bash
+curl -X POST https://api.v1.affinitydesign.ca/admin/clients/CLIENT_ID/send-sms \
+  -H "Authorization: Bearer ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"to": "+19058363456", "body": "Your message"}'
+```
+
+#### 4. Automatic Booking Confirmations (`routes/tools.js`)
 
 **Integration Point**: `POST /tools/book-appointment` endpoint
 
