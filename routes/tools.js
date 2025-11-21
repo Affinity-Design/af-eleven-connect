@@ -276,7 +276,7 @@ export default async function toolRoutes(fastify, options) {
 
       const endTimestamp = endDate
         ? new Date(endDate).getTime()
-        : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).getTime();
+        : new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).getTime();
 
       // Set enableLookBusy default
       const lookBusy = enableLookBusy === "true" || enableLookBusy === true;

@@ -106,6 +106,7 @@ The system needed:
 **Purpose**: Allow admin to send SMS on behalf of any client (matches `/make-call` pattern)
 
 **Flow**:
+
 1. Validate JWT token → extract `adminId`
 2. Extract `clientId` from path parameter
 3. Validate request body (`to` and `body` required)
@@ -116,6 +117,7 @@ The system needed:
 8. Return success/error response with client details
 
 **cURL Example**:
+
 ```bash
 curl -X POST https://api.v1.affinitydesign.ca/admin/clients/CLIENT_ID/send-sms \
   -H "Authorization: Bearer ADMIN_TOKEN" \

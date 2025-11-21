@@ -722,7 +722,9 @@ export default async function adminRoutes(fastify, options) {
 
       // Check if client is active
       if (client.status !== "Active") {
-        fastify.log.warn(`[${requestId}] Client is not active: ${client.status}`);
+        fastify.log.warn(
+          `[${requestId}] Client is not active: ${client.status}`
+        );
         return reply.code(403).send({
           error: `Client is not active (status: ${client.status})`,
           requestId,
@@ -733,7 +735,9 @@ export default async function adminRoutes(fastify, options) {
       const fromNumber = client.twilioPhoneNumber;
 
       if (!fromNumber) {
-        fastify.log.error(`[${requestId}] No Twilio phone number configured for client`);
+        fastify.log.error(
+          `[${requestId}] No Twilio phone number configured for client`
+        );
         return reply.code(400).send({
           error: "No Twilio phone number configured for this client",
           message: "Please configure a Twilio phone number before sending SMS",
@@ -744,7 +748,9 @@ export default async function adminRoutes(fastify, options) {
       // Send the SMS
       const result = await sendSMS(to, fromNumber, body);
 
-      fastify.log.info(`[${requestId}] SMS sent successfully: ${result.messageSid}`);
+      fastify.log.info(
+        `[${requestId}] SMS sent successfully: ${result.messageSid}`
+      );
 
       reply.send({
         success: true,

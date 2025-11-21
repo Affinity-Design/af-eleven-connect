@@ -21,15 +21,18 @@ Send SMS on behalf of any client using admin authentication.
 **Authentication**: Admin JWT token required
 
 **Path Parameters**:
+
 - `clientId` (required): The client ID to send SMS for
 
 **Request Headers**:
+
 ```
 Authorization: Bearer <admin_jwt_token>
 Content-Type: application/json
 ```
 
 **Request Body**:
+
 ```json
 {
   "to": "+19058363456",
@@ -38,10 +41,12 @@ Content-Type: application/json
 ```
 
 **Parameters**:
+
 - `to` (required): Recipient phone number in E.164 format (e.g., +1234567890)
 - `body` (required): Message text (max 1600 characters)
 
 **Success Response** (200):
+
 ```json
 {
   "success": true,
@@ -58,6 +63,7 @@ Content-Type: application/json
 ```
 
 **cURL Example**:
+
 ```bash
 curl -X POST https://api.v1.affinitydesign.ca/admin/clients/5C3JSOVVFiVmBoh8mv3I/send-sms \
   -H "Authorization: Bearer YOUR_ADMIN_TOKEN" \
@@ -276,6 +282,7 @@ await sendAppointmentConfirmationSMS("5C3JSOVVFiVmBoh8mv3I", "+19058363456", {
 **Admin Endpoint (Recommended)**:
 
 1. Use your admin token:
+
 ```bash
 # Send SMS for any client
 curl -X POST https://api.v1.affinitydesign.ca/admin/clients/YOUR_CLIENT_ID/send-sms \
