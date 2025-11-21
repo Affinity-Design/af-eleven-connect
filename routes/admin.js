@@ -2208,4 +2208,100 @@ export default async function adminRoutes(fastify, options) {
       }
     }
   );
+
+  // ================================
+  // DATA MIGRATION ENDPOINTS
+  // ================================
+
+  /**
+   * POST /admin/migrate/clean-metrics
+   * Clean corrupted metrics data from database
+   */
+  fastify.post(
+    "/migrate/clean-metrics",
+    {
+      preHandler: fastify.authenticate,
+    },
+    async (request, reply) => {
+      const requestId = Math.random().toString(36).substring(7);
+      console.log(
+        `[Admin-Migration] POST /migrate/clean-metrics - Request ID: ${requestId}`
+      );
+
+      try {
+        const { cleanCorruptedMetrics } = await import(
+          "../utils/data-migration.js"
+        );
+        const result = await cleanCorruptedMetrics();
+
+        console.log(
+          `[Admin-Migration] Metrics cleaning completed - Request ID: ${requestId}`
+        );
+
+        return reply.code(200).send({
+          success: true,
+          message: "Metrics cleaning completed successfully",
+          data: result,
+          requestId,
+        });
+      } catch (error) {
+        console.error(
+          `[Admin-Migration] Error during metrics cleaning - Request ID: ${requestId}:`,
+          error
+        );
+        return reply.code(500).send({
+          success: false,
+          error: "Failed to clean metrics data",
+          details: error.message,
+          requestId,
+        });
+      }
+    }
+  );
+
+  /**
+   * POST /admin/migrate/validate-schema
+   * Validate database schema for all clients
+   */
+  fastify.post(
+    "/migrate/validate-schema",
+    {
+      preHandler: fastify.authenticate,
+    },
+    async (request, reply) => {
+      const requestId = Math.random().toString(36).substring(7);
+      console.log(
+        `[Admin-Migration] POST /migrate/validate-schema - Request ID: ${requestId}`
+      );
+
+      try {
+        const { validateDatabaseSchema } = await import(
+          "../utils/data-migration.js"
+        );
+        const result = await validateDatabaseSchema();
+
+        console.log(
+          `[Admin-Migration] Schema validation completed - Request ID: ${requestId}`
+        );
+
+        return reply.code(200).send({
+          success: true,
+          message: "Schema validation completed successfully",
+          data: result,
+          requestId,
+        });
+      } catch (error) {
+        console.error(
+          `[Admin-Migration] Error during schema validation - Request ID: ${requestId}:`,
+          error
+        );
+        return reply.code(500).send({
+          success: false,
+          error: "Failed to validate schema",
+          details: error.message,
+          requestId,
+        });
+      }
+    }
+  );
 }

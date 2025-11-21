@@ -13,6 +13,7 @@ import {
   searchGhlContactByPhone,
   findClientForTool,
 } from "../utils/ghl.js";
+import { sendAppointmentConfirmationSMS } from "../utils/sms.js";
 
 export default async function toolRoutes(fastify, options) {
   // Admin authentication for all tool routes
@@ -762,6 +763,31 @@ export default async function toolRoutes(fastify, options) {
           metricsError
         );
         // Don't fail the booking if metrics update fails
+      }
+
+      // Send appointment confirmation SMS
+      try {
+        console.log(
+          `[${requestId}] Sending appointment confirmation SMS to ${normalizedPhone}`
+        );
+
+        await sendAppointmentConfirmationSMS(client.clientId, normalizedPhone, {
+          contactName: appointmentFirstName, // Use the contact's first name
+          startTime,
+          endTime,
+          title,
+          address: finalMeetingLocation,
+        });
+
+        console.log(
+          `[${requestId}] Appointment confirmation SMS sent successfully`
+        );
+      } catch (smsError) {
+        console.error(
+          `[${requestId}] Failed to send appointment confirmation SMS:`,
+          smsError
+        );
+        // Don't fail the booking if SMS fails
       }
 
       return reply.send({

@@ -1,5 +1,6 @@
 // routes/client.js
 import { findClientById, updateClient, addCallToHistory } from "../crud.js";
+import { sendSMS } from "../utils/sms.js";
 
 /**
  * Client routes - all require client authentication
@@ -450,6 +451,92 @@ export default async function clientRoutes(fastify, options) {
       reply.code(500).send({
         error: "Failed to calculate call statistics",
         details: error.message,
+      });
+    }
+  });
+
+  // Send SMS message
+  fastify.post("/send-sms", async (request, reply) => {
+    const requestId =
+      Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
+    try {
+      const { to, body } = request.body;
+
+      fastify.log.info(
+        `[${requestId}] SMS send request from client: ${request.clientId}`
+      );
+
+      // Validate required fields
+      if (!to || !body) {
+        return reply.code(400).send({
+          error: "Missing required fields",
+          message: "Both 'to' and 'body' are required",
+          requestId,
+        });
+      }
+
+      // Get client to retrieve their Twilio number
+      const client = await findClientById(request.clientId);
+
+      if (!client) {
+        fastify.log.warn(
+          `[${requestId}] Client not found: ${request.clientId}`
+        );
+        return reply.code(404).send({
+          error: "Client not found",
+          requestId,
+        });
+      }
+
+      // Check if client is active
+      if (client.status !== "Active") {
+        fastify.log.warn(
+          `[${requestId}] Client is not active: ${client.status}`
+        );
+        return reply.code(403).send({
+          error: `Client is not active (status: ${client.status})`,
+          requestId,
+        });
+      }
+
+      // Get the from number (use primary Twilio number)
+      const fromNumber = client.twilioPhoneNumber;
+
+      if (!fromNumber) {
+        fastify.log.error(
+          `[${requestId}] No Twilio phone number configured for client`
+        );
+        return reply.code(400).send({
+          error: "No Twilio phone number configured for your account",
+          message: "Please contact support to set up SMS capabilities",
+          requestId,
+        });
+      }
+
+      // Send the SMS
+      const result = await sendSMS(to, fromNumber, body);
+
+      fastify.log.info(
+        `[${requestId}] SMS sent successfully: ${result.messageSid}`
+      );
+
+      reply.send({
+        success: true,
+        message: "SMS sent successfully",
+        requestId,
+        messageSid: result.messageSid,
+        status: result.status,
+        to: result.to,
+        from: result.from,
+        dateCreated: result.dateCreated,
+      });
+    } catch (error) {
+      fastify.log.error(`[${requestId}] Error sending SMS:`, error);
+      reply.code(500).send({
+        error: "Failed to send SMS",
+        message: error.message,
+        requestId,
       });
     }
   });
