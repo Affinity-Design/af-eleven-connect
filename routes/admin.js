@@ -684,6 +684,90 @@ export default async function adminRoutes(fastify, options) {
     }
   });
 
+  // Send SMS on behalf of a client (admin)
+  fastify.post("/clients/:clientId/send-sms", async (request, reply) => {
+    const { clientId } = request.params;
+    const { to, body } = request.body;
+
+    const requestId =
+      Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
+    fastify.log.info(
+      `[${requestId}] Admin initiated SMS for client: ${clientId}`
+    );
+
+    // Validate required fields
+    if (!to || !body) {
+      return reply.code(400).send({
+        error: "Missing required fields",
+        message: "Both 'to' and 'body' are required",
+        requestId,
+      });
+    }
+
+    try {
+      // Import SMS utility
+      const { sendSMS } = await import("../utils/sms.js");
+
+      // Find the client
+      const client = await findClientById(clientId);
+
+      if (!client) {
+        fastify.log.warn(`[${requestId}] Client not found: ${clientId}`);
+        return reply.code(404).send({
+          error: "Client not found",
+          requestId,
+        });
+      }
+
+      // Check if client is active
+      if (client.status !== "Active") {
+        fastify.log.warn(`[${requestId}] Client is not active: ${client.status}`);
+        return reply.code(403).send({
+          error: `Client is not active (status: ${client.status})`,
+          requestId,
+        });
+      }
+
+      // Get the from number (use primary Twilio number)
+      const fromNumber = client.twilioPhoneNumber;
+
+      if (!fromNumber) {
+        fastify.log.error(`[${requestId}] No Twilio phone number configured for client`);
+        return reply.code(400).send({
+          error: "No Twilio phone number configured for this client",
+          message: "Please configure a Twilio phone number before sending SMS",
+          requestId,
+        });
+      }
+
+      // Send the SMS
+      const result = await sendSMS(to, fromNumber, body);
+
+      fastify.log.info(`[${requestId}] SMS sent successfully: ${result.messageSid}`);
+
+      reply.send({
+        success: true,
+        message: "SMS sent successfully",
+        requestId,
+        messageSid: result.messageSid,
+        status: result.status,
+        to: result.to,
+        from: result.from,
+        dateCreated: result.dateCreated,
+        clientId: client.clientId,
+        clientName: client.clientMeta.fullName,
+      });
+    } catch (error) {
+      fastify.log.error(`[${requestId}] Error sending SMS:`, error);
+      reply.code(500).send({
+        error: "Failed to send SMS",
+        message: error.message,
+        requestId,
+      });
+    }
+  });
+
   // one time call to upgrade clients
   fastify.post("/migrate-ghl-tokens", async (request, reply) => {
     try {
