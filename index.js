@@ -84,6 +84,16 @@ if (!configStore.TWILIO_ACCOUNT_SID || !configStore.TWILIO_AUTH_TOKEN) {
 
 // Initialize Fastify server
 const fastify = Fastify({ logger: true });
+
+// Initialize Twilio client
+const twilioClient = new Twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
+
+// Decorate Fastify instance with Twilio client so it's accessible in route modules
+fastify.decorate("twilioClient", twilioClient);
+
 // Register route groups
 fastify.register(fastifyWs);
 fastify.register(adminRoutes, {
@@ -97,12 +107,6 @@ fastify.register(clientRoutes, {
 });
 fastify.register(integrationsRoutes, { prefix: "/integrations" });
 fastify.register(toolRoutes, { prefix: "/tools" });
-
-// Initialize Twilio client
-const twilioClient = new Twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
 
 const PORT = process.env.PORT || 8000;
 
