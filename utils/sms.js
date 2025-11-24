@@ -93,16 +93,25 @@ export async function sendAppointmentConfirmationSMS(
 
     // Format the appointment date/time
     const startTime = new Date(appointmentDetails.startTime);
+
+    // Use client's timezone or default to America/New_York (EST/EDT)
+    // This ensures the time in the SMS matches the booking time in the correct timezone
+    const timeZone = client.timezone || "America/New_York";
+
     const formattedDate = startTime.toLocaleDateString("en-US", {
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
+      timeZone: timeZone,
     });
+
     const formattedTime = startTime.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
+      timeZone: timeZone,
+      timeZoneName: "short",
     });
 
     // Build the confirmation message with dynamic fields

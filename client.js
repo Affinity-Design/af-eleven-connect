@@ -147,6 +147,7 @@ const clientSchema = new mongoose.Schema(
     tokenExpiresAt: { type: Date }, // When the access token expires
     agentId: { type: String, required: true }, // Primary agent (backwards compatibility)
     twilioPhoneNumber: { type: String, required: true }, // Primary Twilio number (backwards compatibility)
+    timezone: { type: String, default: "America/New_York" }, // Client's timezone for appointments/notifications
     meetingTitle: { type: String, default: "Consultation" }, // Default meeting title for primary agent
     meetingLocation: { type: String, default: "Google Meet" }, // Default meeting location for primary agent
     additionalAgents: [additionalAgentSchema], // New: Array of additional agents
